@@ -1,6 +1,6 @@
 import { Controller, Get } from '@nestjs/common';
 import { AppGetHealthOutput } from './dtos';
-import { Response } from '../app/decorators';
+import { Response } from '../../app/decorators';
 
 @Controller()
 export class HealthCheckController {
