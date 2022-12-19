@@ -1,1 +1,1 @@
-export * from './get-health-check';
+export * from './get-health-check.output.dto';

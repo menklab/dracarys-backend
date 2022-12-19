@@ -18,5 +18,7 @@ export default [
       entitiesDir: `./src/orm/entities/**/*.entity{.ts, .js}`,
     },
     namingStrategy: new SnakeNamingStrategy(),
+    migrationsRun: false,
+    synchronize: false,
   },
 ];
