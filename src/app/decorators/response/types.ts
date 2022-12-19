@@ -1,3 +1,3 @@
-import { IResponseDtoMetadata } from '../../common/response';
+import { IResponseDtoMetadata } from '../../common/response'
 
-export type TResponseData = IResponseDtoMetadata;
+export type TResponseData = IResponseDtoMetadata

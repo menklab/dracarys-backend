@@ -1,7 +1,7 @@
-import * as path from 'path';
-import { registerAs } from '@nestjs/config';
-import { env } from 'process';
-import { SnakeNamingStrategy } from 'typeorm-naming-strategies';
+import * as path from 'path'
+import { registerAs } from '@nestjs/config'
+import { env } from 'process'
+import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
 export const databaseConfigFactory = registerAs('database', () => ({
   type: env.DB_TYPE,
@@ -13,4 +13,4 @@ export const databaseConfigFactory = registerAs('database', () => ({
   logging: env.ORM_LOGGING === 'true',
   entities: [path.resolve(__dirname, '../orm/entities/**/*.entity{.js,.ts}')],
   namingStrategy: new SnakeNamingStrategy(),
-}));
+}))

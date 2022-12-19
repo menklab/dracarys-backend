@@ -1,1 +1,1 @@
-export * from './response/response.decorator';
+export * from './response/response.decorator'

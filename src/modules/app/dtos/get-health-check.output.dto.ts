@@ -1,6 +1,6 @@
-import { Expose } from 'class-transformer';
+import { Expose } from 'class-transformer'
 
 export class AppGetHealthOutput {
   @Expose()
-  data: string;
+  data: string
 }

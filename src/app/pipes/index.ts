@@ -1,1 +1,1 @@
-export * from './validation/joiValidation';
+export * from './validation/joiValidation'

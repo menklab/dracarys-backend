@@ -1,6 +1,6 @@
-import { Controller, Get } from '@nestjs/common';
-import { AppGetHealthOutput } from './dtos';
-import { Response } from '../../app/decorators';
+import { Controller, Get } from '@nestjs/common'
+import { AppGetHealthOutput } from './dtos'
+import { Response } from '../../app/decorators'
 
 @Controller()
 export class HealthCheckController {
@@ -13,6 +13,6 @@ export class HealthCheckController {
   getHealthCheck(): AppGetHealthOutput {
     return {
       data: new Date().toISOString(),
-    };
+    }
   }
 }

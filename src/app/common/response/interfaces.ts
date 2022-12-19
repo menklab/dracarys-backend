@@ -1,3 +1,3 @@
 export interface IResponseDtoMetadata {
-  dto: { new (...args: unknown[]): unknown };
+  dto: { new (...args: unknown[]): unknown }
 }
