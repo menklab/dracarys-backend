@@ -1,4 +1,64 @@
 #!/usr/bin/env sh
 . "$(dirname -- "$0")/_/husky.sh"
 
-echo "precommit running"
+staged_files=$(git diff --name-only --staged)
+
+# put all staged files from the infrastructure folder into an array
+infra_files=()
+for file in $staged_files; do
+    if [[ $file == "infrastructure/"* ]]; then
+    infra_files+=("$file")
+    fi
+done
+
+# if there are any changed files in the infrastructure folder, run the terraform precommit steps
+if [ ${#infra_files[@]} -gt 0 ]; then
+    echo "Infrastructure changes found - running infrastructure precommit steps"
+
+    cd infrastructure 
+
+    echo "formatting files..."
+    formatted_files=$(terraform fmt -recursive .)
+
+    # stage any files that were formatted
+    for file in $formatted_files; do
+        git add "$file"
+    done
+
+    set -e # exit if any of the following commands fail
+    
+    echo "validating terraform configuration..."
+    terraform validate .
+    
+    echo "Linting modules..."
+    tflint .
+
+    # UNCOMMENT ONCE MODULES EXIST
+    # cd modules
+    # for dir in */
+    # do
+    #     tflint "$dir"
+    # done
+    # cd ..
+
+    set +e # continue even if the following commands fail (as terraform-docs can give warnings that we don't want to fail on)
+
+    echo "Generating module documentation..."
+    terraform-docs .
+
+    git add README.md
+
+    # UNCOMMENT ONCE MODULES EXIST
+    # cd modules
+    # for dir in */
+    # do
+    #     git add "$dir"README.md
+    # done
+    # cd ..
+
+    cd ..
+
+    echo "Done!"
+fi
+
+# run any other precommit steps here
