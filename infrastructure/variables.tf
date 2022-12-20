@@ -12,3 +12,27 @@ variable "environment" {
     error_message = "The environment must be Development, Staging, or Production"
   }
 }
+
+variable "do_region" {
+  type        = string
+  description = "The region to deploy the infrastructure to"
+  default     = "nyc1"
+}
+
+variable "db_size" {
+  type        = string
+  description = "The size of the database cluster"
+  default     = "db-s-1vcpu-1gb" # Default is meant for development only
+}
+
+variable "db_node_count" {
+  type        = number
+  description = "The number of nodes in the database cluster"
+  default     = 1 # Default is meant for development only
+}
+
+variable "droplet_size" {
+  type        = string
+  description = "The size of the droplet"
+  default     = "s-1vcpu-512mb-10gb" # Default is meant for development only
+}

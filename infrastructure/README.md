@@ -27,13 +27,21 @@ No modules.
 
 | Name | Type |
 |------|------|
+| [digitalocean_database_cluster.this](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/database_cluster) | resource |
+| [digitalocean_droplet.api_server](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/droplet) | resource |
 | [digitalocean_project.this](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/project) | resource |
+| [digitalocean_reserved_ip.this](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/reserved_ip) | resource |
+| [digitalocean_vpc.network](https://registry.terraform.io/providers/digitalocean/digitalocean/latest/docs/resources/vpc) | resource |
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
+| <a name="input_db_node_count"></a> [db\_node\_count](#input\_db\_node\_count) | The number of nodes in the database cluster | `number` | `1` | no |
+| <a name="input_db_size"></a> [db\_size](#input\_db\_size) | The size of the database cluster | `string` | `"db-s-1vcpu-1gb"` | no |
+| <a name="input_do_region"></a> [do\_region](#input\_do\_region) | The region to deploy the infrastructure to | `string` | `"nyc1"` | no |
 | <a name="input_do_token"></a> [do\_token](#input\_do\_token) | API token for the Digital Ocean Provider | `string` | n/a | yes |
+| <a name="input_droplet_size"></a> [droplet\_size](#input\_droplet\_size) | The size of the droplet | `string` | `"s-1vcpu-512mb-10gb"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment of the infrastructure. Must be Development, Staging, or Production | `string` | n/a | yes |
 
 ## Outputs
