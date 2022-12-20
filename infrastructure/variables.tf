@@ -36,3 +36,8 @@ variable "droplet_size" {
   description = "The size of the droplet"
   default     = "s-1vcpu-512mb-10gb" # Default is meant for development only
 }
+
+variable "droplet_initial_ssh_keys" {
+  type        = list(string)
+  description = "The initial SSH keys to add to the droplet. NOTE: changing this list will cause a recreation of the droplet - if that's not preferred, add or remove keys from the droplet manually via SSHing into the droplet instead"
+}

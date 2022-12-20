@@ -26,6 +26,7 @@ resource "digitalocean_droplet" "api_server" {
   region   = var.do_region
   size     = var.droplet_size
   vpc_uuid = digitalocean_vpc.network.id
+  ssh_keys = var.droplet_initial_ssh_keys
 }
 
 resource "digitalocean_reserved_ip" "this" {
