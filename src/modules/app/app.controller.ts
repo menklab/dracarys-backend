@@ -1,9 +1,10 @@
 import { Controller, Get } from '@nestjs/common'
-import { AppGetHealthOutput } from './dtos'
+
 import { Response } from '../../app/decorators'
+import { AppGetHealthOutput } from './dtos/get-health-check.output.dto'
 
 @Controller()
-export class HealthCheckController {
+export class AppController {
   constructor() {}
 
   @Get()

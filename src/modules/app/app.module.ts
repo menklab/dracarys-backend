@@ -2,7 +2,8 @@ import { Module } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { config } from '../../config'
-import { HealthCheckController } from './health-check.controller'
+import { AppController } from './app.controller'
+import { AuthModule } from '../auth/auth.module'
 
 @Module({
   imports: [
@@ -16,8 +17,9 @@ import { HealthCheckController } from './health-check.controller'
         return configService.get('database')
       },
     }),
+    AuthModule,
   ],
-  controllers: [HealthCheckController],
+  controllers: [AppController],
   providers: [],
 })
 export class AppModule {}

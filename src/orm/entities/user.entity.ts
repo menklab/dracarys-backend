@@ -1,5 +1,4 @@
-import { Column, Entity, OneToOne, PrimaryGeneratedColumn } from 'typeorm'
-import { Session } from './session.entity'
+import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm'
 
 @Entity()
 export class User {
@@ -9,8 +8,6 @@ export class User {
   @Column()
   pubKey: string
 
-  @OneToOne(() => Session, (session) => session.user, {
-    cascade: true,
-  })
-  session?: Session | null
+  @Column()
+  message: string
 }
