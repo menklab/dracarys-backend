@@ -41,7 +41,7 @@ No modules.
 | <a name="input_db_size"></a> [db\_size](#input\_db\_size) | The size of the database cluster | `string` | `"db-s-1vcpu-1gb"` | no |
 | <a name="input_do_region"></a> [do\_region](#input\_do\_region) | The region to deploy the infrastructure to | `string` | `"nyc1"` | no |
 | <a name="input_do_token"></a> [do\_token](#input\_do\_token) | API token for the Digital Ocean Provider | `string` | n/a | yes |
-| <a name="input_droplet_initial_ssh_keys"></a> [droplet\_initial\_ssh\_keys](#input\_droplet\_initial\_ssh\_keys) | The initial SSH keys to add to the droplet. NOTE: changing this list will cause a recreation of the droplet - if that's not preferred, add or remove keys from the droplet manually via SSHing into the droplet instead | `list(string)` | n/a | yes |
+| <a name="input_droplet_initial_ssh_keys"></a> [droplet\_initial\_ssh\_keys](#input\_droplet\_initial\_ssh\_keys) | The initial SSH key IDs to add to the droplet. NOTE: changing this list will cause a recreation of the droplet - if that's not preferred, add or remove keys from the droplet manually via SSHing into the droplet instead | `list(string)` | n/a | yes |
 | <a name="input_droplet_size"></a> [droplet\_size](#input\_droplet\_size) | The size of the droplet | `string` | `"s-1vcpu-512mb-10gb"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment of the infrastructure. Must be Development, Staging, or Production | `string` | n/a | yes |
 

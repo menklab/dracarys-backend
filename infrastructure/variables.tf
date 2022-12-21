@@ -39,5 +39,5 @@ variable "droplet_size" {
 
 variable "droplet_initial_ssh_keys" {
   type        = list(string)
-  description = "The initial SSH keys to add to the droplet. NOTE: changing this list will cause a recreation of the droplet - if that's not preferred, add or remove keys from the droplet manually via SSHing into the droplet instead"
+  description = "The initial SSH key IDs to add to the droplet. NOTE: changing this list will cause a recreation of the droplet - if that's not preferred, add or remove keys from the droplet manually via SSHing into the droplet instead"
 }
