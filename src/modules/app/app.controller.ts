@@ -1,8 +1,9 @@
-import { Controller, Get } from '@nestjs/common'
+import {Controller, Get, Post, UseGuards} from '@nestjs/common'
 
 import { Response } from '../../app/decorators'
 import { AppGetHealthOutput } from './dtos'
-import {ApiInternalServerErrorResponse} from "@nestjs/swagger";
+import { ApiInternalServerErrorResponse } from '@nestjs/swagger'
+import {AuthGuard} from "./guards/auth.guard";
 
 @Controller()
 export class AppController {
@@ -13,6 +14,7 @@ export class AppController {
   @Response({
     dto: AppGetHealthOutput,
   })
+  @UseGuards(AuthGuard)
   getHealthCheck(): AppGetHealthOutput {
     return {
       data: new Date().toISOString(),
