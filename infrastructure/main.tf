@@ -27,6 +27,15 @@ resource "digitalocean_droplet" "api_server" {
   size     = var.droplet_size
   vpc_uuid = digitalocean_vpc.network.id
   ssh_keys = var.droplet_initial_ssh_keys
+  # Startup script to install node, npm, and pm2 to run the nest app
+  user_data = <<EOT
+#!/bin/sh
+
+sudo apt update -y
+sudo apt install nodejs -y
+sudo apt install npm -y
+npm install pm2 -g
+EOT
 }
 
 resource "digitalocean_reserved_ip" "this" {
