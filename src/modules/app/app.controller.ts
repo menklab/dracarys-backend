@@ -1,12 +1,14 @@
 import { Controller, Get } from '@nestjs/common'
 
 import { Response } from '../../app/decorators'
-import { AppGetHealthOutput } from './dtos/get-health-check.output.dto'
+import { AppGetHealthOutput } from './dtos'
+import {ApiInternalServerErrorResponse} from "@nestjs/swagger";
 
 @Controller()
 export class AppController {
   constructor() {}
 
+  @ApiInternalServerErrorResponse()
   @Get()
   @Response({
     dto: AppGetHealthOutput,

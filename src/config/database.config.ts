@@ -12,6 +12,6 @@ export const databaseConfigFactory = registerAs('database', () => ({
   password: env.DB_PASSWORD,
   logging: env.ORM_LOGGING === 'true',
   entities: [path.resolve(__dirname, '../orm/entities/**/*.entity{.js,.ts}')],
-  synchronize: env.SYNCHRONIZE,
+  synchronize: env.ORM_SYNCHRONIZE,
   namingStrategy: new SnakeNamingStrategy(),
 }))

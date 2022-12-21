@@ -1,5 +1,5 @@
 import { Body, Controller, Delete, Get, Post, Session } from '@nestjs/common'
-import { ApiTags } from '@nestjs/swagger'
+import {ApiForbiddenResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags} from '@nestjs/swagger'
 import { AuthService } from './auth.service'
 import { MessageOutputDto } from './dtos/message/message.output.dto'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
@@ -10,6 +10,8 @@ import { Response } from '../../app/decorators'
 export class AuthController {
   constructor(protected readonly authService: AuthService) {}
 
+  @ApiOkResponse()
+  @ApiInternalServerErrorResponse()
   @Get('requestMessage')
   @Response({
     dto: MessageOutputDto,
@@ -19,12 +21,16 @@ export class AuthController {
     return { message }
   }
 
+  @ApiInternalServerErrorResponse()
+  @ApiForbiddenResponse()
   @Post('validateMessage')
   public async validateMessage(@Session() session: Record<string, any>, @Body() authInputDto: AuthInputDto): Promise<boolean> {
     return this.authService.verifyMessage(session, authInputDto)
   }
 
-  @Delete('/logout')
+  @ApiInternalServerErrorResponse()
+  @ApiOkResponse()
+  @Delete('logout')
   public async logOut(@Session() session: Record<string, any>): Promise<boolean> {
     return this.authService.logOut(session)
   }
