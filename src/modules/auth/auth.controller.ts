@@ -1,48 +1,45 @@
-import { Body, Controller, Delete, Get, Post, Session } from '@nestjs/common'
-import { ApiForbiddenResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
-import { AuthService } from './auth.service'
-import { MessageOutputDto } from './dtos/message/message.output.dto'
-import { AuthInputDto } from './dtos/auth/auth.input.dto'
-import { Response } from '../../app/decorators'
+import {Body, Controller, Delete, Get, Post, Session} from '@nestjs/common'
+import {
+  ApiBadRequestResponse,
+  ApiInternalServerErrorResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse
+} from '@nestjs/swagger'
+import {AuthService} from './auth.service'
+import {MessageOutputDto} from './dtos/message/message.output.dto'
+import {AuthInputDto} from './dtos/auth/auth.input.dto'
+import {Response} from '../../app/decorators'
+import {SWAGGER_OPTIONS} from "../../common";
 
 @ApiTags('Auth')
 @Controller('auth')
 export class AuthController {
-  constructor(protected readonly authService: AuthService) {}
+  constructor(protected readonly authService: AuthService) {
+  }
 
-  @ApiOkResponse({
-    description: 'Returns message',
-    type: MessageOutputDto,
-  })
-  @ApiInternalServerErrorResponse({
-    description: 'Internal server error',
-  })
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.server.internalServerError)
+  @ApiOkResponse(SWAGGER_OPTIONS.auth.requestMessageOk)
   @Get('requestMessage')
   @Response({
     dto: MessageOutputDto,
   })
   public async requestMessage(@Session() session: Record<string, any>): Promise<MessageOutputDto> {
     const message = this.authService.generateMessage(session)
-    return { message }
+    return {message}
   }
 
-  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
-  @ApiForbiddenResponse({ description: 'Forbidden' })
-  @ApiOkResponse({
-    description: 'User authorized',
-    type: Boolean,
-  })
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.server.internalServerError)
+  @ApiUnauthorizedResponse(SWAGGER_OPTIONS.auth.notAuthorized)
+  @ApiBadRequestResponse(SWAGGER_OPTIONS.auth.invalidMessage)
+  @ApiOkResponse(SWAGGER_OPTIONS.auth.authorized)
   @Post('validateMessage')
   public async validateMessage(@Session() session: Record<string, any>, @Body() authInputDto: AuthInputDto): Promise<boolean> {
     return this.authService.verifyMessage(session, authInputDto)
   }
 
-  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
-  @ApiOkResponse({
-    description: 'User logout',
-    type: Boolean,
-  })
-  @ApiOkResponse()
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.server.internalServerError)
+  @ApiOkResponse(SWAGGER_OPTIONS.auth.logout)
   @Delete('logout')
   public async logOut(@Session() session: Record<string, any>): Promise<boolean> {
     return this.authService.logOut(session)

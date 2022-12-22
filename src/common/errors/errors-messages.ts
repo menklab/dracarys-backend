@@ -6,5 +6,13 @@ export const ERROR_MESSAGES = {
     invalidMessage: {
       message: 'invalid message',
     },
+    forbidden: {
+      message: 'forbidden resource',
+    }
   },
+  server: {
+    internal: {
+      message: 'internal server error',
+    }
+  }
 }

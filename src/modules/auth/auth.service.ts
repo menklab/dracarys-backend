@@ -1,4 +1,4 @@
-import { ForbiddenException, Injectable } from '@nestjs/common'
+import {BadRequestException, ForbiddenException, Injectable, UnauthorizedException} from '@nestjs/common'
 import bs58 from 'bs58'
 import nacl from 'tweetnacl'
 import { UserService } from '../user/user.service'
@@ -18,7 +18,10 @@ export class AuthService {
 
   public async verifyMessage(session: Record<string, any>, { pubKey, message, signature }: AuthInputDto): Promise<boolean> {
     if (session.message !== message) {
-      throw new ForbiddenException(ERROR_MESSAGES.auth.invalidMessage.message)
+      throw new BadRequestException({
+        statusCode: 400,
+        message: ERROR_MESSAGES.auth.invalidMessage.message,
+      })
     }
 
     const encodedMessage = new TextEncoder().encode(message)
@@ -32,7 +35,10 @@ export class AuthService {
     const isAuthorized = nacl.sign.detached.verify(encodedMessage, signatureUint8Array, bs58.decode(pubKey))
 
     if (!isAuthorized) {
-      throw new ForbiddenException(ERROR_MESSAGES.auth.notAuthorized.message)
+      throw new UnauthorizedException({
+        statusCode: 401,
+        message: ERROR_MESSAGES.auth.notAuthorized.message
+      })
     }
 
     let user = await this.userService.findByPubKey(pubKey)

@@ -4,14 +4,15 @@ import { Response } from '../../app/decorators'
 import { AppGetHealthOutput } from './dtos'
 import { ApiForbiddenResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { AuthGuard } from './guards/auth.guard'
+import {ERROR_MESSAGES, SWAGGER_OPTIONS} from "../../common";
 
 @ApiTags('App')
 @Controller()
 export class AppController {
   constructor() {}
 
-  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
-  @ApiForbiddenResponse({ description: 'Forbidden' })
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.server.internalServerError)
+  @ApiForbiddenResponse(SWAGGER_OPTIONS.server.forbiddenError)
   @ApiOkResponse({
     description: 'Health check',
     schema: {
