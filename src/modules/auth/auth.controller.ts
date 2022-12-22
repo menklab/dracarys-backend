@@ -10,8 +10,13 @@ import { Response } from '../../app/decorators'
 export class AuthController {
   constructor(protected readonly authService: AuthService) {}
 
-  @ApiOkResponse()
-  @ApiInternalServerErrorResponse()
+  @ApiOkResponse({
+    description: 'Returns message',
+    type: MessageOutputDto,
+  })
+  @ApiInternalServerErrorResponse({
+    description: 'Internal server error',
+  })
   @Get('requestMessage')
   @Response({
     dto: MessageOutputDto,
@@ -21,14 +26,22 @@ export class AuthController {
     return { message }
   }
 
-  @ApiInternalServerErrorResponse()
-  @ApiForbiddenResponse()
+  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
+  @ApiOkResponse({
+    description: 'User authorized',
+    type: Boolean,
+  })
   @Post('validateMessage')
   public async validateMessage(@Session() session: Record<string, any>, @Body() authInputDto: AuthInputDto): Promise<boolean> {
     return this.authService.verifyMessage(session, authInputDto)
   }
 
-  @ApiInternalServerErrorResponse()
+  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
+  @ApiOkResponse({
+    description: 'User logout',
+    type: Boolean,
+  })
   @ApiOkResponse()
   @Delete('logout')
   public async logOut(@Session() session: Record<string, any>): Promise<boolean> {

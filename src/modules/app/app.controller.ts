@@ -1,15 +1,26 @@
-import {Controller, Get, Post, UseGuards} from '@nestjs/common'
+import { Controller, Get, UseGuards } from '@nestjs/common'
 
 import { Response } from '../../app/decorators'
 import { AppGetHealthOutput } from './dtos'
-import { ApiInternalServerErrorResponse } from '@nestjs/swagger'
-import {AuthGuard} from "./guards/auth.guard";
+import { ApiForbiddenResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
+import { AuthGuard } from './guards/auth.guard'
 
+@ApiTags('App')
 @Controller()
 export class AppController {
   constructor() {}
 
-  @ApiInternalServerErrorResponse()
+  @ApiInternalServerErrorResponse({ description: 'Internal server error' })
+  @ApiForbiddenResponse({ description: 'Forbidden' })
+  @ApiOkResponse({
+    description: 'Health check',
+    schema: {
+      type: 'object',
+      properties: {
+        date: { type: 'Date', example: '2020-01-24T19:24:46.366Z' },
+      },
+    },
+  })
   @Get()
   @Response({
     dto: AppGetHealthOutput,
@@ -17,7 +28,7 @@ export class AppController {
   @UseGuards(AuthGuard)
   getHealthCheck(): AppGetHealthOutput {
     return {
-      data: new Date().toISOString(),
+      date: new Date().toISOString(),
     }
   }
 }

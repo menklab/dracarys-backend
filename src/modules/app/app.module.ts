@@ -45,21 +45,23 @@ export class AppModule implements NestModule {
   }
 
   configure(consumer: MiddlewareConsumer): any {
-    consumer.apply(
-      session({
-        store: new (RedisStore(session))({
-          client: this.redis,
-          logErrors: this.configService.get('redis.logging'),
+    consumer
+      .apply(
+        session({
+          store: new (RedisStore(session))({
+            client: this.redis,
+            logErrors: this.configService.get('redis.logging'),
+          }),
+          saveUninitialized: false,
+          secret: this.configService.get('auth.sessionSecret') as string,
+          resave: false,
+          cookie: {
+            sameSite: true,
+            httpOnly: false,
+            maxAge: 60000,
+          },
         }),
-        saveUninitialized: false,
-        secret: this.configService.get('auth.sessionSecret') as string,
-        resave: false,
-        cookie: {
-          sameSite: true,
-          httpOnly: false,
-          maxAge: 60000,
-        },
-      }),
-    ).forRoutes('*')
+      )
+      .forRoutes('*')
   }
 }
