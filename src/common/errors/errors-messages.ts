@@ -8,11 +8,11 @@ export const ERROR_MESSAGES = {
     },
     forbidden: {
       message: 'forbidden resource',
-    }
+    },
   },
   server: {
     internal: {
       message: 'internal server error',
-    }
-  }
+    },
+  },
 }

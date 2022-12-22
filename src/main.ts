@@ -13,14 +13,6 @@ async function bootstrap(): Promise<void> {
   app.enableCors()
   configurePipes(app)
 
-  // app.use(
-  //   session({
-  //     secret: configService.get('auth.sessionSecret') as string,
-  //     resave: false,
-  //     saveUninitialized: true,
-  //   }),
-  // )
-
   if (env.NODE_ENV === 'dev' || env.NODE_ENV === 'staging') {
     const config = new DocumentBuilder().setTitle('Dracaris API').setVersion('0.0.1').addBearerAuth().build()
     const document = SwaggerModule.createDocument(app, config)

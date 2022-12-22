@@ -1,5 +1,5 @@
-import {ERROR_MESSAGES} from "./errors/errors-messages";
-import {MessageOutputDto} from "../modules/auth/dtos/message/message.output.dto";
+import { ERROR_MESSAGES } from './errors/errors-messages'
+import { MessageOutputDto } from '../modules/auth/dtos/message/message.output.dto'
 
 export const SWAGGER_OPTIONS = {
   server: {
@@ -9,9 +9,9 @@ export const SWAGGER_OPTIONS = {
         type: 'object',
         properties: {
           statusCode: { type: 'number', example: 500 },
-          message: { type: 'string', example: ERROR_MESSAGES.server.internal.message }
-        }
-      }
+          message: { type: 'string', example: ERROR_MESSAGES.server.internal.message },
+        },
+      },
     },
     forbiddenError: {
       description: 'Forbidden',
@@ -19,9 +19,9 @@ export const SWAGGER_OPTIONS = {
         type: 'object',
         properties: {
           statusCode: { type: 'number', example: 403 },
-          message: { type: 'number', example: ERROR_MESSAGES.auth.forbidden.message }
-        }
-      }
+          message: { type: 'number', example: ERROR_MESSAGES.auth.forbidden.message },
+        },
+      },
     },
   },
   auth: {
@@ -31,9 +31,9 @@ export const SWAGGER_OPTIONS = {
         type: 'object',
         properties: {
           statusCode: { type: 'number', example: 401 },
-          message: { type: 'string', example: ERROR_MESSAGES.auth.notAuthorized.message }
-        }
-      }
+          message: { type: 'string', example: ERROR_MESSAGES.auth.notAuthorized.message },
+        },
+      },
     },
     invalidMessage: {
       description: 'Problems with message',
@@ -41,9 +41,9 @@ export const SWAGGER_OPTIONS = {
         type: 'object',
         properties: {
           statusCode: { type: 'number', example: 400 },
-          message: { type: 'string', example: ERROR_MESSAGES.auth.invalidMessage.message }
-        }
-      }
+          message: { type: 'string', example: ERROR_MESSAGES.auth.invalidMessage.message },
+        },
+      },
     },
     authorized: {
       description: 'User authorized',
@@ -56,6 +56,6 @@ export const SWAGGER_OPTIONS = {
     requestMessageOk: {
       description: 'Returns message',
       type: MessageOutputDto,
-    }
-  }
+    },
+  },
 }
