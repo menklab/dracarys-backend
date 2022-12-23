@@ -1,5 +1,6 @@
-import { Column, Entity } from 'typeorm'
+import {Column, Entity, ManyToOne} from 'typeorm'
 import { BaseEntity } from './base.entity'
+import {Program} from "./program.entity";
 
 @Entity()
 export class User extends BaseEntity {
@@ -8,4 +9,7 @@ export class User extends BaseEntity {
 
   @Column()
   message: string
+
+  @ManyToOne(() => Program, (program) => program.user)
+  programs: Program[]
 }

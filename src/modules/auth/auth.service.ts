@@ -1,4 +1,4 @@
-import { BadRequestException, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common'
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
 import bs58 from 'bs58'
 import nacl from 'tweetnacl'
 import { UserService } from '../user/user.service'

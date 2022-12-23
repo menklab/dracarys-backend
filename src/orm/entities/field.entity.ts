@@ -1,10 +1,9 @@
-import {Entity, PrimaryGeneratedColumn} from "typeorm";
+import { Entity } from "typeorm";
+import { BaseEntity } from "./base.entity";
 
 @Entity()
-export class Field {
+export class Field extends BaseEntity{
 
-  @PrimaryGeneratedColumn()
-  id: number
 
 
 
