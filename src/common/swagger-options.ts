@@ -58,4 +58,15 @@ export const SWAGGER_OPTIONS = {
       type: MessageOutputDto,
     },
   },
+  app: {
+    healthCheckOk: {
+      description: 'Health check',
+      schema: {
+        type: 'object',
+        properties: {
+          date: { type: 'Date', example: '2020-01-24T19:24:46.366Z' },
+        },
+      },
+    }
+  }
 }

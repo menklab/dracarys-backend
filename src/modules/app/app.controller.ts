@@ -13,15 +13,7 @@ export class AppController {
 
   @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.server.internalServerError)
   @ApiForbiddenResponse(SWAGGER_OPTIONS.server.forbiddenError)
-  @ApiOkResponse({
-    description: 'Health check',
-    schema: {
-      type: 'object',
-      properties: {
-        date: { type: 'Date', example: '2020-01-24T19:24:46.366Z' },
-      },
-    },
-  })
+  @ApiOkResponse(SWAGGER_OPTIONS.app.healthCheckOk)
   @Get()
   @Response({
     dto: AppGetHealthOutput,
