@@ -1,7 +1,7 @@
 import { Test, TestingModule } from '@nestjs/testing'
 import { AppController } from '../app.controller'
 
-describe('HealthCheckController', () => {
+describe('AppController', () => {
   let appController: AppController
 
   beforeEach(async () => {
@@ -14,7 +14,7 @@ describe('HealthCheckController', () => {
 
   describe('root', () => {
     it('should return actual ISO date', () => {
-      expect(typeof appController.getHealthCheck().data).toBe('string')
+      expect(typeof appController.getHealthCheck().date).toBe('string')
     })
   })
 })
