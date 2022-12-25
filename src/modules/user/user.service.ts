@@ -14,6 +14,10 @@ export class UserService {
     return this.userRepository.save({ pubKey, message })
   }
 
+  public async findById(id: number): Promise<User | null> {
+    return this.userRepository.findOne({ where: { id } })
+  }
+
   public async findByPubKey(pubKey: string): Promise<User | null> {
     return this.userRepository.findOne({
       where: { pubKey },

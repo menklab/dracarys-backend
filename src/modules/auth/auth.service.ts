@@ -11,7 +11,8 @@ export class AuthService {
   constructor(protected readonly userService: UserService) {}
 
   public generateMessage(session: Record<string, any>): string {
-    const message = crypto.randomBytes(64).toString('base64')
+    // const message = crypto.randomBytes(64).toString('base64')
+    const message = 'iOwwDTwkTDVBKYQAhJ8dbz2SF1N/5host4l7N5VpEiIQcrQbaHW/lwykz40oVifnBacU9hEnnoP5BLHz2JxosQ=='
     session.message = message
     return message
   }

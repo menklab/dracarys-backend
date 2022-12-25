@@ -1,8 +1,7 @@
 import Joi from "joi";
-import {CreateProgramDto} from "./create-program.dto";
+import {UpdateProgramDto} from "./update-program.dto";
 
-
-export const CreateProgramValidationSchema = Joi.object<CreateProgramDto>({
+export const UpdateProgramValidationSchema = Joi.object<UpdateProgramDto>({
   name: Joi
     .string()
     .required()
