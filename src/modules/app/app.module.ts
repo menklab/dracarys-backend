@@ -1,8 +1,13 @@
-import { Module } from '@nestjs/common'
+import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import { config } from '../../config'
-import { HealthCheckController } from './health-check.controller'
+import { AppController } from './app.controller'
+import { AuthModule } from '../auth/auth.module'
+import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
+import Redis from 'ioredis'
+import session from 'express-session'
+import RedisStore from 'connect-redis'
 
 @Module({
   imports: [
@@ -16,8 +21,47 @@ import { HealthCheckController } from './health-check.controller'
         return configService.get('database')
       },
     }),
+    RedisModule.forRootAsync({
+      inject: [ConfigService],
+      useFactory(configService: ConfigService) {
+        return {
+          config: {
+            host: configService.get('redis.host'),
+            port: configService.get('redis.port'),
+          },
+        }
+      },
+    }),
+    AuthModule,
   ],
-  controllers: [HealthCheckController],
+  controllers: [AppController],
   providers: [],
 })
-export class AppModule {}
+export class AppModule implements NestModule {
+  private readonly redis: Redis
+
+  constructor(private readonly redisService: RedisService, private readonly configService: ConfigService) {
+    this.redis = redisService.getClient()
+  }
+
+  configure(consumer: MiddlewareConsumer): any {
+    consumer
+      .apply(
+        session({
+          store: new (RedisStore(session))({
+            client: this.redis,
+            logErrors: this.configService.get('redis.logging'),
+          }),
+          saveUninitialized: false,
+          secret: this.configService.get('auth.sessionSecret') as string,
+          resave: false,
+          cookie: {
+            sameSite: true,
+            httpOnly: false,
+            maxAge: 60000,
+          },
+        }),
+      )
+      .forRoutes('*')
+  }
+}

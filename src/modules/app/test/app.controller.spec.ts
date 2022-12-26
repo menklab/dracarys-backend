@@ -1,20 +1,20 @@
 import { Test, TestingModule } from '@nestjs/testing'
-import { HealthCheckController } from '../health-check.controller'
+import { AppController } from '../app.controller'
 
-describe('HealthCheckController', () => {
-  let appController: HealthCheckController
+describe('AppController', () => {
+  let appController: AppController
 
   beforeEach(async () => {
     const app: TestingModule = await Test.createTestingModule({
-      controllers: [HealthCheckController],
+      controllers: [AppController],
     }).compile()
 
-    appController = app.get<HealthCheckController>(HealthCheckController)
+    appController = app.get<AppController>(AppController)
   })
 
   describe('root', () => {
     it('should return actual ISO date', () => {
-      expect(typeof appController.getHealthCheck().data).toBe('string')
+      expect(typeof appController.getHealthCheck().date).toBe('string')
     })
   })
 })
