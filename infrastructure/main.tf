@@ -40,6 +40,14 @@ sudo apt update -y
 sudo apt install nodejs -y
 sudo apt install npm -y
 npm install pm2 -g
+
+echo "module.exports = {
+  apps : [{
+    name: 'dracarys',
+    script: 'app/dist/src/main.js',
+    watch: 'app'
+  }],
+};" > ecosystem.config.js
 EOT
 }
 
@@ -49,7 +57,7 @@ resource "digitalocean_reserved_ip" "this" {
 }
 
 resource "digitalocean_database_cluster" "postgres" {
-  name                 = format("%s-%s", local.env_prefix, "db-cluster")
+  name                 = format("%s-%s", local.env_prefix, "postgres-cluster")
   engine               = "pg"
   version              = "12"
   size                 = var.db_size
