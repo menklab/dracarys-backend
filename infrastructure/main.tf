@@ -13,8 +13,13 @@ provider "digitalocean" {
   token = var.do_token
 }
 
+locals {
+  # This is lowercase because DO doesn't allow uppercase letters in db names
+  env_prefix = lower(format("%s-%s", "dracarys", var.environment))
+}
+
 resource "digitalocean_vpc" "network" {
-  name     = format("%s-%s-%s", "dracarys", var.environment, "network")
+  name     = format("%s-%s", local.env_prefix, "network")
   region   = "nyc1"
   ip_range = "10.0.0.0/24"
 }
@@ -22,7 +27,7 @@ resource "digitalocean_vpc" "network" {
 
 resource "digitalocean_droplet" "api_server" {
   image    = "ubuntu-20-04-x64"
-  name     = "api_server"
+  name     = "api-server"
   region   = var.do_region
   size     = var.droplet_size
   vpc_uuid = digitalocean_vpc.network.id
@@ -44,7 +49,7 @@ resource "digitalocean_reserved_ip" "this" {
 }
 
 resource "digitalocean_database_cluster" "postgres" {
-  name                 = format("%s-%s-%s", "dracarys", var.environment, "db-cluster")
+  name                 = format("%s-%s", local.env_prefix, "db-cluster")
   engine               = "pg"
   version              = "12"
   size                 = var.db_size
@@ -54,7 +59,7 @@ resource "digitalocean_database_cluster" "postgres" {
 }
 
 resource "digitalocean_database_cluster" "redis" {
-  name                 = format("%s-%s-%s", "dracarys", var.environment, "db-cluster")
+  name                 = format("%s-%s", local.env_prefix, "redis-cluster")
   engine               = "redis"
   version              = "7"
   size                 = var.redis_size
@@ -64,7 +69,7 @@ resource "digitalocean_database_cluster" "redis" {
 }
 
 resource "digitalocean_project" "this" {
-  name        = format("%s-%s", "dracarys", var.environment)
+  name        = local.env_prefix
   description = "A project to represent dracarys back end resources"
   purpose     = "Service or API"
   environment = var.environment
