@@ -43,7 +43,7 @@ resource "digitalocean_reserved_ip" "this" {
   region     = var.do_region
 }
 
-resource "digitalocean_database_cluster" "this" {
+resource "digitalocean_database_cluster" "postgres" {
   name                 = format("%s-%s-%s", "dracarys", var.environment, "db-cluster")
   engine               = "pg"
   version              = "12"
@@ -53,10 +53,20 @@ resource "digitalocean_database_cluster" "this" {
   private_network_uuid = digitalocean_vpc.network.id
 }
 
+resource "digitalocean_database_cluster" "redis" {
+  name                 = format("%s-%s-%s", "dracarys", var.environment, "db-cluster")
+  engine               = "redis"
+  version              = "7"
+  size                 = var.redis_size
+  region               = var.do_region
+  node_count           = var.redis_node_count
+  private_network_uuid = digitalocean_vpc.network.id
+}
+
 resource "digitalocean_project" "this" {
   name        = format("%s-%s", "dracarys", var.environment)
   description = "A project to represent dracarys back end resources"
   purpose     = "Service or API"
   environment = var.environment
-  resources   = [digitalocean_droplet.api_server.urn, digitalocean_reserved_ip.this.urn, digitalocean_database_cluster.this.urn]
+  resources   = [digitalocean_droplet.api_server.urn, digitalocean_reserved_ip.this.urn, digitalocean_database_cluster.postgres.urn, digitalocean_database_cluster.redis.urn]
 }

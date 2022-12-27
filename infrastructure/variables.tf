@@ -21,13 +21,25 @@ variable "do_region" {
 
 variable "db_size" {
   type        = string
-  description = "The size of the database cluster"
+  description = "The size of the postgres database cluster"
   default     = "db-s-1vcpu-1gb" # Default is meant for development only
 }
 
 variable "db_node_count" {
   type        = number
-  description = "The number of nodes in the database cluster"
+  description = "The number of nodes in the postgres database cluster"
+  default     = 1 # Default is meant for development only
+}
+
+variable "redis_size" {
+  type        = string
+  description = "The size of the redis cluster"
+  default     = "db-s-1vcpu-1gb" # Default is meant for development only
+}
+
+variable "redis_node_count" {
+  type        = number
+  description = "The number of nodes in the redis cluster"
   default     = 1 # Default is meant for development only
 }
 
