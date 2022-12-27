@@ -1,14 +1,15 @@
 import { NestFactory } from '@nestjs/core'
 import { ConfigService } from '@nestjs/config'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
+import { env } from 'process'
 import { AppModule } from './modules/app/app.module'
 import { configurePipes } from './bootstrap/pipes'
-import { env } from 'process'
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create(AppModule)
   const configService = app.get(ConfigService)
 
+  app.setGlobalPrefix('api')
   app.enableCors()
   configurePipes(app)
 
