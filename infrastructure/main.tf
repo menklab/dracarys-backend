@@ -57,7 +57,7 @@ resource "digitalocean_reserved_ip" "this" {
 }
 
 resource "digitalocean_database_cluster" "postgres" {
-  name                 = format("%s-%s", local.env_prefix, "db-cluster")
+  name                 = format("%s-%s", local.env_prefix, "postgres-cluster")
   engine               = "pg"
   version              = "12"
   size                 = var.db_size
