@@ -73,5 +73,5 @@ resource "digitalocean_project" "this" {
   description = "A project to represent dracarys back end resources"
   purpose     = "Service or API"
   environment = var.environment
-  resources   = [digitalocean_droplet.api_server.urn, digitalocean_reserved_ip.this.urn, digitalocean_database_cluster.postgres.urn, digitalocean_database_cluster.redis.urn]
+  resources   = [digitalocean_droplet.api_server.urn, digitalocean_database_cluster.postgres.urn, digitalocean_database_cluster.redis.urn]
 }
