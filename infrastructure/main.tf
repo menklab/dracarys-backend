@@ -40,6 +40,14 @@ sudo apt update -y
 sudo apt install nodejs -y
 sudo apt install npm -y
 npm install pm2 -g
+
+echo "module.exports = {
+  apps : [{
+    name: 'dracarys',
+    script: 'app/dist/src/main.js',
+    watch: 'app'
+  }],
+};" > ecosystem.config.js
 EOT
 }
 
