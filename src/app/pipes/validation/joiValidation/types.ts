@@ -2,7 +2,7 @@ import Joi from 'joi'
 
 export interface IValidationError {
   message: string
-  property: string[]
+  path: string[]
 }
 
 export type TJoiValidationSchemas = {
