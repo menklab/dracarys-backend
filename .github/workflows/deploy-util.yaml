@@ -31,8 +31,8 @@ jobs:
       # The path the key is stored in should correspond to the key this environment is using in the ecosystem.config.js file
       - name: Write SSH key to filesystem for use by pm2
         run: |
-        mkdir ~/.ssh/menklab
-        echo "${{ secrets.SSH_KEY }}" > ~/.ssh/menklab/dracarys-backend-${{ inputs.environment }}
+          mkdir ~/.ssh/menklab
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/menklab/dracarys-backend-${{ inputs.environment }}
 
       # NOTE: the deployment name is (and in any future environments, should be) the same as the environment name
       - name: Deploy to ${{ inputs.environment }} using pm2
