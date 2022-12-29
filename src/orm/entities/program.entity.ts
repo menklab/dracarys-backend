@@ -9,7 +9,9 @@ export class Program extends BaseEntity {
   @Column()
   name: string
 
-  @ManyToOne(() => User, (user) => user.programs)
+  @ManyToOne(() => User, (user) => user.programs, {
+    onDelete: 'CASCADE'
+  })
   user: User
 
   @OneToMany(() => Account, (account) => account.program)
