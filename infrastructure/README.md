@@ -50,9 +50,12 @@ echo 'TOKEN_YOU_GENERATED' | doppler configure set token --scope /var/www/dracar
 ```
 **NOTE: it would be nice to automate this, but it's more difficult to do so in an Ubuntu UserData startup script, since the root user does not exist at the time the script runs, which interferes with the installation of nvm.**
 
-6. Locally, run `pm2 setup environment-name-here` to put the remote server in a state where it can receive deployments from pm2. Note that you'll need to have a copy of the remote server's SSH key locally in a path that you specify in [ecosystem.config.js](../ecosystem.config.js) for the new environment.
+6. Create a new environment in the GitHub repository settings (note that the name of this environment **MUST BE EQUAL TO** the name of the deployment added to `ecosystem.config.js` in step 4) and add the following secrets:
+- `SSH_KEY` - the private key that the pipeline will use to SSH into the Droplet
 
-7. Update [deploy.yaml](../.github/workflows/deploy.yaml) to add a new step which deploys to the given environment. Ensure that the new step you add runs conditionally based on whatever trigger you'd like for the deployment.
+7. Locally, run `pm2 setup environment-name-here` to put the remote server in a state where it can receive deployments from pm2. Note that you'll need to have a copy of the remote server's SSH key locally in a path that you specify in [ecosystem.config.js](../ecosystem.config.js) for the new environment.
+
+8. Update [deploy.yaml](../.github/workflows/deploy.yaml) to add a new step which deploys to the given environment. Ensure that the new step you add runs conditionally based on whatever trigger you'd like for the deployment.
 
 
 ## Deploying and Operating the Application
