@@ -27,6 +27,10 @@ jobs:
   deployment:
     runs-on: ubuntu-latest
     steps:
+      # Checkout the repo (needed to call the reusable workflow)
+      - name: Checkout
+        uses: actions/checkout@v2.6.0
+
       # Triggers on push to develop or workflow_dispatch to dev
       - name: Trigger Dev Deployment
         if: (github.event_name == 'push' && github.ref == 'refs/heads/develop') || (github.event_name == 'workflow_dispatch' && inputs.environment == 'dev')
