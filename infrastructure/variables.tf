@@ -46,7 +46,7 @@ variable "redis_node_count" {
 variable "droplet_size" {
   type        = string
   description = "The size of the droplet"
-  default     = "s-1vcpu-512mb-10gb" # Default is meant for development only
+  default     = "s-1vcpu-1gb" # Default is meant for development only
 }
 
 variable "droplet_initial_ssh_keys" {
