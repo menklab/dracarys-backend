@@ -50,19 +50,24 @@ echo 'TOKEN_YOU_GENERATED' | doppler configure set token --scope /var/www/dracar
 ```
 **NOTE: it would be nice to automate this, but it's more difficult to do so in an Ubuntu UserData startup script, since the root user does not exist at the time the script runs, which interferes with the installation of nvm.**
 
+6. Locally, run `pm2 setup environment-name-here` to put the remote server in a state where it can receive deployments from pm2. Note that you'll need to have a copy of the remote server's SSH key locally in a path that you specify in [ecosystem.config.js](../ecosystem.config.js) for the new environment.
+
+7. Update [deploy.yaml](../.github/workflows/deploy.yaml) to add a new step which deploys to the given environment. Ensure that the new step you add runs conditionally based on whatever trigger you'd like for the deployment.
+
+
 ## Deploying and Operating the Application
 Locally (or in CI/CD script), install pm2 globally:
-npm install pm2 -g
+`npm install pm2 -g`
 
 To deploy (run this locally or in CI/CD script - note you'll need to have ):
-pm2 setup dev
-pm2 deploy dev (with an optional --force flag if you have local changes)
+`pm2 setup environment-name-here`
+`pm2 deploy environment-name-here` (with an optional --force flag if you have local changes)
 
 To view logs (run this on the remote server):
-pm2 logs --only dracarys-backend
+`pm2 logs --only dracarys-backend`
 
 To stop (run this on the remote server, in the `/var/www/dracarys-backend/src directory`) (to reverse this, redeploy the app, as it will start it automatically): 
-pm2 stop ecosystem.config.js --only dracarys-backend
+`pm2 stop ecosystem.config.js --only dracarys-backend`
 
 # Root Module Documentation
 <!-- BEGIN_TF_DOCS -->
