@@ -10,6 +10,8 @@ export class User extends BaseEntity {
   @Column()
   message: string
 
-  @ManyToOne(() => Program, (program) => program.user)
+  @ManyToOne(() => Program, (program) => program.user, {
+    cascade: true
+  })
   programs: Program[]
 }
