@@ -1,0 +1,42 @@
+# This workflow detects what it was triggered by, uses that information to determine the appropriate environment name, and calls the reusable deployment workflow with the environment name attached (which corresponds to a GitHub environment).
+
+name: Deploy Backend
+
+on: 
+  # Used for dev deployments
+  push:
+    branches:
+      - develop
+  workflow_dispatch:
+    inputs:
+      environment:
+        description: 'Environment to deploy to. Dev is the only valid option.'
+        required: true
+        default: 'dev' 
+        type: choice
+        options:
+        - dev
+
+  # Used for production deployments
+  release:
+    types: [published]
+
+
+
+jobs:
+  deployment:
+    runs-on: ubuntu-latest
+    steps:
+      # Triggers on push to develop or workflow_dispatch to dev
+      - name: Trigger Dev Deployment
+        if: (github.event_name == 'push' && github.ref == 'refs/heads/develop') || (github.event_name == 'workflow_dispatch' && inputs.environment == 'dev')
+        uses: ./.github/workflows/deploy-util
+        with:
+          environment: dev
+      
+      # Triggers on release published (currently unused - uncomment when environment is ready)
+      # - name: Trigger Production Deployment
+      #   if: github.event_name == 'release' && github.event.action == 'published'
+      #   uses: ./.github/workflows/deploy-util
+      #   with:
+      #     environment: prod
