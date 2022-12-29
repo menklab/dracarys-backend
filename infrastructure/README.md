@@ -8,7 +8,8 @@ To see how to contribute to the infrastructure, see [CONTRIBUTING.md](../CONTRIB
 1. Create a new branch for the environment in GitHub
 2. Create a new workspace for the environment in Terraform Cloud linked to the branch created in step 1
 3. Add the necessary variables in the Terraform workspace (see [variables.tf](variables.tf) or the documentation below to see which variables to add), then apply the Terraform configuration to create the infrastructure in Digital Ocean
-4. SSH into the Droplet and the following commands to set up the environment:
+4. Add a deployment target in the [ecosystem.config.js](../ecosystem.config.js) file for the environment (you can just copy and paste the existing dev one and just change the name and the host)
+5. SSH into the Droplet and the following commands to set up the environment:
 ```
 # Install Node, NPM, and pm2
 curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
@@ -39,19 +40,28 @@ echo "deb https://packages.doppler.com/public/cli/deb/debian any-version main" |
 # Fetch and install latest doppler cli
 sudo apt-get update && sudo apt-get install -y doppler
 
-# Follow instructions to authenticate with doppler
-doppler login --scope /
+# Click on the relevant environment in Doppler, then click on the "Access" tab, and generate a new readonly service token. Copy the token and run the following commands to authenticate:
+# Prevent configure command being leaked in bash history
+export HISTIGNORE='doppler*'
+
+# Scope to location of application directory
+echo 'TOKEN_YOU_GENERATED' | doppler configure set token --scope /var/www/dracarys-backend
+
 ```
 **NOTE: it would be nice to automate this, but it's more difficult to do so in an Ubuntu UserData startup script, since the root user does not exist at the time the script runs, which interferes with the installation of nvm.**
 
-To deploy (run this locally or in CI/CD script):
+## Deploying and Operating the Application
+Locally (or in CI/CD script), install pm2 globally:
+npm install pm2 -g
+
+To deploy (run this locally or in CI/CD script - note you'll need to have ):
 pm2 setup dev
 pm2 deploy dev --force
 
-To view logs:
+To view logs (run this on the remote server):
 pm2 logs --only dracarys-backend
 
-To stop: 
+To stop (run this on the remote server) (to reverse this, redeploy the app, as it will start it automatically): 
 pm2 stop ecosystem.config.js --only dracarys-backend
 
 # Root Module Documentation
