@@ -1,5 +1,3 @@
-# This workflow detects what it was triggered by, uses that information to determine the appropriate environment name, and calls the reusable deployment workflow with the environment name attached (which corresponds to a GitHub environment).
-
 name: Deploy Backend
 
 on: 
@@ -24,23 +22,60 @@ on:
 
 
 jobs:
+  # Uses a combination of branch name and event type to determine which environment to deploy the app to
+  determine-environment:
+    runs-on: ubuntu-latest
+    outputs:
+      environment: ${{ steps.determine-environment-step.outputs.environment }}
+    steps:
+      # Triggers on push to develop or workflow_dispatch to dev
+      - name: Determine GitHub Environment
+        # set environment to dev as job output
+        id: determine-environment-step
+        run: |
+          if [ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/develop" ]; then
+            echo "environment=dev" >> ${GITHUB_OUTPUT}
+          elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+            echo "environment=${{ inputs.environment }}" >> ${GITHUB_OUTPUT}
+          fi
+
+  # Deploys the app to the environment determined by the previous job
   deployment:
     runs-on: ubuntu-latest
+    needs: determine-environment
+    environment: ${{ needs.determine-environment.environment }}
     steps:
-      # Checkout the repo (needed to call the reusable workflow)
       - name: Checkout
         uses: actions/checkout@v2.6.0
 
-      # Triggers on push to develop or workflow_dispatch to dev
-      - name: Trigger Dev Deployment
-        if: (github.event_name == 'push' && github.ref == 'refs/heads/develop') || (github.event_name == 'workflow_dispatch' && inputs.environment == 'dev')
-        uses: ./.github/workflows/deploy-util
+      # Caching global npm cache, as we're using pm2 (installed globally) to deploy the app
+      # NOTE: the reason we don't want to install pm2 in devDependencies and install all of the project's dependencies here is
+      # because the project being built on this CI/CD runner is pointless - pm2 pulls and builds the project from the repo for
+      # us on the remote server, so we don't need to install the project's dependencies here.
+      - name: Get npm cache directory
+        id: npm-cache-dir
+        shell: bash
+        run: echo "dir=$(npm config get cache)" >> ${GITHUB_OUTPUT}
+
+      # Restore global npm cache
+      - uses: actions/cache@v3
+        id: npm-cache # use this to check for `cache-hit` ==> if: steps.npm-cache.outputs.cache-hit != 'true'
         with:
-          environment: dev
-      
-      # Triggers on release published (currently unused - uncomment when environment is ready)
-      # - name: Trigger Production Deployment
-      #   if: github.event_name == 'release' && github.event.action == 'published'
-      #   uses: ./.github/workflows/deploy-util
-      #   with:
-      #     environment: prod
+          path: ${{ steps.npm-cache-dir.outputs.dir }}
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install pm2
+        run: npm install -g pm2
+
+      # NOTE: the ssh key is stored in the relevant environment's secrets in the GitHub repo settings
+      # The path the key is stored in should correspond to the key this environment is using in the ecosystem.config.js file
+      - name: Write SSH key to filesystem for use by pm2
+        run: |
+          mkdir ~/.ssh/menklab
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/menklab/dracarys-backend-${{ needs.determine-environment.environment }}
+
+      # NOTE: the deployment name is (and in any future environments, should be) the same as the environment name
+      - name: Deploy to ${{ needs.determine-environment.environment }} using pm2
+        run: pm2 deploy ecosystem.config.js ${{ needs.determine-environment.environment }}
