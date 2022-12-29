@@ -33,7 +33,9 @@ jobs:
         # set environment to dev as job output
         id: determine-environment-step
         run: |
-          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" == "push" ] && [ "${{ github.ref }}" == "refs/heads/develop" ]; then
+            echo "environment=dev" >> ${GITHUB_OUTPUT}
+          elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             echo "environment=${{ inputs.environment }}" >> ${GITHUB_OUTPUT}
           fi
 
@@ -74,6 +76,7 @@ jobs:
           mkdir ~/.ssh
           mkdir ~/.ssh/menklab
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/menklab/dracarys-backend-${{ needs.determine-environment.outputs.environment }}
+          chmod 600 ~/.ssh/menklab/dracarys-backend-${{ needs.determine-environment.outputs.environment }}
 
       # NOTE: the deployment name is (and in any future environments, should be) the same as the environment name
       - name: Deploy to ${{ needs.determine-environment.outputs.environment }} using pm2
