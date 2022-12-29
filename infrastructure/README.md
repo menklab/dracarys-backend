@@ -44,12 +44,15 @@ doppler login --scope /
 ```
 **NOTE: it would be nice to automate this, but it's more difficult to do so in an Ubuntu UserData startup script, since the root user does not exist at the time the script runs, which interferes with the installation of nvm.**
 
-To deploy:
+To deploy (run this locally or in CI/CD script):
 pm2 setup dev
 pm2 deploy dev --force
 
 To view logs:
 pm2 logs --only dracarys-backend
+
+To stop: 
+pm2 stop ecosystem.config.js --only dracarys-backend
 
 # Root Module Documentation
 <!-- BEGIN_TF_DOCS -->
