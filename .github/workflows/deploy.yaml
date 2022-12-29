@@ -73,8 +73,8 @@ jobs:
         run: |
           mkdir ~/.ssh
           mkdir ~/.ssh/menklab
-          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/menklab/dracarys-backend-${{ needs.determine-environment.environment }}
+          echo "${{ secrets.SSH_KEY }}" > ~/.ssh/menklab/dracarys-backend-${{ needs.determine-environment.outputs.environment }}
 
       # NOTE: the deployment name is (and in any future environments, should be) the same as the environment name
-      - name: Deploy to ${{ needs.determine-environment.environment }} using pm2
-        run: pm2 deploy ecosystem.config.js ${{ needs.determine-environment.environment }}
+      - name: Deploy to ${{ needs.determine-environment.outputs.environment }} using pm2
+        run: pm2 deploy ecosystem.config.js ${{ needs.determine-environment.outputs.environment }}
