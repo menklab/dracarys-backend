@@ -56,12 +56,12 @@ npm install pm2 -g
 
 To deploy (run this locally or in CI/CD script - note you'll need to have ):
 pm2 setup dev
-pm2 deploy dev --force
+pm2 deploy dev (with an optional --force flag if you have local changes)
 
 To view logs (run this on the remote server):
 pm2 logs --only dracarys-backend
 
-To stop (run this on the remote server) (to reverse this, redeploy the app, as it will start it automatically): 
+To stop (run this on the remote server, in the `/var/www/dracarys-backend/src directory`) (to reverse this, redeploy the app, as it will start it automatically): 
 pm2 stop ecosystem.config.js --only dracarys-backend
 
 # Root Module Documentation
