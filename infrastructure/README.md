@@ -63,7 +63,7 @@ Locally (or in CI/CD script), install pm2 globally:
 `npm install pm2 -g`
 
 To deploy (run this locally or in CI/CD script - note you'll need to have ):
-`pm2 setup environment-name-here`
+`pm2 deploy dev setup`
 `pm2 deploy environment-name-here` (with an optional --force flag if you have local changes)
 
 To view logs (run this on the remote server):
