@@ -17,16 +17,39 @@ curl -o- https://raw.githubusercontent.com/nvm-sh/nvm/v0.39.3/install.sh | bash
 
 nvm install 16
 npm install pm2 -g
-echo "module.exports = {
-  apps : [{
-    name: 'dracarys',
-    script: 'app/dist/src/main.js',
-    watch: 'app'
-  }],
-};" > ecosystem.config.js
-mkdir app
+
+# add symlinks for npm, node, and pm2 to /usr/bin, needed for pm2 deployments. Note that you'll have to update this symlink if you change the node version
+whereis node
+ln -s [path found from the above command] /usr/bin/node
+whereis npm
+ln -s [path found from the above command] /usr/bin/npm
+whereis pm2
+ln -s [path found from the above command] /usr/bin/pm2
+
+# install doppler CLI and authenticate so that the deployment can access the secrets
+# Install pre-reqs
+sudo apt-get update && sudo apt-get install -y apt-transport-https ca-certificates curl gnupg
+
+# Add Doppler's GPG key
+curl -sLf --retry 3 --tlsv1.2 --proto "=https" 'https://packages.doppler.com/public/cli/gpg.DE2A7741A397C129.key' | sudo apt-key add -
+
+# Add Doppler's apt repo
+echo "deb https://packages.doppler.com/public/cli/deb/debian any-version main" | sudo tee /etc/apt/sources.list.d/doppler-cli.list
+
+# Fetch and install latest doppler cli
+sudo apt-get update && sudo apt-get install -y doppler
+
+# Follow instructions to authenticate with doppler
+doppler login --scope /
 ```
 **NOTE: it would be nice to automate this, but it's more difficult to do so in an Ubuntu UserData startup script, since the root user does not exist at the time the script runs, which interferes with the installation of nvm.**
+
+To deploy:
+pm2 setup dev
+pm2 deploy dev --force
+
+To view logs:
+pm2 logs --only dracarys-backend
 
 # Root Module Documentation
 <!-- BEGIN_TF_DOCS -->
@@ -67,7 +90,7 @@ No modules.
 | <a name="input_do_region"></a> [do\_region](#input\_do\_region) | The region to deploy the infrastructure to | `string` | `"nyc1"` | no |
 | <a name="input_do_token"></a> [do\_token](#input\_do\_token) | API token for the Digital Ocean Provider | `string` | n/a | yes |
 | <a name="input_droplet_initial_ssh_keys"></a> [droplet\_initial\_ssh\_keys](#input\_droplet\_initial\_ssh\_keys) | The initial SSH key IDs to add to the droplet. NOTE: changing this list will cause a recreation of the droplet - if that's not preferred, add or remove keys from the droplet manually via SSHing into the droplet instead | `list(string)` | n/a | yes |
-| <a name="input_droplet_size"></a> [droplet\_size](#input\_droplet\_size) | The size of the droplet | `string` | `"s-1vcpu-512mb-10gb"` | no |
+| <a name="input_droplet_size"></a> [droplet\_size](#input\_droplet\_size) | The size of the droplet | `string` | `"s-1vcpu-1gb"` | no |
 | <a name="input_environment"></a> [environment](#input\_environment) | The environment of the infrastructure. Must be Development, Staging, or Production | `string` | n/a | yes |
 | <a name="input_redis_node_count"></a> [redis\_node\_count](#input\_redis\_node\_count) | The number of nodes in the redis cluster | `number` | `1` | no |
 | <a name="input_redis_size"></a> [redis\_size](#input\_redis\_size) | The size of the redis cluster | `string` | `"db-s-1vcpu-1gb"` | no |
