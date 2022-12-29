@@ -1,10 +1,10 @@
-import { BadRequestException, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common'
+import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
 import bs58 from 'bs58'
 import nacl from 'tweetnacl'
 import { UserService } from '../user/user.service'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
 import * as crypto from 'crypto'
-import { ERROR_MESSAGES } from '../../common'
+import {ERRORS, ErrorType} from '../../common'
 
 @Injectable()
 export class AuthService {
@@ -19,8 +19,8 @@ export class AuthService {
   public async verifyMessage(session: Record<string, any>, { pubKey, message, signature }: AuthInputDto): Promise<boolean> {
     if (session.message !== message) {
       throw new BadRequestException({
-        statusCode: 400,
-        message: ERROR_MESSAGES.auth.invalidMessage.message,
+        type: ErrorType.BUSINESS_ERRORS,
+        errors: [ERRORS.auth.invalidMessage],
       })
     }
 
@@ -36,8 +36,8 @@ export class AuthService {
 
     if (!isAuthorized) {
       throw new UnauthorizedException({
-        statusCode: 401,
-        message: ERROR_MESSAGES.auth.notAuthorized.message,
+        type: ErrorType.BUSINESS_ERRORS,
+        errors: [ERRORS.auth.notAuthorized],
       })
     }
 

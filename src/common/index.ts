@@ -1,4 +1,4 @@
-export * from './errors/errors-messages'
+export * from './errors/errors'
 export * from './swagger-options'
 export * from './errors/enum/error-type'
 export * from './errors/interfaces/error.interface'

@@ -1,4 +1,4 @@
-import { ERROR_MESSAGES } from './errors/errors-messages'
+import {ERRORS} from "./errors/errors";
 import { MessageOutputDto } from '../modules/auth/dtos/message/message.output.dto'
 
 export const SWAGGER_OPTIONS = {
@@ -8,8 +8,8 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'object',
         properties: {
-          statusCode: { type: 'number', example: 500 },
-          message: { type: 'string', example: ERROR_MESSAGES.server.internal.message },
+          statusCode: { type: 'string', example: ERRORS.server.internal.code },
+          message: { type: 'string', example: ERRORS.server.internal.message },
         },
       },
     },
@@ -18,8 +18,8 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'object',
         properties: {
-          statusCode: { type: 'number', example: 403 },
-          message: { type: 'number', example: ERROR_MESSAGES.auth.forbidden.message },
+          statusCode: { type: 'string', example: ERRORS.auth.forbidden.code },
+          message: { type: 'string', example: ERRORS.auth.forbidden.message },
         },
       },
     },
@@ -30,8 +30,8 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'object',
         properties: {
-          statusCode: { type: 'number', example: 401 },
-          message: { type: 'string', example: ERROR_MESSAGES.auth.notAuthorized.message },
+          statusCode: { type: 'string', example: ERRORS.auth.notAuthorized.code },
+          message: { type: 'string', example: ERRORS.auth.notAuthorized.message },
         },
       },
     },
@@ -40,8 +40,8 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'object',
         properties: {
-          statusCode: { type: 'number', example: 400 },
-          message: { type: 'string', example: ERROR_MESSAGES.auth.invalidMessage.message },
+          statusCode: { type: 'string', example: ERRORS.auth.invalidMessage.code },
+          message: { type: 'string', example: ERRORS.auth.invalidMessage.message },
         },
       },
     },
