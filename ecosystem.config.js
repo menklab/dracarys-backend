@@ -11,6 +11,8 @@ module.exports = {
   ],
 
   // This piece is used on the local machine or ci/cd runner to deploy the app to the remote server
+  // NOTE: to ensure consistency with automated deployments, any deployment names should match environment names in GitHub
+  // To see existing environments, go to https://github.com/menklab/dracarys-backend/settings/environments
   deploy: {
     // "dev" is the environment name
     dev: {
@@ -39,7 +41,7 @@ module.exports = {
       'pre-deploy-local': "echo 'This is a local executed command'",
       // post-deploy action
       'post-deploy':
-        'doppler secrets download --no-file --format env > .env; npm ci --verbose; npm run build; pm2 startOrRestart ecosystem.config.js --only dracarys-backend',
+        'doppler secrets download --no-file --format env > .env; npm ci; npm run build; pm2 startOrRestart ecosystem.config.js --only dracarys-backend',
     },
   },
 }
