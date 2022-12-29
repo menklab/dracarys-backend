@@ -33,9 +33,7 @@ jobs:
         # set environment to dev as job output
         id: determine-environment-step
         run: |
-          if [ "${{ github.event_name }}" == "push" && "${{ github.ref }}" == "refs/heads/develop" ]; then
-            echo "environment=dev" >> ${GITHUB_OUTPUT}
-          elif [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
+          if [ "${{ github.event_name }}" == "workflow_dispatch" ]; then
             echo "environment=${{ inputs.environment }}" >> ${GITHUB_OUTPUT}
           fi
 
@@ -73,6 +71,7 @@ jobs:
       # The path the key is stored in should correspond to the key this environment is using in the ecosystem.config.js file
       - name: Write SSH key to filesystem for use by pm2
         run: |
+          mkdir ~/.ssh
           mkdir ~/.ssh/menklab
           echo "${{ secrets.SSH_KEY }}" > ~/.ssh/menklab/dracarys-backend-${{ needs.determine-environment.environment }}
 
