@@ -1,27 +1,22 @@
 import {ERRORS} from "./errors/errors";
 import { MessageOutputDto } from '../modules/auth/dtos/message/message.output.dto'
+import {ErrorType} from "./errors/enum/error-type";
 
 export const SWAGGER_OPTIONS = {
-  server: {
-    forbiddenError: {
-      description: 'Forbidden',
-      schema: {
-        type: 'object',
-        properties: {
-          code: { type: 'string', example: ERRORS.auth.forbidden.code },
-          message: { type: 'string', example: ERRORS.auth.forbidden.message },
-        },
-      },
-    },
-  },
   auth: {
     notAuthorized: {
       description: 'Unauthorized',
       schema: {
         type: 'object',
         properties: {
-          code: { type: 'string', example: ERRORS.auth.notAuthorized.code },
-          message: { type: 'string', example: ERRORS.auth.notAuthorized.message },
+          type: { type: 'string', example: ErrorType.BUSINESS_ERRORS },
+          errors: {
+            type: 'array',
+            example: [{
+              code: { type: 'string', example: ERRORS.auth.notAuthorized.code },
+              message: { type: 'string', example: ERRORS.auth.notAuthorized.message },
+            }]
+          },
         },
       },
     },
@@ -30,8 +25,14 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'object',
         properties: {
-          code: { type: 'string', example: ERRORS.auth.invalidMessage.code },
-          message: { type: 'string', example: ERRORS.auth.invalidMessage.message },
+          type: { type: 'string', example: ErrorType.BUSINESS_ERRORS },
+          errors: {
+            type: 'array',
+            example: [{
+              code: { type: 'string', example: ERRORS.auth.invalidMessage.code },
+              message: { type: 'string', example: ERRORS.auth.invalidMessage.message },
+            }]
+          },
         },
       },
     },

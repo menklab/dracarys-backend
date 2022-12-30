@@ -12,7 +12,7 @@ export class AppController {
   constructor() {}
 
   @ApiInternalServerErrorResponse()
-  @ApiForbiddenResponse(SWAGGER_OPTIONS.server.forbiddenError)
+  @ApiForbiddenResponse()
   @ApiOkResponse(SWAGGER_OPTIONS.app.healthCheckOk)
   @Get()
   @Response({
