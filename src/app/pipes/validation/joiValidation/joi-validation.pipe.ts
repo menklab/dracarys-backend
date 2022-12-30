@@ -23,7 +23,7 @@ export class JoiValidationPipe implements PipeTransform {
 
     const errors: IError[] = validationResult.error.details.map((error) => ({
       message: error.message,
-      path: error.path.map((i) => i.toString()).join('/'),
+      path: error.path.map((i) => i.toString()).join('.'),
     }))
 
     const apiException: ApiException = {

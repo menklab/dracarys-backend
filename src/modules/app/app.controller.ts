@@ -11,7 +11,7 @@ import { SWAGGER_OPTIONS } from '../../common'
 export class AppController {
   constructor() {}
 
-  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.server.internalServerError)
+  @ApiInternalServerErrorResponse()
   @ApiForbiddenResponse(SWAGGER_OPTIONS.server.forbiddenError)
   @ApiOkResponse(SWAGGER_OPTIONS.app.healthCheckOk)
   @Get()

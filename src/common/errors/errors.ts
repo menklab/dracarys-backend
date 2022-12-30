@@ -15,10 +15,4 @@ export const ERRORS = {
       message: 'forbidden resource',
     },
   },
-  server: {
-    internal: {
-      code: 'SERVER_ERROR',
-      message: 'internal server error',
-    },
-  },
 }

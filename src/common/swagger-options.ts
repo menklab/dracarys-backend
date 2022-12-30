@@ -3,22 +3,12 @@ import { MessageOutputDto } from '../modules/auth/dtos/message/message.output.dt
 
 export const SWAGGER_OPTIONS = {
   server: {
-    internalServerError: {
-      description: 'Internal server error',
-      schema: {
-        type: 'object',
-        properties: {
-          statusCode: { type: 'string', example: ERRORS.server.internal.code },
-          message: { type: 'string', example: ERRORS.server.internal.message },
-        },
-      },
-    },
     forbiddenError: {
       description: 'Forbidden',
       schema: {
         type: 'object',
         properties: {
-          statusCode: { type: 'string', example: ERRORS.auth.forbidden.code },
+          code: { type: 'string', example: ERRORS.auth.forbidden.code },
           message: { type: 'string', example: ERRORS.auth.forbidden.message },
         },
       },
@@ -30,7 +20,7 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'object',
         properties: {
-          statusCode: { type: 'string', example: ERRORS.auth.notAuthorized.code },
+          code: { type: 'string', example: ERRORS.auth.notAuthorized.code },
           message: { type: 'string', example: ERRORS.auth.notAuthorized.message },
         },
       },
@@ -40,7 +30,7 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'object',
         properties: {
-          statusCode: { type: 'string', example: ERRORS.auth.invalidMessage.code },
+          code: { type: 'string', example: ERRORS.auth.invalidMessage.code },
           message: { type: 'string', example: ERRORS.auth.invalidMessage.message },
         },
       },
