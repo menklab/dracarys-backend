@@ -5,6 +5,7 @@ import { UserService } from '../user/user.service'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
 import * as crypto from 'crypto'
 import {ERRORS, ErrorType} from '../../common'
+import {BusinessException} from "../../common/errors/utils/business-exception";
 
 @Injectable()
 export class AuthService {
@@ -18,10 +19,7 @@ export class AuthService {
 
   public async verifyMessage(session: Record<string, any>, { pubKey, message, signature }: AuthInputDto): Promise<boolean> {
     if (session.message !== message) {
-      throw new BadRequestException({
-        type: ErrorType.BUSINESS_ERRORS,
-        errors: [ERRORS.auth.invalidMessage],
-      })
+      throw new BadRequestException(BusinessException.invalidMessage())
     }
 
     const encodedMessage = new TextEncoder().encode(message)
@@ -35,10 +33,7 @@ export class AuthService {
     const isAuthorized = nacl.sign.detached.verify(encodedMessage, signatureUint8Array, bs58.decode(pubKey))
 
     if (!isAuthorized) {
-      throw new UnauthorizedException({
-        type: ErrorType.BUSINESS_ERRORS,
-        errors: [ERRORS.auth.notAuthorized],
-      })
+      throw new UnauthorizedException(BusinessException.unauthorized())
     }
 
     let user = await this.userService.findByPubKey(pubKey)

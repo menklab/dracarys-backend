@@ -10,9 +10,5 @@ export const ERRORS = {
       code: ErrorCode.INVALID_MESSAGE,
       message: 'invalid message',
     },
-    forbidden: {
-      code: ErrorCode.FORBIDDEN,
-      message: 'forbidden resource',
-    },
   },
 }
