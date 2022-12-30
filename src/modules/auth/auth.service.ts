@@ -4,8 +4,9 @@ import nacl from 'tweetnacl'
 import { UserService } from '../user/user.service'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
 import * as crypto from 'crypto'
-import {ERRORS, ErrorType} from '../../common'
-import {BusinessException} from "../../common/errors/utils/business-exception";
+import {businessException} from "../../common/errors/utils/business-exception";
+import {ERRORS} from "../../common";
+
 
 @Injectable()
 export class AuthService {
@@ -19,7 +20,7 @@ export class AuthService {
 
   public async verifyMessage(session: Record<string, any>, { pubKey, message, signature }: AuthInputDto): Promise<boolean> {
     if (session.message !== message) {
-      throw new BadRequestException(BusinessException.invalidMessage())
+      throw new BadRequestException(businessException([ERRORS.auth.invalidMessage]))
     }
 
     const encodedMessage = new TextEncoder().encode(message)
@@ -33,7 +34,7 @@ export class AuthService {
     const isAuthorized = nacl.sign.detached.verify(encodedMessage, signatureUint8Array, bs58.decode(pubKey))
 
     if (!isAuthorized) {
-      throw new UnauthorizedException(BusinessException.unauthorized())
+      throw new UnauthorizedException(businessException([ERRORS.auth.notAuthorized]))
     }
 
     let user = await this.userService.findByPubKey(pubKey)
