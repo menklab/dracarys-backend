@@ -9,12 +9,13 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'object',
         properties: {
-          type: { type: 'string', example: ErrorType.BUSINESS_ERRORS },
+          type: { type: 'enum', example: ErrorType.BUSINESS_ERRORS },
           errors: {
             type: 'array',
             example: [{
               code: { type: 'string', example: ERRORS.auth.notAuthorized.code },
               message: { type: 'string', example: ERRORS.auth.notAuthorized.message },
+              path: { type: 'string', optional: true },
             }]
           },
         },
@@ -25,12 +26,13 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'object',
         properties: {
-          type: { type: 'string', example: ErrorType.BUSINESS_ERRORS },
+          type: { type: 'enum', example: ErrorType.BUSINESS_ERRORS },
           errors: {
             type: 'array',
             example: [{
               code: { type: 'string', example: ERRORS.auth.invalidMessage.code },
               message: { type: 'string', example: ERRORS.auth.invalidMessage.message },
+              path: { type: 'string', optional: true },
             }]
           },
         },
