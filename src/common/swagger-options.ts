@@ -1,37 +1,23 @@
-import { ERROR_MESSAGES } from './errors/errors-messages'
+import {ERRORS} from "./errors/errors";
 import { MessageOutputDto } from '../modules/auth/dtos/message/message.output.dto'
+import {ErrorType} from "./errors/enum/error-type";
 
 export const SWAGGER_OPTIONS = {
-  server: {
-    internalServerError: {
-      description: 'Internal server error',
-      schema: {
-        type: 'object',
-        properties: {
-          statusCode: { type: 'number', example: 500 },
-          message: { type: 'string', example: ERROR_MESSAGES.server.internal.message },
-        },
-      },
-    },
-    forbiddenError: {
-      description: 'Forbidden',
-      schema: {
-        type: 'object',
-        properties: {
-          statusCode: { type: 'number', example: 403 },
-          message: { type: 'number', example: ERROR_MESSAGES.auth.forbidden.message },
-        },
-      },
-    },
-  },
   auth: {
     notAuthorized: {
       description: 'Unauthorized',
       schema: {
         type: 'object',
         properties: {
-          statusCode: { type: 'number', example: 401 },
-          message: { type: 'string', example: ERROR_MESSAGES.auth.notAuthorized.message },
+          type: { type: 'enum', example: ErrorType.BUSINESS_ERRORS },
+          errors: {
+            type: 'array',
+            example: [{
+              code: { type: 'string', example: ERRORS.auth.notAuthorized.code },
+              message: { type: 'string', example: ERRORS.auth.notAuthorized.message },
+              path: { type: 'string', optional: true },
+            }]
+          },
         },
       },
     },
@@ -40,8 +26,15 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'object',
         properties: {
-          statusCode: { type: 'number', example: 400 },
-          message: { type: 'string', example: ERROR_MESSAGES.auth.invalidMessage.message },
+          type: { type: 'enum', example: ErrorType.BUSINESS_ERRORS },
+          errors: {
+            type: 'array',
+            example: [{
+              code: { type: 'string', example: ERRORS.auth.invalidMessage.code },
+              message: { type: 'string', example: ERRORS.auth.invalidMessage.message },
+              path: { type: 'string', optional: true },
+            }]
+          },
         },
       },
     },

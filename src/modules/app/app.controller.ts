@@ -1,18 +1,18 @@
-import { Controller, Get, UseGuards } from '@nestjs/common'
+import { Controller, Get, UseGuards} from '@nestjs/common'
 
 import { Response } from '../../app/decorators'
 import { AppGetHealthOutput } from './dtos'
 import { ApiForbiddenResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags } from '@nestjs/swagger'
 import { AuthGuard } from './guards/auth.guard'
-import { ERROR_MESSAGES, SWAGGER_OPTIONS } from '../../common'
+import { SWAGGER_OPTIONS } from '../../common'
 
 @ApiTags('App')
 @Controller()
 export class AppController {
   constructor() {}
 
-  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.server.internalServerError)
-  @ApiForbiddenResponse(SWAGGER_OPTIONS.server.forbiddenError)
+  @ApiInternalServerErrorResponse()
+  @ApiForbiddenResponse()
   @ApiOkResponse(SWAGGER_OPTIONS.app.healthCheckOk)
   @Get()
   @Response({

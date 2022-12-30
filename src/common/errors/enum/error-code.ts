@@ -1,0 +1,4 @@
+export enum ErrorCode {
+  NOT_AUTHORIZED = 'NOT_AUTHORIZED',
+  INVALID_MESSAGE = 'INVALID_MESSAGE',
+}

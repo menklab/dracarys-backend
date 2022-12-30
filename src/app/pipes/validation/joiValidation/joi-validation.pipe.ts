@@ -1,5 +1,6 @@
-import { ArgumentMetadata, BadRequestException, Injectable, PipeTransform } from '@nestjs/common'
-import { TJoiValidationSchemas, IValidationError } from './types'
+import {ArgumentMetadata, BadRequestException, Injectable, PipeTransform} from '@nestjs/common'
+import {TJoiValidationSchemas} from './types'
+import {ApiException, ErrorType, IError} from "../../../../common";
 
 @Injectable()
 export class JoiValidationPipe implements PipeTransform {
@@ -20,11 +21,16 @@ export class JoiValidationPipe implements PipeTransform {
       return validationResult.value
     }
 
-    const errors: IValidationError[] = validationResult.error.details.map((error) => ({
+    const errors: IError[] = validationResult.error.details.map((error) => ({
       message: error.message,
-      property: error.path.map((i) => i.toString()),
+      path: error.path.map((i) => i.toString()).join('.'),
     }))
 
-    throw new BadRequestException(errors)
+    const apiException: ApiException = {
+      type: ErrorType.VALIDATION_ERRORS,
+      errors
+    }
+
+    throw new BadRequestException(apiException)
   }
 }
