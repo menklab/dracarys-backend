@@ -12,7 +12,7 @@ backend repo for the dracarys application
 
 ### <a id="main-lang-version"></a> Main language version
 
-Node 16.18.0
+Node 18.12.0 (LTS)
 
 ### <a id="installation"></a> Installation
 
