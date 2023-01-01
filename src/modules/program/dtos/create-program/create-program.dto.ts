@@ -1,5 +1,5 @@
-import {ApiProperty} from "@nestjs/swagger";
-import {User} from "../../../../orm/entities";
+import { ApiProperty } from '@nestjs/swagger'
+import { User } from '../../../../orm/entities'
 
 export class CreateProgramDto {
   @ApiProperty({ minLength: 1, maxLength: 5 })

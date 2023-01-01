@@ -1,6 +1,6 @@
 import { MessageOutputDto } from '../modules/auth/dtos/message/message.output.dto'
-import {getSchemaPath} from "@nestjs/swagger";
-import {ApiException} from "./errors/dtos/api-exception.dto";
+import { getSchemaPath } from '@nestjs/swagger'
+import { ApiException } from './errors/dtos/api-exception.dto'
 
 export const SWAGGER_OPTIONS = {
   auth: {
@@ -26,10 +26,10 @@ export const SWAGGER_OPTIONS = {
           date: { type: 'Date', example: '2020-01-24T19:24:46.366Z' },
         },
       },
-    }
+    },
   },
   error: {
     description: 'Business of validation errors',
-    schema: { $ref: getSchemaPath(ApiException) }
-  }
+    schema: { $ref: getSchemaPath(ApiException) },
+  },
 }

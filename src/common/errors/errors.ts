@@ -1,4 +1,4 @@
-import {ErrorCode} from "./enum/error-code";
+import { ErrorCode } from './enum/error-code'
 
 export const ERRORS = {
   auth: {
@@ -14,13 +14,13 @@ export const ERRORS = {
   user: {
     notFound: {
       code: ErrorCode.USER_NOT_FOUND,
-      message: 'user not found'
-    }
+      message: 'user not found',
+    },
   },
   program: {
     notFound: {
       code: ErrorCode.PROGRAM_NOT_FOUND,
-      message: 'program not found'
-    }
-  }
+      message: 'program not found',
+    },
+  },
 }

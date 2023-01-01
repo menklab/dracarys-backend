@@ -8,8 +8,8 @@ import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
 import Redis from 'ioredis'
 import session from 'express-session'
 import RedisStore from 'connect-redis'
-import {UserModule} from "../user/user.module";
-import {ProgramModule} from "../program/program.module";
+import { UserModule } from '../user/user.module'
+import { ProgramModule } from '../program/program.module'
 
 @Module({
   imports: [

@@ -1,7 +1,6 @@
-import {ApiProperty, ApiPropertyOptional} from "@nestjs/swagger";
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 
 export class Error {
-
   @ApiProperty()
   message: string
 
