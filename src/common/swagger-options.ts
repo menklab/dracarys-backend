@@ -1,50 +1,9 @@
-import { ERROR_MESSAGES } from './errors/errors-messages'
 import { MessageOutputDto } from '../modules/auth/dtos/message/message.output.dto'
+import {getSchemaPath} from "@nestjs/swagger";
+import {ApiException} from "./errors/dtos/api-exception.dto";
 
 export const SWAGGER_OPTIONS = {
-  server: {
-    internalServerError: {
-      description: 'Internal server error',
-      schema: {
-        type: 'object',
-        properties: {
-          statusCode: { type: 'number', example: 500 },
-          message: { type: 'string', example: ERROR_MESSAGES.server.internal.message },
-        },
-      },
-    },
-    forbiddenError: {
-      description: 'Forbidden',
-      schema: {
-        type: 'object',
-        properties: {
-          statusCode: { type: 'number', example: 403 },
-          message: { type: 'number', example: ERROR_MESSAGES.auth.forbidden.message },
-        },
-      },
-    },
-  },
   auth: {
-    notAuthorized: {
-      description: 'Unauthorized',
-      schema: {
-        type: 'object',
-        properties: {
-          statusCode: { type: 'number', example: 401 },
-          message: { type: 'string', example: ERROR_MESSAGES.auth.notAuthorized.message },
-        },
-      },
-    },
-    invalidMessage: {
-      description: 'Problems with message',
-      schema: {
-        type: 'object',
-        properties: {
-          statusCode: { type: 'number', example: 400 },
-          message: { type: 'string', example: ERROR_MESSAGES.auth.invalidMessage.message },
-        },
-      },
-    },
     authorized: {
       description: 'User authorized',
       type: Boolean,
@@ -68,5 +27,9 @@ export const SWAGGER_OPTIONS = {
         },
       },
     }
+  },
+  error: {
+    description: 'Business of validation errors',
+    schema: { $ref: getSchemaPath(ApiException) }
   }
 }

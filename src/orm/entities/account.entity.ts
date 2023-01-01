@@ -1,12 +1,9 @@
-import {Entity, ManyToOne, PrimaryGeneratedColumn} from "typeorm";
-import {Field} from "./field.entity";
+import {Entity, ManyToOne} from "typeorm";
 import { Program } from "./program.entity";
 import {BaseEntity} from "./base.entity";
 
-@Entity()
+@Entity({ name: 'account' })
 export class Account extends BaseEntity{
-
-  fields: Field[]
 
   @ManyToOne(() => Program, (program) => program.accounts)
   program: Program;

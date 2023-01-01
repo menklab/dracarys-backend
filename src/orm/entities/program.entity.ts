@@ -1,9 +1,9 @@
-import {Column, Entity, ManyToOne, OneToMany, PrimaryGeneratedColumn} from "typeorm";
+import {Column, Entity, ManyToOne, OneToMany} from "typeorm";
 import {Account} from "./account.entity";
 import {BaseEntity} from "./base.entity";
 import {User} from "./user.entity";
 
-@Entity()
+@Entity({ name: 'program' })
 export class Program extends BaseEntity {
 
   @Column()

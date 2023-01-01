@@ -5,6 +5,8 @@ import {UserService} from "../user/user.service";
 import {Repository} from "typeorm";
 import {InjectRepository} from "@nestjs/typeorm";
 import {UpdateProgramDto} from "./dtos/update-program/update-program.dto";
+import {businessException} from "../../common/errors/utils/business-exception";
+import {ERRORS} from "../../common";
 
 @Injectable()
 export class ProgramService {
@@ -16,14 +18,13 @@ export class ProgramService {
   ) {
   }
 
-
   public async create(userId: number, createProgramDto: CreateProgramDto): Promise<Program> {
     const user = await this.userService.findById(userId)
     if (!user) {
-      // TODO: put to ERROR_MESSAGES
-     throw new NotFoundException('user not found')
+     throw new NotFoundException(businessException([ERRORS.user.notFound]))
     }
     createProgramDto.user = user
+
     return await this.programRepository.save(createProgramDto)
   }
 
@@ -32,9 +33,9 @@ export class ProgramService {
       where: { id }
     })
     if (!program) {
-      // TODO: place to ERRORS_MESSAGES
-      throw new NotFoundException('program not found')
+      throw new NotFoundException(businessException([ERRORS.program.notFound]))
     }
+
     return this.programRepository.save({
       ...program,
       ...updateProgramDto,
@@ -52,7 +53,13 @@ export class ProgramService {
   }
 
   public async delete(id: number): Promise<void> {
-    console.log(id)
+    const program = await this.programRepository.findOne({
+      where: { id }
+    })
+    if (!program) {
+      throw new NotFoundException(businessException([ERRORS.program.notFound]))
+    }
+
     await this.programRepository.delete(id);
   }
 
