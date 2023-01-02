@@ -1,10 +1,17 @@
 import { Body, Controller, Delete, Get, Post, Session } from '@nestjs/common'
-import { ApiBadRequestResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
+import {
+  ApiBadRequestResponse,
+  ApiInternalServerErrorResponse,
+  ApiOkResponse,
+  ApiTags,
+  ApiUnauthorizedResponse,
+  getSchemaPath,
+} from '@nestjs/swagger'
 import { AuthService } from './auth.service'
 import { MessageOutputDto } from './dtos/message/message.output.dto'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
 import { Response } from '../../app/decorators'
-import { SWAGGER_OPTIONS } from '../../common'
+import { ApiException, ErrorType, SWAGGER_OPTIONS } from '../../common'
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -23,8 +30,8 @@ export class AuthController {
   }
 
   @ApiInternalServerErrorResponse()
-  @ApiUnauthorizedResponse(SWAGGER_OPTIONS.auth.notAuthorized)
-  @ApiBadRequestResponse(SWAGGER_OPTIONS.auth.invalidMessage)
+  @ApiUnauthorizedResponse(SWAGGER_OPTIONS.error)
+  @ApiBadRequestResponse(SWAGGER_OPTIONS.error)
   @ApiOkResponse(SWAGGER_OPTIONS.auth.authorized)
   @Post('validateMessage')
   public async validateMessage(@Session() session: Record<string, any>, @Body() authInputDto: AuthInputDto): Promise<boolean> {

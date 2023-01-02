@@ -1,5 +1,5 @@
 export * from './errors/errors'
 export * from './swagger-options'
 export * from './errors/enum/error-type'
-export * from './errors/interfaces/error.interface'
-export * from './errors/interfaces/api-exception.interface'
+export * from './errors/dtos/api-exception.dto'
+export * from './errors/dtos/error.dto'

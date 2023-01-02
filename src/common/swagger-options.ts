@@ -1,43 +1,9 @@
-import {ERRORS} from "./errors/errors";
 import { MessageOutputDto } from '../modules/auth/dtos/message/message.output.dto'
-import {ErrorType} from "./errors/enum/error-type";
+import { getSchemaPath } from '@nestjs/swagger'
+import { ApiException } from './errors/dtos/api-exception.dto'
 
 export const SWAGGER_OPTIONS = {
   auth: {
-    notAuthorized: {
-      description: 'Unauthorized',
-      schema: {
-        type: 'object',
-        properties: {
-          type: { type: 'enum', example: ErrorType.BUSINESS_ERRORS },
-          errors: {
-            type: 'array',
-            example: [{
-              code: { type: 'string', example: ERRORS.auth.notAuthorized.code },
-              message: { type: 'string', example: ERRORS.auth.notAuthorized.message },
-              path: { type: 'string', optional: true },
-            }]
-          },
-        },
-      },
-    },
-    invalidMessage: {
-      description: 'Problems with message',
-      schema: {
-        type: 'object',
-        properties: {
-          type: { type: 'enum', example: ErrorType.BUSINESS_ERRORS },
-          errors: {
-            type: 'array',
-            example: [{
-              code: { type: 'string', example: ERRORS.auth.invalidMessage.code },
-              message: { type: 'string', example: ERRORS.auth.invalidMessage.message },
-              path: { type: 'string', optional: true },
-            }]
-          },
-        },
-      },
-    },
     authorized: {
       description: 'User authorized',
       type: Boolean,
@@ -60,6 +26,10 @@ export const SWAGGER_OPTIONS = {
           date: { type: 'Date', example: '2020-01-24T19:24:46.366Z' },
         },
       },
-    }
-  }
+    },
+  },
+  error: {
+    description: 'Business of validation errors',
+    schema: { $ref: getSchemaPath(ApiException) },
+  },
 }
