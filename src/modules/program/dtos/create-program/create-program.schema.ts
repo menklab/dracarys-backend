@@ -1,11 +1,15 @@
 import { CreateProgramDto } from './create-program.dto'
+import { ERRORS } from 'src/common'
 import Joi from 'joi'
 
 export const CreateProgramValidationSchema = Joi.object<CreateProgramDto>({
   name: Joi.string()
     .required()
     .min(1)
-    .message('Name must be between 1 and 50 characters long')
     .max(50)
-    .message('Name must be between 1 and 50 characters long'),
+    .messages({
+      'string.empty': ERRORS.program.name.empty.message,
+      'string.min': ERRORS.program.name.min.message,
+      'string.max': ERRORS.program.name.max.message
+    })
 })

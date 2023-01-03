@@ -1,14 +1,12 @@
-import { AccountController } from "./account.controller"
-import { AccountService } from "./account.service"
-import { UserModule } from "../user/user.module"
-import { TypeOrmModule } from "@nestjs/typeorm"
-import { Account } from "../../orm/entities"
-import { Module } from "@nestjs/common"
+import { AccountController } from './account.controller'
+import { Account, Program } from '../../orm/entities'
+import { AccountService } from './account.service'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { Module } from '@nestjs/common'
 
 @Module({
   imports: [
-    TypeOrmModule.forFeature([Account]),
-    UserModule
+    TypeOrmModule.forFeature([Account, Program])
   ],
   controllers: [AccountController],
   providers: [AccountService],

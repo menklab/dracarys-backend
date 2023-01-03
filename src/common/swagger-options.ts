@@ -29,7 +29,7 @@ export const SWAGGER_OPTIONS = {
     },
   },
   error: {
-    description: 'Business of validation errors',
+    description: 'Business or validation errors',
     schema: { $ref: getSchemaPath(ApiException) },
   },
 }
