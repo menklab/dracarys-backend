@@ -1,7 +1,6 @@
-import {ApiProperty} from "@nestjs/swagger";
-
+import { ApiProperty } from '@nestjs/swagger'
 
 export class UpdateProgramDto {
-  @ApiProperty()
+  @ApiProperty({ minLength: 1, maxLength: 5 })
   name: string
 }

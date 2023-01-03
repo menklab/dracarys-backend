@@ -1,9 +1,9 @@
-import { Column, Entity, ManyToOne } from "typeorm"
-import { BaseEntity } from "./base.entity"
-import { Program } from "./program.entity"
-import { Field } from "./field.entity"
+import { Column, Entity, ManyToOne } from 'typeorm'
+import { Program } from './program.entity'
+import { BaseEntity } from './base.entity'
+import { Field } from './field.entity'
 
-@Entity()
+@Entity({ name: 'account' })
 export class Account extends BaseEntity {
 
   fields: Field[]

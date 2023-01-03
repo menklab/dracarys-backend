@@ -41,13 +41,16 @@ import Redis from 'ioredis'
     AccountModule
   ],
   controllers: [AppController],
-  providers: [],
+  providers: []
 })
 
 export class AppModule implements NestModule {
   private readonly redis: Redis
 
-  constructor(private readonly redisService: RedisService, private readonly configService: ConfigService) {
+  constructor(
+    private readonly redisService: RedisService,
+    private readonly configService: ConfigService
+  ) {
     this.redis = redisService.getClient()
   }
 

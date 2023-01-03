@@ -10,6 +10,6 @@ export function configurePipes(app: INestApplication): void {
       ...AuthValidationSchemas,
       ...ProgramValidationSchemas,
       ...AccountValidationSchemas
-    })
+    }),
   )
 }

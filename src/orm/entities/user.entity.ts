@@ -1,8 +1,8 @@
-import {Column, Entity, ManyToOne} from 'typeorm'
+import { Column, Entity, ManyToOne } from 'typeorm'
 import { BaseEntity } from './base.entity'
-import {Program} from "./program.entity";
+import { Program } from './program.entity'
 
-@Entity()
+@Entity({ name: 'user' })
 export class User extends BaseEntity {
   @Column()
   pubKey: string
@@ -11,7 +11,7 @@ export class User extends BaseEntity {
   message: string
 
   @ManyToOne(() => Program, (program) => program.user, {
-    cascade: true
+    cascade: true,
   })
   programs: Program[]
 }
