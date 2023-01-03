@@ -1,6 +1,8 @@
 ## dracarys-backend
 backend repo for the dracarys application
 
+the frontend repo can be found [here](https://github.com/menklab/dracarys-frontend)
+
 ## Content
 
 - [Main language version](#main-lang-version)
