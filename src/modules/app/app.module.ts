@@ -1,15 +1,16 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { config } from '../../config'
+import { AccountModule } from '../account/account.module'
+import { ProgramModule } from '../program/program.module'
 import { AppController } from './app.controller'
 import { AuthModule } from '../auth/auth.module'
-import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
-import Redis from 'ioredis'
-import session from 'express-session'
+import { UserModule } from '../user/user.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import RedisStore from 'connect-redis'
-import {UserModule} from "../user/user.module";
-import {ProgramModule} from "../program/program.module";
+import { config } from '../../config'
+import session from 'express-session'
+import Redis from 'ioredis'
 
 @Module({
   imports: [
@@ -37,10 +38,12 @@ import {ProgramModule} from "../program/program.module";
     AuthModule,
     UserModule,
     ProgramModule,
+    AccountModule
   ],
   controllers: [AppController],
   providers: [],
 })
+
 export class AppModule implements NestModule {
   private readonly redis: Redis
 
@@ -56,13 +59,12 @@ export class AppModule implements NestModule {
             client: this.redis,
             logErrors: this.configService.get('redis.logging'),
           }),
-          saveUninitialized: false,
+          saveUninitialized: true,
           secret: this.configService.get('auth.sessionSecret') as string,
-          resave: false,
+          resave: true,
           cookie: {
             sameSite: true,
             httpOnly: false,
-            maxAge: 60000,
           },
         }),
       )

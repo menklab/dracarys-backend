@@ -1,8 +1,4 @@
-<<<<<<< HEAD
-import { BadRequestException, ForbiddenException, Injectable, UnauthorizedException } from '@nestjs/common'
-=======
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
->>>>>>> 4aa8c2d0e9f145fbaf7e854470078fc36db72f4a
 import bs58 from 'bs58'
 import nacl from 'tweetnacl'
 import { UserService } from '../user/user.service'
@@ -15,7 +11,8 @@ export class AuthService {
   constructor(protected readonly userService: UserService) {}
 
   public generateMessage(session: Record<string, any>): string {
-    const message = crypto.randomBytes(64).toString('base64')
+    const message = 'iOwwDTwkTDVBKYQAhJ8dbz2SF1N/5host4l7N5VpEiIQcrQbaHW/lwykz40oVifnBacU9hEnnoP5BLHz2JxosQ=='
+    // const message = crypto.randomBytes(64).toString('base64')
     session.message = message
     return message
   }
