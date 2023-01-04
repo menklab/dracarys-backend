@@ -4,7 +4,7 @@ import { env } from 'process'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
 export const postgreSQLConfigFactory = registerAs('database', () => ({
-  type: env.DB_TYPE,
+  type: env.ORM_DB_TYPE,
   host: env.POSTGRES_HOST,
   port: env.POSTGRES_PORT,
   database: env.POSTGRES_DB_NAME,
