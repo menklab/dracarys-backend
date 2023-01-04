@@ -47,6 +47,10 @@ export const ERRORS = {
         code: ErrorCode.NAME_IS_EMPTY,
         message: 'name must not be empty'
       },
+      alphanum: {
+        code: ErrorCode.NAME_IS_NOT_CHAR_OR_NUM,
+        message: 'name must only have characters or numbers'
+      },
       min: {
         code: ErrorCode.NAME_MIN_LENGTH,
         message: 'name must be at least 1 character long'
