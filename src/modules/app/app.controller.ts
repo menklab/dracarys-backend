@@ -28,23 +28,18 @@ export class AppController {
     const versions = await si.versions()
     const ram = await si.mem()
 
-    // CPU Info
     const cpuInfo = `${cpu.manufacturer} ${cpu.brand} ${cpu.speed}GHz`
     const cores = `${cpu.cores} (${cpu.physicalCores} Physical)`
 
-    // RAM Info
     const totalRam = Math.round(ram.total / 1024 / 1024 / 1024)
     const ramInfo = `${totalRam}GB`
 
-    // Disk Info
     const size = Math.round(disk.size / 1024 / 1024 / 1024)
     const diskSize = `${disk.vendor} ${disk.name} ${size}GB ${disk.type} (${disk.interfaceType})`
 
-    // OS Info
     const osInfo = `${os.distro} ${os.codename} (${os.platform})`
     const kernelInfo = `${os.kernel} ${os.arch}`
 
-    // Node Info
     const nodeInfo = `v${versions.node}`
     const v8 = `${versions.v8}`
 
