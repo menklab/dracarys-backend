@@ -7,6 +7,7 @@ import { AuthGuard } from '../app/guards/auth.guard'
 import { UpdateProgramDto } from './dtos/update-program/update-program.dto'
 import { SWAGGER_OPTIONS } from '../../common'
 
+// TODO: FIX - controller MUST NOT RETURN ENTITY
 @ApiTags('Program')
 @Controller('program')
 export class ProgramController {
