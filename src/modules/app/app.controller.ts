@@ -54,6 +54,6 @@ export class AppController {
       kernel: kernelInfo,
       node: nodeInfo,
       date: new Date().toISOString(),
-    } as any
+    } as AppGetHealthOutput // TODO: Fix
   }
 }
