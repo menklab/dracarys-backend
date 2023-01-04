@@ -2,11 +2,12 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Session, UseGuards }
 import { ApiBadRequestResponse, ApiForbiddenResponse, ApiInternalServerErrorResponse, ApiNotFoundResponse, ApiTags } from '@nestjs/swagger'
 import { CreateProgramDto } from './dtos/create-program/create-program.dto'
 import { ProgramService } from './program.service'
-import { Program } from '../../orm/entities'
+import { ProgramEntity } from '../../orm/entities'
 import { AuthGuard } from '../app/guards/auth.guard'
 import { UpdateProgramDto } from './dtos/update-program/update-program.dto'
 import { SWAGGER_OPTIONS } from '../../common'
 
+// TODO: FIX - controller MUST NOT RETURN ENTITY
 @ApiTags('Program')
 @Controller('program')
 export class ProgramController {
@@ -18,7 +19,7 @@ export class ProgramController {
   @ApiForbiddenResponse()
   @ApiNotFoundResponse(SWAGGER_OPTIONS.error)
   @ApiBadRequestResponse(SWAGGER_OPTIONS.error)
-  public async create(@Session() session: Record<string, any>, @Body() createProgramDto: CreateProgramDto): Promise<Program> {
+  public async create(@Session() session: Record<string, any>, @Body() createProgramDto: CreateProgramDto): Promise<ProgramEntity> {
     return this.programService.create(session.userId, createProgramDto)
   }
 
@@ -28,7 +29,7 @@ export class ProgramController {
   @ApiForbiddenResponse()
   @ApiNotFoundResponse(SWAGGER_OPTIONS.error)
   @ApiBadRequestResponse(SWAGGER_OPTIONS.error)
-  public async update(@Param('id') id: number, @Body() updateProgramDto: UpdateProgramDto): Promise<Program> {
+  public async update(@Param('id') id: number, @Body() updateProgramDto: UpdateProgramDto): Promise<ProgramEntity> {
     return this.programService.update(id, updateProgramDto)
   }
 
@@ -36,7 +37,7 @@ export class ProgramController {
   @UseGuards(AuthGuard)
   @ApiInternalServerErrorResponse()
   @ApiForbiddenResponse()
-  public async getAll(@Session() session: Record<string, any>): Promise<Program[]> {
+  public async getAll(@Session() session: Record<string, any>): Promise<ProgramEntity[]> {
     return this.programService.getAllByUserId(session.userId)
   }
 

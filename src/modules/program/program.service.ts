@@ -1,9 +1,9 @@
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { Program } from '../../orm/entities'
-import { CreateProgramDto } from './dtos/create-program/create-program.dto'
-import { UserService } from '../user/user.service'
 import { Repository } from 'typeorm'
 import { InjectRepository } from '@nestjs/typeorm'
+import { ProgramEntity } from '../../orm/entities'
+import { CreateProgramDto } from './dtos/create-program/create-program.dto'
+import { UserService } from '../user/user.service'
 import { UpdateProgramDto } from './dtos/update-program/update-program.dto'
 import { businessException } from '../../common/errors/utils/business-exception'
 import { ERRORS } from '../../common'
@@ -11,22 +11,22 @@ import { ERRORS } from '../../common'
 @Injectable()
 export class ProgramService {
   constructor(
-    @InjectRepository(Program)
-    private readonly programRepository: Repository<Program>,
+    @InjectRepository(ProgramEntity)
+    private readonly programRepository: Repository<ProgramEntity>,
     private readonly userService: UserService,
   ) {}
 
-  public async create(userId: number, createProgramDto: CreateProgramDto): Promise<Program> {
+  public async create(userId: number, createProgramDto: CreateProgramDto): Promise<ProgramEntity> {
     const user = await this.userService.findById(userId)
     if (!user) {
       throw new NotFoundException(businessException([ERRORS.user.notFound]))
     }
-    createProgramDto.user = user
+    createProgramDto.user = user // TODO: FIX IT
 
-    return await this.programRepository.save(createProgramDto)
+    return this.programRepository.save(createProgramDto)
   }
 
-  public async update(id: number, updateProgramDto: UpdateProgramDto): Promise<Program> {
+  public async update(id: number, updateProgramDto: UpdateProgramDto): Promise<ProgramEntity> {
     const program = await this.programRepository.findOne({
       where: { id },
     })
@@ -40,7 +40,7 @@ export class ProgramService {
     })
   }
 
-  public async getAllByUserId(userId: number): Promise<Program[]> {
+  public async getAllByUserId(userId: number): Promise<ProgramEntity[]> {
     return this.programRepository.find({
       where: {
         user: {

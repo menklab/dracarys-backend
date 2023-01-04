@@ -1,5 +1,5 @@
-import { MessageOutputDto } from '../modules/auth/dtos/message/message.output.dto'
 import { getSchemaPath } from '@nestjs/swagger'
+import { MessageOutputDto } from '../modules/auth/dtos/message/message.output.dto'
 import { ApiException } from './errors/dtos/api-exception.dto'
 
 export const SWAGGER_OPTIONS = {

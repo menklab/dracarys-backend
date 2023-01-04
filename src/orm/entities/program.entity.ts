@@ -1,18 +1,18 @@
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
-import { Account } from './account.entity'
+import { AccountEntity } from './account.entity'
 import { BaseEntity } from './base.entity'
-import { User } from './user.entity'
+import { UserEntity } from './user.entity'
 
 @Entity({ name: 'program' })
-export class Program extends BaseEntity {
+export class ProgramEntity extends BaseEntity {
   @Column()
   name: string
 
-  @ManyToOne(() => User, (user) => user.programs, {
+  @ManyToOne(() => UserEntity, (user) => user.programs, {
     onDelete: 'CASCADE',
   })
-  user: User
+  user: UserEntity
 
-  @OneToMany(() => Account, (account) => account.program)
-  accounts: Account[]
+  @OneToMany(() => AccountEntity, (account) => account.program)
+  accounts: AccountEntity[]
 }
