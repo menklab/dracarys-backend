@@ -32,6 +32,7 @@ import { ProgramModule } from '../program/program.module'
             password: configService.get('redis.password'),
             username: configService.get('redis.username'),
             port: configService.get('redis.port'),
+            tls: {},
           },
         }
       },
