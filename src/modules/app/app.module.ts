@@ -5,6 +5,7 @@ import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
 import Redis from 'ioredis'
 import session from 'express-session'
 import RedisStore from 'connect-redis'
+import { TerminusModule } from '@nestjs/terminus'
 import { AuthModule } from '../auth/auth.module'
 import { AppController } from './app.controller'
 import { config } from '../../config'
@@ -13,6 +14,7 @@ import { ProgramModule } from '../program/program.module'
 
 @Module({
   imports: [
+    TerminusModule,
     ConfigModule.forRoot({
       isGlobal: true,
       load: config,
