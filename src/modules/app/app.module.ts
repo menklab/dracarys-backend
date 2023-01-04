@@ -1,13 +1,13 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { ConfigModule, ConfigService } from '@nestjs/config'
 import { TypeOrmModule } from '@nestjs/typeorm'
-import { config } from '../../config'
-import { AppController } from './app.controller'
-import { AuthModule } from '../auth/auth.module'
 import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
 import Redis from 'ioredis'
 import session from 'express-session'
 import RedisStore from 'connect-redis'
+import { AuthModule } from '../auth/auth.module'
+import { AppController } from './app.controller'
+import { config } from '../../config'
 import { UserModule } from '../user/user.module'
 import { ProgramModule } from '../program/program.module'
 
@@ -29,6 +29,8 @@ import { ProgramModule } from '../program/program.module'
         return {
           config: {
             host: configService.get('redis.host'),
+            password: configService.get('redis.password'),
+            username: configService.get('redis.username'),
             port: configService.get('redis.port'),
           },
         }

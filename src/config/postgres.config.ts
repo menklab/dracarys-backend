@@ -3,15 +3,19 @@ import { registerAs } from '@nestjs/config'
 import { env } from 'process'
 import { SnakeNamingStrategy } from 'typeorm-naming-strategies'
 
-export const databaseConfigFactory = registerAs('database', () => ({
+export const postgreSQLConfigFactory = registerAs('database', () => ({
   type: env.DB_TYPE,
-  host: env.DB_HOST,
-  port: env.DB_PORT,
-  database: env.DB_NAME,
-  username: env.DB_USER,
-  password: env.DB_PASSWORD,
-  logging: env.ORM_LOGGING === 'true',
+  host: env.POSTGRES_HOST,
+  port: env.POSTGRES_PORT,
+  database: env.POSTGRES_NAME,
+  username: env.POSTGRES_USER,
+  password: env.POSTGRES_PASSWORD,
+  logging: env.ORM_LOGGING,
   entities: [path.resolve(__dirname, '../orm/entities/**/*.entity{.js,.ts}')],
   synchronize: env.ORM_SYNCHRONIZE,
   namingStrategy: new SnakeNamingStrategy(),
+  ssl: {
+    sslmode: 'require',
+    rejectUnauthorized: false,
+  },
 }))

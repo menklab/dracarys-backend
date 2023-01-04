@@ -1,6 +1,6 @@
+import { ApiProperty, ApiPropertyOptional, getSchemaPath } from '@nestjs/swagger'
 import { ErrorType } from '../enum/error-type'
 import { Error } from './error.dto'
-import { ApiProperty, ApiPropertyOptional, getSchemaPath } from '@nestjs/swagger'
 
 export class ApiException {
   @ApiProperty({ enum: ErrorType })
