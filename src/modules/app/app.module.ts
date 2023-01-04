@@ -1,27 +1,28 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import { config } from '../../config'
+import { AccountModule } from '../account/account.module'
+import { ProgramModule } from '../program/program.module'
 import { AppController } from './app.controller'
 import { AuthModule } from '../auth/auth.module'
-import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
-import Redis from 'ioredis'
-import session from 'express-session'
-import RedisStore from 'connect-redis'
 import { UserModule } from '../user/user.module'
-import { ProgramModule } from '../program/program.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import RedisStore from 'connect-redis'
+import { config } from '../../config'
+import session from 'express-session'
+import Redis from 'ioredis'
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: config,
+      load: config
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory(configService) {
         return configService.get('database')
-      },
+      }
     }),
     RedisModule.forRootAsync({
       inject: [ConfigService],
@@ -29,22 +30,27 @@ import { ProgramModule } from '../program/program.module'
         return {
           config: {
             host: configService.get('redis.host'),
-            port: configService.get('redis.port'),
-          },
+            port: configService.get('redis.port')
+          }
         }
-      },
+      }
     }),
     AuthModule,
     UserModule,
     ProgramModule,
+    AccountModule
   ],
   controllers: [AppController],
-  providers: [],
+  providers: []
 })
+
 export class AppModule implements NestModule {
   private readonly redis: Redis
 
-  constructor(private readonly redisService: RedisService, private readonly configService: ConfigService) {
+  constructor(
+    private readonly redisService: RedisService,
+    private readonly configService: ConfigService
+  ) {
     this.redis = redisService.getClient()
   }
 
@@ -54,17 +60,16 @@ export class AppModule implements NestModule {
         session({
           store: new (RedisStore(session))({
             client: this.redis,
-            logErrors: this.configService.get('redis.logging'),
+            logErrors: this.configService.get('redis.logging')
           }),
-          saveUninitialized: false,
+          saveUninitialized: true,
           secret: this.configService.get('auth.sessionSecret') as string,
-          resave: false,
+          resave: true,
           cookie: {
             sameSite: true,
-            httpOnly: false,
-            maxAge: 60000,
-          },
-        }),
+            httpOnly: false
+          }
+        })
       )
       .forRoutes('*')
   }
