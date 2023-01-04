@@ -8,8 +8,8 @@ import { AuthModule } from '../auth/auth.module'
 import { UserModule } from '../user/user.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import RedisStore from 'connect-redis'
-import { config } from '../../config'
 import session from 'express-session'
+import { config } from '../../config'
 import Redis from 'ioredis'
 
 @Module({
@@ -30,8 +30,11 @@ import Redis from 'ioredis'
         return {
           config: {
             host: configService.get('redis.host'),
-            port: configService.get('redis.port')
-          }
+            password: configService.get('redis.password'),
+            username: configService.get('redis.username'),
+            port: configService.get('redis.port'),
+            tls: {},
+          },
         }
       }
     }),

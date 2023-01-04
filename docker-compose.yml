@@ -1,15 +1,25 @@
+version: '3.9'
+
 services:
   redis:
-    image: redis
+    image: 'redis:7'
+    container_name: redis
+    restart: always
+    env_file:
+      - .env
     ports:
       - '6379:6379'
+    command:
+      - /bin/sh
+      - -c
+      - redis-server --requirepass "$${REDIS_PASSWORD:?REDIS_PASSWORD variable is not set}"
     volumes:
       - redis:/data
   postgreSQL:
-    env_file:
-      - .env
     image: postgres
     restart: always
+    env_file:
+      - .env
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}

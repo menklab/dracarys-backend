@@ -1,9 +1,9 @@
 import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/common'
 import bs58 from 'bs58'
 import nacl from 'tweetnacl'
+import * as crypto from 'crypto'
 import { UserService } from '../user/user.service'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
-import * as crypto from 'crypto'
 import { businessException } from '../../common/errors/utils/business-exception'
 import { ERRORS } from '../../common'
 
