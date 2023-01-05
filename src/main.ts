@@ -16,7 +16,7 @@ async function bootstrap(): Promise<void> {
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
     preflightContinue: false,
     credentials: true,
-    allowedHeaders: 'Content-Type, Accept'
+    allowedHeaders: 'Content-Type, Accept',
   }
   app.enableCors(options)
   configurePipes(app)

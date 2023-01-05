@@ -16,13 +16,13 @@ import Redis from 'ioredis'
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
-      load: config
+      load: config,
     }),
     TypeOrmModule.forRootAsync({
       inject: [ConfigService],
       useFactory(configService) {
         return configService.get('database')
-      }
+      },
     }),
     RedisModule.forRootAsync({
       inject: [ConfigService],
@@ -33,27 +33,23 @@ import Redis from 'ioredis'
             password: configService.get('redis.password'),
             username: configService.get('redis.username'),
             port: configService.get('redis.port'),
-            tls: {},
+            tls: configService.get('app.nodeEnv') === 'dev' ? false : {},
           },
         }
-      }
+      },
     }),
     AuthModule,
     UserModule,
     ProgramModule,
-    AccountModule
+    AccountModule,
   ],
   controllers: [AppController],
-  providers: []
+  providers: [],
 })
-
 export class AppModule implements NestModule {
   private readonly redis: Redis
 
-  constructor(
-    private readonly redisService: RedisService,
-    private readonly configService: ConfigService
-  ) {
+  constructor(private readonly redisService: RedisService, private readonly configService: ConfigService) {
     this.redis = redisService.getClient()
   }
 
@@ -63,16 +59,17 @@ export class AppModule implements NestModule {
         session({
           store: new (RedisStore(session))({
             client: this.redis,
-            logErrors: this.configService.get('redis.logging')
+            logErrors: this.configService.get('redis.logging'),
           }),
           saveUninitialized: true,
           secret: this.configService.get('auth.sessionSecret') as string,
           resave: true,
           cookie: {
             sameSite: true,
-            httpOnly: false
-          }
-        })
+            httpOnly: false,
+            maxAge: 60000,
+          },
+        }),
       )
       .forRoutes('*')
   }

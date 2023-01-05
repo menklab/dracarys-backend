@@ -6,5 +6,5 @@ import { TJoiValidationSchemas } from '../../../app/pipes'
 
 export const AccountValidationSchemas: TJoiValidationSchemas = {
   [CreateAccountDto.name]: CreateAccountValidationSchema,
-  [UpdateAccountDto.name]: UpdateAccountValidationSchema
+  [UpdateAccountDto.name]: UpdateAccountValidationSchema,
 }

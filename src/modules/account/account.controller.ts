@@ -2,7 +2,6 @@ import { ApiBadRequestResponse, ApiForbiddenResponse, ApiInternalServerErrorResp
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
 import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
 import { CreateAccountDto } from './dtos/create-account/create-account.dto'
-import { toAccountDto, toAccountsDto } from './mappers/account.mapper'
 import { AuthGuard } from '../app/guards/auth.guard'
 import { AccountService } from './account.service'
 import { AccountDto } from './dtos/account.dto'
@@ -12,15 +11,13 @@ import { SWAGGER_OPTIONS } from 'src/common'
 @UseGuards(AuthGuard)
 @Controller('account')
 export class AccountController {
-  constructor(private readonly accountService: AccountService) { }
+  constructor(private readonly accountService: AccountService) {}
 
   @Get()
   @ApiForbiddenResponse()
   @ApiInternalServerErrorResponse()
   public async getAll(@Query('program_id') program_id: number): Promise<AccountDto[]> {
-    const accounts = await this.accountService.getAll(program_id)
-
-    return toAccountsDto(accounts)
+    return this.accountService.getAll(program_id)
   }
 
   @Post()
@@ -29,9 +26,7 @@ export class AccountController {
   @ApiNotFoundResponse(SWAGGER_OPTIONS.error)
   @ApiBadRequestResponse(SWAGGER_OPTIONS.error)
   public async create(@Body() createAccountDto: CreateAccountDto): Promise<AccountDto> {
-    const account = await this.accountService.create(createAccountDto)
-
-    return toAccountDto(account)
+    return this.accountService.create(createAccountDto)
   }
 
   @Patch(':id')
@@ -40,9 +35,7 @@ export class AccountController {
   @ApiNotFoundResponse(SWAGGER_OPTIONS.error)
   @ApiBadRequestResponse(SWAGGER_OPTIONS.error)
   public async update(@Param('id') id: number, @Body() updateAccountDto: UpdateAccountDto): Promise<AccountDto> {
-    const account = await this.accountService.update(id, updateAccountDto)
-
-    return toAccountDto(account)
+    return this.accountService.update(id, updateAccountDto)
   }
 
   @Delete(':id')
@@ -51,5 +44,4 @@ export class AccountController {
   public async delete(@Param('id') id: number): Promise<void> {
     return this.accountService.delete(id)
   }
-
 }

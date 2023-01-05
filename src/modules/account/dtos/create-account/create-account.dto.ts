@@ -2,7 +2,7 @@ import { ApiProperty } from '@nestjs/swagger'
 
 export class CreateAccountDto {
   @ApiProperty()
-  program_id: number
+  programId: number
 
   @ApiProperty()
   name: string

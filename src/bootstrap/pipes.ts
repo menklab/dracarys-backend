@@ -9,7 +9,7 @@ export function configurePipes(app: INestApplication): void {
     new JoiValidationPipe({
       ...AuthValidationSchemas,
       ...ProgramValidationSchemas,
-      ...AccountValidationSchemas
-    })
+      ...AccountValidationSchemas,
+    }),
   )
 }

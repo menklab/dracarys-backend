@@ -4,7 +4,6 @@ import { BaseEntity } from './base.entity'
 
 @Entity({ name: 'account' })
 export class AccountEntity extends BaseEntity {
-
   @Column()
   name: string
 
