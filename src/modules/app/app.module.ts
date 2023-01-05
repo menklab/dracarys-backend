@@ -1,16 +1,17 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
-import { ConfigModule, ConfigService } from '@nestjs/config'
-import { TypeOrmModule } from '@nestjs/typeorm'
 import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
-import Redis from 'ioredis'
-import session from 'express-session'
+import { ConfigModule, ConfigService } from '@nestjs/config'
+import { AccountModule } from '../account/account.module'
+import { ProgramModule } from '../program/program.module'
+import { AppController } from './app.controller'
+import { AuthModule } from '../auth/auth.module'
+import { UserModule } from '../user/user.module'
+import { TypeOrmModule } from '@nestjs/typeorm'
 import RedisStore from 'connect-redis'
 import { TerminusModule } from '@nestjs/terminus'
-import { AuthModule } from '../auth/auth.module'
-import { AppController } from './app.controller'
+import session from 'express-session'
 import { config } from '../../config'
-import { UserModule } from '../user/user.module'
-import { ProgramModule } from '../program/program.module'
+import Redis from 'ioredis'
 
 @Module({
   imports: [
@@ -34,7 +35,7 @@ import { ProgramModule } from '../program/program.module'
             password: configService.get('redis.password'),
             username: configService.get('redis.username'),
             port: configService.get('redis.port'),
-            tls: {},
+            tls: configService.get('app.nodeEnv') === 'dev' ? false : {},
           },
         }
       },
@@ -42,6 +43,7 @@ import { ProgramModule } from '../program/program.module'
     AuthModule,
     UserModule,
     ProgramModule,
+    AccountModule,
   ],
   controllers: [AppController],
   providers: [],
@@ -61,9 +63,9 @@ export class AppModule implements NestModule {
             client: this.redis,
             logErrors: this.configService.get('redis.logging'),
           }),
-          saveUninitialized: false,
+          saveUninitialized: true,
           secret: this.configService.get('auth.sessionSecret') as string,
-          resave: false,
+          resave: true,
           cookie: {
             sameSite: true,
             httpOnly: false,
