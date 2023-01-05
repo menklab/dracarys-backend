@@ -35,7 +35,7 @@ import { config } from '../../config'
             password: configService.get('redis.password'),
             username: configService.get('redis.username'),
             port: configService.get('redis.port'),
-            tls: configService.get('app.nodeEnv') === 'dev' ? false : {},
+            tls: {},
           },
         }
       },
