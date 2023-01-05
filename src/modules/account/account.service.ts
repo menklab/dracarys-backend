@@ -16,7 +16,7 @@ export class AccountService {
     private readonly accountRepository: Repository<AccountEntity>,
     @InjectRepository(ProgramEntity)
     private readonly programRepository: Repository<ProgramEntity>,
-  ) { }
+  ) {}
 
   public async getAll(programId: number): Promise<AccountDto[]> {
     const accounts = await this.accountRepository.find({
@@ -65,6 +65,14 @@ export class AccountService {
   }
 
   public async delete(id: number): Promise<void> {
+    let account = await this.accountRepository.findOne({
+      where: { id: id },
+    })
+
+    if (!account) {
+      throw new NotFoundException(businessException([ERRORS.account.notFound]))
+    }
+
     await this.accountRepository.delete(id)
   }
 }

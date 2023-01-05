@@ -10,4 +10,4 @@ import { Module } from '@nestjs/common'
   providers: [AccountService],
   exports: [AccountService],
 })
-export class AccountModule { }
+export class AccountModule {}

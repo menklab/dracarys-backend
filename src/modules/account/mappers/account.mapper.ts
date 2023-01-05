@@ -14,14 +14,10 @@ export class AccountMapper {
   }
 
   static toCreateEntity(program: ProgramEntity, data: CreateAccountDto): AccountEntity {
-    let result = Object.assign(new AccountEntity(), program, data)
-
-    return result
+    return Object.assign(new AccountEntity(), { program: program }, data)
   }
 
   static toUpdateEntity(account: AccountEntity, data: UpdateAccountDto): AccountEntity {
-    let result = Object.assign(account, data)
-
-    return result
+    return Object.assign(account, data)
   }
 }
