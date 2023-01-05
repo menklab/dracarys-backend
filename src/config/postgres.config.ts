@@ -14,9 +14,11 @@ export const postgreSQLConfigFactory = registerAs('database', () => ({
   entities: [path.resolve(__dirname, '../orm/entities/**/*.entity{.js,.ts}')],
   synchronize: env.ORM_SYNCHRONIZE,
   namingStrategy: new SnakeNamingStrategy(),
-  ssl: env.NODE_ENV === 'dev' ? false :
-    {
-      sslmode: 'require',
-      rejectUnauthorized: false,
-    },
+  ssl:
+    env.NODE_ENV === 'dev'
+      ? false
+      : {
+          sslmode: 'require',
+          rejectUnauthorized: false,
+        },
 }))

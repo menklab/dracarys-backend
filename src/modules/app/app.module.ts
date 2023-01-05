@@ -1,17 +1,17 @@
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
 import { ConfigModule, ConfigService } from '@nestjs/config'
+import { TypeOrmModule } from '@nestjs/typeorm'
+import { TerminusModule } from '@nestjs/terminus'
+import session from 'express-session'
+import Redis from 'ioredis'
+import RedisStore from 'connect-redis'
 import { AccountModule } from '../account/account.module'
 import { ProgramModule } from '../program/program.module'
 import { AppController } from './app.controller'
 import { AuthModule } from '../auth/auth.module'
 import { UserModule } from '../user/user.module'
-import { TypeOrmModule } from '@nestjs/typeorm'
-import RedisStore from 'connect-redis'
-import { TerminusModule } from '@nestjs/terminus'
-import session from 'express-session'
 import { config } from '../../config'
-import Redis from 'ioredis'
 
 @Module({
   imports: [
