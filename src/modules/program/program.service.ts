@@ -16,7 +16,7 @@ export class ProgramService {
     @InjectRepository(ProgramEntity)
     private readonly programRepository: Repository<ProgramEntity>,
     private readonly userService: UserService,
-  ) { }
+  ) {}
 
   public async getAllByUserId(userId: number): Promise<ProgramDto[]> {
     const programs = await this.programRepository.find({
