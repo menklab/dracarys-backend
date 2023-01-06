@@ -52,29 +52,29 @@ export class AccountElementService {
       throw new NotFoundException(businessException([ERRORS.account.notFound]))
     }
 
-    const accountElementMapped = AccountElementMapper.toCreateEntity(account, data)
-    const accountElementSaved = await this.accountElementRepository.save(accountElementMapped)
+    const accountElementEntity = AccountElementMapper.toCreateEntity(account, data)
+    const accountElementSaved = await this.accountElementRepository.save(accountElementEntity)
 
     return AccountElementMapper.toDto(accountElementSaved)
   }
 
   public async update(id: number, data: UpdateAccountElementDto): Promise<AccountElementDto> {
-    const accountElementFetched = await this.accountElementRepository.findOne({
+    const accountElement = await this.accountElementRepository.findOne({
       where: { id: id },
     })
 
-    if (!accountElementFetched) {
+    if (!accountElement) {
       throw new NotFoundException(businessException([ERRORS.accountElement.notFound]))
     }
 
-    const accountElementMapped = AccountElementMapper.toUpdateEntity(accountElementFetched, data)
-    const accountElementSaved = await this.accountElementRepository.save(accountElementMapped)
+    const accountElementEntity = AccountElementMapper.toUpdateEntity(accountElement, data)
+    const accountElementSaved = await this.accountElementRepository.save(accountElementEntity)
 
     return AccountElementMapper.toDto(accountElementSaved)
   }
 
   public async delete(id: number): Promise<void> {
-    let accountElement = await this.accountElementRepository.findOne({
+    const accountElement = await this.accountElementRepository.findOne({
       where: { id: id },
     })
 

@@ -1,4 +1,4 @@
-import { AccountElementTypeEnum } from './account.element.type.enum'
+import { AccountElementType } from '../../common/enum/account.element.type'
 import { Column, Entity, ManyToOne } from 'typeorm'
 import { AccountEntity } from './account.entity'
 import { BaseEntity } from './base.entity'
@@ -10,10 +10,10 @@ export class AccountElementEntity extends BaseEntity {
 
   @Column({
     type: 'enum',
-    enum: AccountElementTypeEnum,
-    default: AccountElementTypeEnum.PUBKEY,
+    enum: AccountElementType,
+    default: AccountElementType.PUBKEY,
   })
-  type: AccountElementTypeEnum
+  type: AccountElementType
 
   @ManyToOne(() => AccountEntity, (account) => account.elements)
   account: AccountEntity

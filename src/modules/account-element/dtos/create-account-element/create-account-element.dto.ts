@@ -1,4 +1,4 @@
-import { AccountElementTypeEnum } from 'src/orm/entities/account.element.type.enum'
+import { AccountElementType } from 'src/common/enum/account.element.type'
 import { ApiProperty } from '@nestjs/swagger'
 
 export class CreateAccountElementDto {
@@ -9,5 +9,5 @@ export class CreateAccountElementDto {
   name: string
 
   @ApiProperty()
-  type: AccountElementTypeEnum
+  type: AccountElementType
 }

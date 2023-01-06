@@ -1,9 +1,9 @@
-import { AccountElementTypeEnum } from 'src/orm/entities/account.element.type.enum'
+import { AccountElementType } from 'src/common/enum/account.element.type'
 
 export class AccountElementDto {
   id: number
   name: string
-  type: AccountElementTypeEnum
+  type: AccountElementType
   createdAt: Date
   updatedAt: Date
 }

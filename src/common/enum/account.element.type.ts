@@ -1,4 +1,4 @@
-export enum AccountElementTypeEnum {
+export enum AccountElementType {
   PUBKEY = 'Pubkey',
   BOOL = 'bool',
   U64 = 'u64',

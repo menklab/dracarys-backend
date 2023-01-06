@@ -11,12 +11,14 @@ async function bootstrap(): Promise<void> {
   const configService = app.get(ConfigService)
 
   app.setGlobalPrefix('api')
+
+  //TODO revert optsions back if front-end still has cors errors
   const options = {
-    origin: true,
-    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: false,
+    // origin: true,
+    // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    // preflightContinue: false,
     credentials: true,
-    allowedHeaders: 'Content-Type, Accept',
+    // allowedHeaders: 'Content-Type, Accept',
   }
   app.enableCors(options)
   configurePipes(app)

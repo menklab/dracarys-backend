@@ -1,4 +1,4 @@
-import { AccountElementTypeEnum } from 'src/orm/entities/account.element.type.enum'
+import { AccountElementType } from 'src/common/enum/account.element.type'
 import { CreateAccountElementDto } from './create-account-element.dto'
 import { ERRORS } from 'src/common'
 import Joi from 'joi'
@@ -21,7 +21,7 @@ export const CreateAccountElementValidationSchema = Joi.object<CreateAccountElem
     }),
   type: Joi.string()
     .required()
-    .valid(...Object.values(AccountElementTypeEnum))
+    .valid(...Object.values(AccountElementType))
     .messages({
       'string.empty': ERRORS.accountElement.type.empty.message,
       'string.valid': ERRORS.accountElement.type.valid.message,
