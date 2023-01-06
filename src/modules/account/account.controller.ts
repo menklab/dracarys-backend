@@ -16,8 +16,15 @@ export class AccountController {
   @Get()
   @ApiForbiddenResponse()
   @ApiInternalServerErrorResponse()
-  public async getAll(@Query('program_id') program_id: number): Promise<AccountDto[]> {
-    return this.accountService.getAll(program_id)
+  public async getAll(@Query('programId') programId: number): Promise<AccountDto[]> {
+    return this.accountService.getAll(programId)
+  }
+
+  @Get(':id')
+  @ApiForbiddenResponse()
+  @ApiInternalServerErrorResponse()
+  public async get(@Param('id') id: number): Promise<AccountDto> {
+    return this.accountService.get(id)
   }
 
   @Post()

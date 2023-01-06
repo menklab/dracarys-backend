@@ -1,13 +1,13 @@
 import { businessException } from 'src/common/errors/utils/business-exception'
+import { CreateAccountDto } from './dtos/create-account/create-account.dto'
+import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
 import { AccountEntity, ProgramEntity } from 'src/orm/entities'
 import { Injectable, NotFoundException } from '@nestjs/common'
+import { AccountMapper } from './mappers/account.mapper'
 import { InjectRepository } from '@nestjs/typeorm'
+import { AccountDto } from './dtos/account.dto'
 import { Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
-import { AccountDto } from './dtos/account.dto'
-import { AccountMapper } from './mappers/account.mapper'
-import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
-import { CreateAccountDto } from './dtos/create-account/create-account.dto'
 
 @Injectable()
 export class AccountService {
@@ -27,11 +27,19 @@ export class AccountService {
       },
     })
 
-    const result = accounts.map((account) => {
-      return AccountMapper.toDto(account)
+    return accounts.map(AccountMapper.toDto)
+  }
+
+  public async get(id: number): Promise<AccountDto> {
+    const account = await this.accountRepository.findOne({
+      where: { id },
     })
 
-    return result
+    if (!account) {
+      throw new NotFoundException(businessException([ERRORS.account.notFound]))
+    }
+
+    return AccountMapper.toDto(account)
   }
 
   public async create(data: CreateAccountDto): Promise<AccountDto> {
@@ -43,13 +51,28 @@ export class AccountService {
       throw new NotFoundException(businessException([ERRORS.program.notFound]))
     }
 
-    let account = AccountMapper.toCreateEntity(program, data)
-    account = await this.accountRepository.save(account)
+    const accountMapped = AccountMapper.toCreateEntity(program, data)
+    const accountSaved = await this.accountRepository.save(accountMapped)
 
-    return AccountMapper.toDto(account)
+    return AccountMapper.toDto(accountSaved)
   }
 
   public async update(id: number, data: UpdateAccountDto): Promise<AccountDto> {
+    const accountFetched = await this.accountRepository.findOne({
+      where: { id: id },
+    })
+
+    if (!accountFetched) {
+      throw new NotFoundException(businessException([ERRORS.account.notFound]))
+    }
+
+    const accountMapped = AccountMapper.toUpdateEntity(accountFetched, data)
+    const accountSaved = await this.accountRepository.save(accountMapped)
+
+    return AccountMapper.toDto(accountSaved)
+  }
+
+  public async delete(id: number): Promise<void> {
     let account = await this.accountRepository.findOne({
       where: { id: id },
     })
@@ -58,13 +81,6 @@ export class AccountService {
       throw new NotFoundException(businessException([ERRORS.account.notFound]))
     }
 
-    account = AccountMapper.toUpdateEntity(account, data)
-    account = await this.accountRepository.save(account)
-
-    return AccountMapper.toDto(account)
-  }
-
-  public async delete(id: number): Promise<void> {
     await this.accountRepository.delete(id)
   }
 }
