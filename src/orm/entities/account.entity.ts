@@ -1,3 +1,4 @@
+import { AccountElementEntity } from './account.element.entity'
 import { Column, Entity, ManyToOne } from 'typeorm'
 import { ProgramEntity } from './program.entity'
 import { BaseEntity } from './base.entity'
@@ -9,4 +10,9 @@ export class AccountEntity extends BaseEntity {
 
   @ManyToOne(() => ProgramEntity, (program) => program.accounts)
   program: ProgramEntity
+
+  @ManyToOne(() => AccountElementEntity, (element) => element.account, {
+    cascade: true,
+  })
+  elements: AccountElementEntity[]
 }
