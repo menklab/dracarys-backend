@@ -24,7 +24,7 @@ export class ProgramController {
   @ApiForbiddenResponse()
   @ApiInternalServerErrorResponse()
   public async get(@Param('id') id: number, @Session() session: Record<string, any>): Promise<ProgramDto> {
-    return this.programService.get(id)
+    return this.programService.get(id, session.userId)
   }
 
   @Post()

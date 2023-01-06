@@ -16,7 +16,7 @@ export class ProgramService {
     @InjectRepository(ProgramEntity)
     private readonly programRepository: Repository<ProgramEntity>,
     private readonly userService: UserService,
-  ) {}
+  ) { }
 
   public async getAllByUserId(userId: number): Promise<ProgramDto[]> {
     const programs = await this.programRepository.find({
@@ -27,16 +27,17 @@ export class ProgramService {
       },
     })
 
-    const result = programs.map((program) => {
-      return ProgramMapper.toDto(program)
-    })
-
-    return result
+    return programs.map(ProgramMapper.toDto)
   }
 
-  public async get(id: number): Promise<ProgramDto> {
+  public async get(id: number, userId: number): Promise<ProgramDto> {
     const program = await this.programRepository.findOne({
-      where: { id },
+      where: {
+        id,
+        user: {
+          id: userId,
+        },
+      },
     })
     if (!program) {
       throw new NotFoundException(businessException([ERRORS.program.notFound]))
@@ -51,24 +52,24 @@ export class ProgramService {
       throw new NotFoundException(businessException([ERRORS.user.notFound]))
     }
 
-    let program = ProgramMapper.toCreateEntity(user, data)
-    program = await this.programRepository.save(program)
+    const programMapped = ProgramMapper.toCreateEntity(user, data)
+    const programSaved = await this.programRepository.save(programMapped)
 
-    return ProgramMapper.toDto(program)
+    return ProgramMapper.toDto(programSaved)
   }
 
   public async update(id: number, data: UpdateProgramDto): Promise<ProgramDto> {
-    let program = await this.programRepository.findOne({
+    let programFetched = await this.programRepository.findOne({
       where: { id },
     })
-    if (!program) {
+    if (!programFetched) {
       throw new NotFoundException(businessException([ERRORS.program.notFound]))
     }
 
-    program = ProgramMapper.toUpdateEntity(program, data)
-    program = await this.programRepository.save(program)
+    const programMapped = ProgramMapper.toUpdateEntity(programFetched, data)
+    const programSaved = await this.programRepository.save(programMapped)
 
-    return ProgramMapper.toDto(program)
+    return ProgramMapper.toDto(programSaved)
   }
 
   public async delete(id: number): Promise<void> {

@@ -16,7 +16,7 @@ export class AccountService {
     private readonly accountRepository: Repository<AccountEntity>,
     @InjectRepository(ProgramEntity)
     private readonly programRepository: Repository<ProgramEntity>,
-  ) {}
+  ) { }
 
   public async getAll(programId: number): Promise<AccountDto[]> {
     const accounts = await this.accountRepository.find({
@@ -27,11 +27,19 @@ export class AccountService {
       },
     })
 
-    const result = accounts.map((account) => {
-      return AccountMapper.toDto(account)
+    return accounts.map(AccountMapper.toDto)
+  }
+
+  public async get(id: number): Promise<AccountDto> {
+    const account = await this.accountRepository.findOne({
+      where: { id },
     })
 
-    return result
+    if (!account) {
+      throw new NotFoundException(businessException([ERRORS.account.notFound]))
+    }
+
+    return AccountMapper.toDto(account)
   }
 
   public async create(data: CreateAccountDto): Promise<AccountDto> {
@@ -43,25 +51,25 @@ export class AccountService {
       throw new NotFoundException(businessException([ERRORS.program.notFound]))
     }
 
-    let account = AccountMapper.toCreateEntity(program, data)
-    account = await this.accountRepository.save(account)
+    const accountMapped = AccountMapper.toCreateEntity(program, data)
+    const accountSaved = await this.accountRepository.save(accountMapped)
 
-    return AccountMapper.toDto(account)
+    return AccountMapper.toDto(accountSaved)
   }
 
   public async update(id: number, data: UpdateAccountDto): Promise<AccountDto> {
-    let account = await this.accountRepository.findOne({
+    const accountFetched = await this.accountRepository.findOne({
       where: { id: id },
     })
 
-    if (!account) {
+    if (!accountFetched) {
       throw new NotFoundException(businessException([ERRORS.account.notFound]))
     }
 
-    account = AccountMapper.toUpdateEntity(account, data)
-    account = await this.accountRepository.save(account)
+    const accountMapped = AccountMapper.toUpdateEntity(accountFetched, data)
+    const accountSaved = await this.accountRepository.save(accountMapped)
 
-    return AccountMapper.toDto(account)
+    return AccountMapper.toDto(accountSaved)
   }
 
   public async delete(id: number): Promise<void> {
