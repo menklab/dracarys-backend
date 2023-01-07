@@ -1,3 +1,4 @@
+import { AccountElementModule } from '../account-element/account-element.module'
 import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
 import { ConfigModule, ConfigService } from '@nestjs/config'
@@ -44,6 +45,7 @@ import Redis from 'ioredis'
     UserModule,
     ProgramModule,
     AccountModule,
+    AccountElementModule,
   ],
   controllers: [AppController],
   providers: [],

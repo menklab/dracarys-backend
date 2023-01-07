@@ -65,4 +65,42 @@ export const ERRORS = {
       message: 'program id must be a number',
     },
   },
+  accountElement: {
+    notFound: {
+      code: ErrorCode.ACCOUNT_ELEMENT_NOT_FOUND,
+      message: 'account element not found',
+    },
+    accountId: {
+      code: ErrorCode.ACCOUNT_ID_MUST_BE_NUMBER,
+      message: 'account id must be a number',
+    },
+    name: {
+      empty: {
+        code: ErrorCode.NAME_IS_EMPTY,
+        message: 'name must not be empty',
+      },
+      regex: {
+        code: ErrorCode.ACCOUNT_ELEMENT_NAME_REGEX,
+        message: 'name can only include lowercase letters, numbers and underscore',
+      },
+      min: {
+        code: ErrorCode.NAME_MIN_LENGTH,
+        message: 'name must be at least 1 character long',
+      },
+      max: {
+        code: ErrorCode.NAME_MAX_LENGTH,
+        message: 'name must not exceed 50 characters',
+      },
+    },
+    type: {
+      empty: {
+        code: ErrorCode.TYPE_IS_EMPTY,
+        message: 'name must not be empty',
+      },
+      valid: {
+        code: ErrorCode.TYPE_NOT_VALID,
+        message: 'type must be from the list of allowed types',
+      },
+    },
+  },
 }
