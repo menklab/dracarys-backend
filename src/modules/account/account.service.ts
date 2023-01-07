@@ -8,6 +8,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { AccountDto } from './dtos/account.dto'
 import { Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
+import { UpdateAccountLinkDto } from './dtos/update-account-link/update-account-link.dto'
 
 @Injectable()
 export class AccountService {
@@ -82,5 +83,26 @@ export class AccountService {
     }
 
     await this.accountRepository.delete(id)
+  }
+
+  public async updateLinkedAccounts(data: UpdateAccountLinkDto): Promise<AccountDto[]> {
+    let accounts = []
+
+    for (let link of data.links) {
+      const account = await this.accountRepository.findOne({
+        where: { id: link.accountId },
+      })
+
+      if (!account) {
+        throw new NotFoundException(businessException([ERRORS.account.notFound]))
+      }
+
+      const accountEntity = AccountMapper.toUpdateLinkedAccounts(account, link.linkedAccounts)
+      const accountSaved = await this.accountRepository.save(accountEntity)
+
+      accounts.push(accountSaved)
+    }
+
+    return accounts.map(AccountMapper.toDto)
   }
 }

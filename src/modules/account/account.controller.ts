@@ -1,11 +1,12 @@
 import { ApiBadRequestResponse, ApiForbiddenResponse, ApiInternalServerErrorResponse, ApiNotFoundResponse, ApiTags } from '@nestjs/swagger'
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common'
 import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
 import { CreateAccountDto } from './dtos/create-account/create-account.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
 import { AccountService } from './account.service'
 import { AccountDto } from './dtos/account.dto'
 import { SWAGGER_OPTIONS } from 'src/common'
+import { UpdateAccountLinkDto } from './dtos/update-account-link/update-account-link.dto'
 
 @ApiTags('Account')
 @UseGuards(AuthGuard)
@@ -50,5 +51,14 @@ export class AccountController {
   @ApiInternalServerErrorResponse()
   public async delete(@Param('id') id: number): Promise<void> {
     return this.accountService.delete(id)
+  }
+
+  @Put('links')
+  @ApiForbiddenResponse()
+  @ApiInternalServerErrorResponse()
+  @ApiNotFoundResponse(SWAGGER_OPTIONS.error)
+  @ApiBadRequestResponse(SWAGGER_OPTIONS.error)
+  public async updateLinkedAccounts(@Body() updateAccountLinkDto: UpdateAccountLinkDto): Promise<AccountDto[]> {
+    return this.accountService.updateLinkedAccounts(updateAccountLinkDto)
   }
 }

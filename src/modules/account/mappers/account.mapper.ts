@@ -8,6 +8,8 @@ export class AccountMapper {
     return {
       id: account.id,
       name: account.name,
+      coordinates: account.coordinates,
+      linkedAccounts: account.linkedAccounts,
       createdAt: account.createdAt,
       updatedAt: account.updatedAt,
     }
@@ -19,5 +21,9 @@ export class AccountMapper {
 
   static toUpdateEntity(account: AccountEntity, data: UpdateAccountDto): AccountEntity {
     return Object.assign(account, data)
+  }
+
+  static toUpdateLinkedAccounts(account: AccountEntity, linkedAccounts: Array<number>): AccountEntity {
+    return Object.assign(account, { linkedAccounts: linkedAccounts })
   }
 }

@@ -42,6 +42,10 @@ export const ERRORS = {
       code: ErrorCode.ACCOUNT_NOT_FOUND,
       message: 'account not found',
     },
+    links: {
+      code: ErrorCode.LINKS_NOT_FOUND,
+      message: 'links array must not be empty',
+    },
     name: {
       empty: {
         code: ErrorCode.NAME_IS_EMPTY,
