@@ -15,4 +15,16 @@ export class AccountEntity extends BaseEntity {
     cascade: true,
   })
   elements: AccountElementEntity[]
+
+  @Column({
+    type: 'jsonb',
+    default: '[]',
+  })
+  coordinates: Array<number>
+
+  @Column({
+    type: 'jsonb',
+    default: '[]',
+  })
+  linkedAccounts: Array<number>
 }
