@@ -107,4 +107,32 @@ export const ERRORS = {
       },
     },
   },
+  instruction: {
+    notFound: {
+      code: ErrorCode.INSTRUCTION_NOT_FOUND,
+      message: 'instruction not found',
+    },
+    programId: {
+      code: ErrorCode.PROGRAM_ID_MUST_BE_NUMBER,
+      message: 'program id must be a number',
+    },
+    name: {
+      empty: {
+        code: ErrorCode.NAME_IS_EMPTY,
+        message: 'name must not be empty',
+      },
+      regex: {
+        code: ErrorCode.INSTRUCTION_ELEMENT_NAME_REGEX,
+        message: 'name can only include lowercase letters, numbers and underscore',
+      },
+      min: {
+        code: ErrorCode.NAME_MIN_LENGTH,
+        message: 'name must be at least 1 character long',
+      },
+      max: {
+        code: ErrorCode.NAME_MAX_LENGTH,
+        message: 'name must not exceed 50 characters',
+      },
+    },
+  },
 }
