@@ -22,5 +22,4 @@ export class InstructionMapper {
   static toUpdateEntity(entity: InstructionEntity, data: UpdateInstructionDto): InstructionEntity {
     return Object.assign(entity, data)
   }
-
 }

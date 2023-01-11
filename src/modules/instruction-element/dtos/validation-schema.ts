@@ -1,10 +1,10 @@
-import { CreateAccountElementValidationSchema } from './create-account-element/create-account-element.schema'
-import { UpdateAccountElementValidationSchema } from './update-account-element/update-account-element.schema'
-import { CreateAccountElementDto } from './create-account-element/create-account-element.dto'
-import { UpdateAccountElementDto } from './update-account-element/update-account-element.dto'
+import { CreateInstructionElementValidationSchema } from './create-instruction-element/create-instruction-element.schema'
+import { UpdateInstructionElementValidationSchema } from './update-instruction-element/update-instruction-element.schema'
+import { CreateInstructionElementDto } from './create-instruction-element/create-instruction-element.dto'
+import { UpdateInstructionElementDto } from './update-instruction-element/update-instruction-element.dto'
 import { TJoiValidationSchemas } from '../../../app/pipes'
 
-export const AccountElementValidationSchemas: TJoiValidationSchemas = {
-  [CreateAccountElementDto.name]: CreateAccountElementValidationSchema,
-  [UpdateAccountElementDto.name]: UpdateAccountElementValidationSchema,
+export const InstructionElementValidationSchemas: TJoiValidationSchemas = {
+  [CreateInstructionElementDto.name]: CreateInstructionElementValidationSchema,
+  [UpdateInstructionElementDto.name]: UpdateInstructionElementValidationSchema,
 }

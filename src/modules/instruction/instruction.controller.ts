@@ -11,7 +11,7 @@ import { SWAGGER_OPTIONS } from 'src/common'
 @UseGuards(AuthGuard)
 @Controller('instruction')
 export class InstructionController {
-  constructor(private readonly instructionService: InstructionService) { }
+  constructor(private readonly instructionService: InstructionService) {}
 
   @Get()
   @ApiForbiddenResponse()
@@ -51,5 +51,4 @@ export class InstructionController {
   public async delete(@Param('id') id: number): Promise<void> {
     return this.instructionService.delete(id)
   }
-
 }

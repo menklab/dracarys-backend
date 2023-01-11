@@ -17,7 +17,7 @@ export class InstructionService {
     private readonly instructionRepository: Repository<InstructionEntity>,
     @InjectRepository(ProgramEntity)
     private readonly programRepository: Repository<ProgramEntity>,
-  ) { }
+  ) {}
 
   public async getAll(programId: number): Promise<InstructionDto[]> {
     const instructions = await this.instructionRepository.find({
@@ -84,5 +84,4 @@ export class InstructionService {
 
     await this.instructionRepository.delete(id)
   }
-
 }

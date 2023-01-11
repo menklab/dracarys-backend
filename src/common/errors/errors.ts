@@ -135,4 +135,60 @@ export const ERRORS = {
       },
     },
   },
+  instructionElement: {
+    notFound: {
+      code: ErrorCode.INSTRUCTION_ELEMENT_NOT_FOUND,
+      message: 'instruction element not found',
+    },
+    instructionId: {
+      code: ErrorCode.INSTRUCTION_ID_MUST_BE_NUMBER,
+      message: 'instruction id must be a number',
+    },
+    name: {
+      empty: {
+        code: ErrorCode.NAME_IS_EMPTY,
+        message: 'name must not be empty',
+      },
+      regex: {
+        code: ErrorCode.INSTRUCTION_ELEMENT_NAME_REGEX,
+        message: 'name can only include lowercase letters, numbers and underscore',
+      },
+      min: {
+        code: ErrorCode.NAME_MIN_LENGTH,
+        message: 'name must be at least 1 character long',
+      },
+      max: {
+        code: ErrorCode.NAME_MAX_LENGTH,
+        message: 'name must not exceed 50 characters',
+      },
+    },
+    accountType: {
+      empty: {
+        code: ErrorCode.TYPE_IS_EMPTY,
+        message: 'account type must not be empty',
+      },
+      valid: {
+        code: ErrorCode.TYPE_NOT_VALID,
+        message: 'account type must be from the list of allowed types',
+      },
+    },
+    genericType: {
+      empty: {
+        code: ErrorCode.GENERIC_TYPE_IS_EMPTY,
+        message: 'generic type must not be empty',
+      },
+      alphanum: {
+        code: ErrorCode.GENERIC_TYPE_IS_NOT_CHAR_OR_NUM,
+        message: 'generic type must only have characters or numbers',
+      },
+      min: {
+        code: ErrorCode.GENERIC_TYPE_MIN_LENGTH,
+        message: 'generic type must be at least 1 character long',
+      },
+      max: {
+        code: ErrorCode.GENERIC_TYPE_MAX_LENGTH,
+        message: 'generic type must not exceed 50 characters',
+      },
+    },
+  },
 }

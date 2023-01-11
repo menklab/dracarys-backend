@@ -11,4 +11,4 @@ import { Module } from '@nestjs/common'
   providers: [InstructionService],
   exports: [InstructionService],
 })
-export class InstructionModule { }
+export class InstructionModule {}

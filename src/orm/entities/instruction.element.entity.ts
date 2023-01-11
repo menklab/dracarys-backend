@@ -6,6 +6,9 @@ import { BaseEntity } from './base.entity'
 @Entity({ name: 'instruction_element' })
 export class InstructionElementEntity extends BaseEntity {
   @Column()
+  order: number
+
+  @Column()
   name: string
 
   @Column()

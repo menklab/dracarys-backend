@@ -18,5 +18,4 @@ export class InstructionEntity extends BaseEntity {
     cascade: true,
   })
   elements: InstructionElementEntity[]
-
 }
