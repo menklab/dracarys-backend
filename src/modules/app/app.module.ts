@@ -69,6 +69,7 @@ export class AppModule implements NestModule {
           secret: this.configService.get('auth.sessionSecret') as string,
           resave: true,
           cookie: {
+            secure: true,
             sameSite: 'none',
             httpOnly: false,
             maxAge: 6000000,
