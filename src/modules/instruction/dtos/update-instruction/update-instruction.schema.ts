@@ -4,7 +4,6 @@ import Joi from 'joi'
 
 export const UpdateInstructionValidationSchema = Joi.object<UpdateInstructionDto>({
   name: Joi.string()
-    .required()
     .min(1)
     .max(50)
     .trim()

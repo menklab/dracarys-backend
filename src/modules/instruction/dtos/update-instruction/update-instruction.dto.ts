@@ -1,9 +1,9 @@
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiPropertyOptional } from '@nestjs/swagger'
 
 export class UpdateInstructionDto {
-  @ApiProperty()
+  @ApiPropertyOptional()
   name?: string
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   description?: string
 }

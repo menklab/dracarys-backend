@@ -1,5 +1,5 @@
 import { InstructionElementAccountType } from 'src/common/enum/instruction.element.account.type'
-import { ApiProperty } from '@nestjs/swagger'
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
 
 export class CreateInstructionElementDto {
   @ApiProperty()
@@ -11,7 +11,7 @@ export class CreateInstructionElementDto {
   @ApiProperty()
   order: number
 
-  @ApiProperty()
+  @ApiPropertyOptional()
   description?: string
 
   @ApiProperty()
