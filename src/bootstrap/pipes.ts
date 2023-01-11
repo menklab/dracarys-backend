@@ -1,4 +1,6 @@
+import { InstructionElementValidationSchemas } from 'src/modules/instruction-element/dtos/validation-schema'
 import { AccountElementValidationSchemas } from 'src/modules/account-element/dtos/validation-schema'
+import { InstructionValidationSchemas } from 'src/modules/instruction/dtos/validation-schema'
 import { ProgramValidationSchemas } from '../modules/program/dtos/validation-schema'
 import { AccountValidationSchemas } from '../modules/account/dtos/validation-schema'
 import { AuthValidationSchemas } from '../modules/auth/dtos/validation-schema'
@@ -12,6 +14,8 @@ export function configurePipes(app: INestApplication): void {
       ...ProgramValidationSchemas,
       ...AccountValidationSchemas,
       ...AccountElementValidationSchemas,
+      ...InstructionValidationSchemas,
+      ...InstructionElementValidationSchemas,
     }),
   )
 }
