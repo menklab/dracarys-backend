@@ -75,7 +75,8 @@ export class AppModule implements NestModule {
           cookie: {
             secure: true,
             sameSite: 'none',
-            httpOnly: true,
+            httpOnly: false,
+            domain: 'dracarys-frontend-git-dev-menklab.vercel.app',
             maxAge: 6000000,
           },
         }),

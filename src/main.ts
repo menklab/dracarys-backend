@@ -14,10 +14,30 @@ async function bootstrap(): Promise<void> {
 
   //TODO revert optsions back if front-end still has cors errors
   const options = {
-    origin: true,
-    // methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    // preflightContinue: false,
+    // origin: true,
+    origin: ['http://localhost:3000', 'https://dracarys-frontend-git-dev-menklab.vercel.app', 'https://dracarys.digital'],
+    methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
+    // preflightContinue: true,
     credentials: true,
+    // allowedHeaders: '*',
+    allowedHeaders: [
+      'origin',
+      'Accept',
+      'DNT',
+      'Cookie',
+      'Cookie2',
+      'Host',
+      'Set-Cookie',
+      'X-CustomHeader',
+      'Keep-Alive',
+      'User-Agent',
+      'X-Requested-With',
+      'If-Modified-Since',
+      'Cache-Control',
+      'Content-Type',
+      'Content-Range',
+      'Range',
+    ],
     // allowedHeaders: 'Content-Type, Accept',
   }
   app.enableCors(options)
