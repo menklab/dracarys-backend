@@ -1,3 +1,4 @@
+import { NestExpressApplication } from '@nestjs/platform-express'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
 import { AppModule } from './modules/app/app.module'
 import { configurePipes } from './bootstrap/pipes'
@@ -7,7 +8,8 @@ import { NestFactory } from '@nestjs/core'
 import { env } from 'process'
 
 async function bootstrap(): Promise<void> {
-  const app = await NestFactory.create(AppModule)
+  // const app = await NestFactory.create(AppModule)
+  const app = await NestFactory.create<NestExpressApplication>(AppModule)
   const configService = app.get(ConfigService)
 
   app.setGlobalPrefix('api')
@@ -42,6 +44,7 @@ async function bootstrap(): Promise<void> {
     // allowedHeaders: 'Content-Type, Accept',
   }
   app.enableCors(options)
+  app.set('trust proxy', true)
   configurePipes(app)
 
   if (env.NODE_ENV === 'dev' || env.NODE_ENV === 'staging') {
