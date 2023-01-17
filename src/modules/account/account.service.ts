@@ -10,7 +10,6 @@ import { Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
 import { UpdateAccountLinkDto } from './dtos/update-account-link/update-account-link.dto'
 import { AccountElementEntity } from '../../orm/entities/account.element.entity'
-import { create } from 'domain'
 
 @Injectable()
 export class AccountService {
@@ -119,7 +118,7 @@ export class AccountService {
 
     for (const account of accounts) {
       const structure = this.createStructure(account.name, account.elements)
-      code.concat(...structure)
+      code.push(...structure)
     }
 
     return code

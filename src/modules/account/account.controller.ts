@@ -28,13 +28,6 @@ export class AccountController {
     return this.accountService.getAll(programId)
   }
 
-  @Get(':id')
-  @ApiForbiddenResponse()
-  @ApiInternalServerErrorResponse()
-  public async get(@Param('id') id: number): Promise<AccountDto> {
-    return this.accountService.get(id)
-  }
-
   @Post()
   @ApiForbiddenResponse()
   @ApiInternalServerErrorResponse()
@@ -75,5 +68,12 @@ export class AccountController {
   @ApiOkResponse(SWAGGER_OPTIONS.account.generateCodeOk)
   public async generateCode(): Promise<string[]> {
     return this.accountService.generateCode()
+  }
+
+  @Get(':id')
+  @ApiForbiddenResponse()
+  @ApiInternalServerErrorResponse()
+  public async get(@Param('id') id: number): Promise<AccountDto> {
+    return this.accountService.get(id)
   }
 }
