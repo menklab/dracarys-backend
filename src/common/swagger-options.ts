@@ -38,9 +38,9 @@ export const SWAGGER_OPTIONS = {
       schema: {
         type: 'array',
         items: {
-          type: 'string'
-        }
-      }
-    }
-  }
+          type: 'string',
+        },
+      },
+    },
+  },
 }

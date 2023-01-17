@@ -9,8 +9,8 @@ import { AccountDto } from './dtos/account.dto'
 import { Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
 import { UpdateAccountLinkDto } from './dtos/update-account-link/update-account-link.dto'
-import {AccountElementEntity} from "../../orm/entities/account.element.entity";
-import {create} from "domain";
+import { AccountElementEntity } from '../../orm/entities/account.element.entity'
+import { create } from 'domain'
 
 @Injectable()
 export class AccountService {
@@ -113,7 +113,7 @@ export class AccountService {
       relations: {
         elements: true,
       },
-    });
+    })
 
     const code: string[] = []
 

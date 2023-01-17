@@ -4,7 +4,7 @@ import {
   ApiInternalServerErrorResponse,
   ApiNotFoundResponse,
   ApiOkResponse,
-  ApiTags
+  ApiTags,
 } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common'
 import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
@@ -74,6 +74,6 @@ export class AccountController {
   @ApiInternalServerErrorResponse()
   @ApiOkResponse(SWAGGER_OPTIONS.account.generateCodeOk)
   public async generateCode(): Promise<string[]> {
-    return this.accountService.generateCode();
+    return this.accountService.generateCode()
   }
 }
