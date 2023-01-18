@@ -32,4 +32,15 @@ export const SWAGGER_OPTIONS = {
     description: 'Business of validation errors',
     schema: { $ref: getSchemaPath(ApiException) },
   },
+  account: {
+    generateCodeOk: {
+      description: 'Array of code elements',
+      schema: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+    },
+  },
 }

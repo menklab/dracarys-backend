@@ -1,4 +1,11 @@
-import { ApiBadRequestResponse, ApiForbiddenResponse, ApiInternalServerErrorResponse, ApiNotFoundResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBadRequestResponse,
+  ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common'
 import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
 import { CreateAccountDto } from './dtos/create-account/create-account.dto'
@@ -19,13 +26,6 @@ export class AccountController {
   @ApiInternalServerErrorResponse()
   public async getAll(@Query('programId') programId: number): Promise<AccountDto[]> {
     return this.accountService.getAll(programId)
-  }
-
-  @Get(':id')
-  @ApiForbiddenResponse()
-  @ApiInternalServerErrorResponse()
-  public async get(@Param('id') id: number): Promise<AccountDto> {
-    return this.accountService.get(id)
   }
 
   @Post()
@@ -60,5 +60,20 @@ export class AccountController {
   @ApiBadRequestResponse(SWAGGER_OPTIONS.error)
   public async updateLinkedAccounts(@Body() updateAccountLinkDto: UpdateAccountLinkDto): Promise<AccountDto[]> {
     return this.accountService.updateLinkedAccounts(updateAccountLinkDto)
+  }
+
+  @Get('generate-code')
+  @ApiForbiddenResponse()
+  @ApiInternalServerErrorResponse()
+  @ApiOkResponse(SWAGGER_OPTIONS.account.generateCodeOk)
+  public async generateCode(): Promise<string[]> {
+    return this.accountService.generateCode()
+  }
+
+  @Get(':id')
+  @ApiForbiddenResponse()
+  @ApiInternalServerErrorResponse()
+  public async get(@Param('id') id: number): Promise<AccountDto> {
+    return this.accountService.get(id)
   }
 }

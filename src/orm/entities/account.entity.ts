@@ -1,5 +1,5 @@
 import { AccountElementEntity } from './account.element.entity'
-import { Column, Entity, ManyToOne } from 'typeorm'
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
 import { ProgramEntity } from './program.entity'
 import { BaseEntity } from './base.entity'
 
@@ -11,7 +11,7 @@ export class AccountEntity extends BaseEntity {
   @ManyToOne(() => ProgramEntity, (program) => program.accounts)
   program: ProgramEntity
 
-  @ManyToOne(() => AccountElementEntity, (element) => element.account, {
+  @OneToMany(() => AccountElementEntity, (element) => element.account, {
     cascade: true,
   })
   elements: AccountElementEntity[]
@@ -27,4 +27,11 @@ export class AccountEntity extends BaseEntity {
     default: '[]',
   })
   linkedAccounts: Array<number>
+
+  addElement(element: AccountElementEntity) {
+    if (this.elements === null) {
+      this.elements = Array<AccountElementEntity>()
+    }
+    this.elements.push(element)
+  }
 }

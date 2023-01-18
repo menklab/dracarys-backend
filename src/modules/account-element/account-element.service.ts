@@ -46,6 +46,9 @@ export class AccountElementService {
   public async create(data: CreateAccountElementDto): Promise<AccountElementDto> {
     const account = await this.accountRepository.findOne({
       where: { id: data.accountId },
+      relations: {
+        elements: true,
+      },
     })
 
     if (!account) {
@@ -54,6 +57,9 @@ export class AccountElementService {
 
     const accountElementEntity = AccountElementMapper.toCreateEntity(account, data)
     const accountElementSaved = await this.accountElementRepository.save(accountElementEntity)
+
+    account.addElement(accountElementSaved)
+    await this.accountRepository.save(account)
 
     return AccountElementMapper.toDto(accountElementSaved)
   }
