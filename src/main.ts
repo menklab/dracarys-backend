@@ -16,10 +16,10 @@ async function bootstrap(): Promise<void> {
 
   //TODO revert optsions back if front-end still has cors errors
   const options = {
-    // origin: true,
-    origin: ['http://localhost:3000', 'https://dracarys-frontend-git-dev-menklab.vercel.app', 'https://dracarys.digital'],
+    origin: true,
+    // origin: ['http://localhost:3000', 'https://dracarys-frontend-git-dev-menklab.vercel.app', 'https://dracarys.digital'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    preflightContinue: true,
+    // preflightContinue: true,
     credentials: true,
     // allowedHeaders: '*',
     allowedHeaders: [
