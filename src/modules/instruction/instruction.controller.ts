@@ -1,4 +1,11 @@
-import { ApiBadRequestResponse, ApiForbiddenResponse, ApiInternalServerErrorResponse, ApiNotFoundResponse, ApiTags } from '@nestjs/swagger'
+import {
+  ApiBadRequestResponse,
+  ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
+  ApiNotFoundResponse,
+  ApiOkResponse,
+  ApiTags,
+} from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
 import { UpdateInstructionDto } from './dtos/update-instruction/update-instruction.dto'
 import { CreateInstructionDto } from './dtos/create-instruction/create-instruction.dto'
@@ -18,13 +25,6 @@ export class InstructionController {
   @ApiInternalServerErrorResponse()
   public async getAll(@Query('programId') programId: number): Promise<InstructionDto[]> {
     return this.instructionService.getAll(programId)
-  }
-
-  @Get(':id')
-  @ApiForbiddenResponse()
-  @ApiInternalServerErrorResponse()
-  public async get(@Param('id') id: number): Promise<InstructionDto> {
-    return this.instructionService.get(id)
   }
 
   @Post()
@@ -50,5 +50,20 @@ export class InstructionController {
   @ApiInternalServerErrorResponse()
   public async delete(@Param('id') id: number): Promise<void> {
     return this.instructionService.delete(id)
+  }
+
+  @Get('generate-code')
+  @ApiForbiddenResponse()
+  @ApiInternalServerErrorResponse()
+  @ApiOkResponse(SWAGGER_OPTIONS.instruction.generateCodeOk)
+  public async generateCode(@Query('programId') programId: number): Promise<string[]> {
+    return this.instructionService.generateCode(programId)
+  }
+
+  @Get(':id')
+  @ApiForbiddenResponse()
+  @ApiInternalServerErrorResponse()
+  public async get(@Param('id') id: number): Promise<InstructionDto> {
+    return this.instructionService.get(id)
   }
 }
