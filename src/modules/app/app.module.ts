@@ -75,7 +75,7 @@ export class AppModule implements NestModule {
           cookie: {
             // secure: true,
             sameSite: 'strict',
-            // httpOnly: true,
+            httpOnly: false,
             domain: 'dracarys.digital',
             maxAge: 6000000,
           },
