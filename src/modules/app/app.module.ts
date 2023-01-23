@@ -73,7 +73,6 @@ export class AppModule implements NestModule {
           secret: this.configService.get('auth.sessionSecret') as string,
           resave: true,
           cookie: {
-            // secure: true,
             sameSite: 'strict',
             httpOnly: false,
             domain: 'dracarys.digital',
