@@ -8,7 +8,7 @@ export class InstructionEntity extends BaseEntity {
   @Column()
   name: string
 
-  @Column({ default: '' })
+  @Column({ nullable: true })
   description: string
 
   @ManyToOne(() => ProgramEntity, (program) => program.instructions)
