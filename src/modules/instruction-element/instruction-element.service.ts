@@ -46,6 +46,7 @@ export class InstructionElementService {
   public async create(data: CreateInstructionElementDto): Promise<InstructionElementDto> {
     const instruction = await this.instructionRepository.findOne({
       where: { id: data.instructionId },
+      relations: { elements: true },
     })
 
     if (!instruction) {
@@ -54,6 +55,9 @@ export class InstructionElementService {
 
     const instructionElementEntity = InstructionElementMapper.toCreateEntity(instruction, data)
     const instructionElementSaved = await this.instructionElementRepository.save(instructionElementEntity)
+
+    instruction.addElement(instructionElementSaved)
+    await this.instructionRepository.save(instruction)
 
     return InstructionElementMapper.toDto(instructionElementSaved)
   }

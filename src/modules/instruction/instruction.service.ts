@@ -9,6 +9,7 @@ import { InjectRepository } from '@nestjs/typeorm'
 import { ProgramEntity } from 'src/orm/entities'
 import { Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
+import { InstructionElementEntity } from '../../orm/entities/instruction.element.entity'
 
 @Injectable()
 export class InstructionService {
@@ -83,5 +84,65 @@ export class InstructionService {
     }
 
     await this.instructionRepository.delete(id)
+  }
+
+  public async generateCode(programId: number): Promise<string[]> {
+    const instructions = await this.instructionRepository.find({
+      where: {
+        program: {
+          id: programId,
+        },
+      },
+      relations: {
+        elements: true,
+      },
+    })
+
+    if (!instructions) {
+      return []
+    }
+
+    const code = ['use anchor_lang::prelude::*;', '']
+
+    for (const instruction of instructions) {
+      const camelCaseName = this.toCamelCase(instruction.name)
+      const func = this.generateFunction(instruction.name, camelCaseName)
+      code.push(...func)
+      const structure = this.generateStructure(instruction.elements, camelCaseName)
+      code.push(...structure)
+    }
+
+    return code
+  }
+
+  private generateFunction(name: string, camelCaseName: string): string[] {
+    return [`pub func ${name}(ctx: Context<${camelCaseName}>) ->`, '  Result<()> {', '', '  Ok(())', '}', '']
+  }
+
+  private generateStructure(instructionElements: InstructionElementEntity[], camelCaseName: string): string[] {
+    const structure = ['#[derive(Accounts)]']
+    const structureName = `pub struct ${camelCaseName}<'info> {`
+    structure.push(structureName)
+
+    for (const element of instructionElements) {
+      if (element.mut) {
+        structure.push('  #[account(mut)]')
+      }
+      const field = `  pub ${element.name}: ${element.accountType}<'info, ${element.genericType}>`
+      structure.push(field)
+      structure.push('}')
+      structure.push('')
+    }
+
+    return structure
+  }
+
+  private toCamelCase(str: string): string {
+    return str
+      .split('_')
+      .map((word) => {
+        return word.charAt(0).toUpperCase() + word.slice(1)
+      })
+      .join('')
   }
 }

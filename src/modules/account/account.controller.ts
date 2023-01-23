@@ -66,8 +66,8 @@ export class AccountController {
   @ApiForbiddenResponse()
   @ApiInternalServerErrorResponse()
   @ApiOkResponse(SWAGGER_OPTIONS.account.generateCodeOk)
-  public async generateCode(): Promise<string[]> {
-    return this.accountService.generateCode()
+  public async generateCode(@Query('programId') programId: number): Promise<string[]> {
+    return this.accountService.generateCode(programId)
   }
 
   @Get(':id')

@@ -107,7 +107,7 @@ export class AccountService {
     return accounts.map(AccountMapper.toDto)
   }
 
-  public async generateCode(): Promise<string[]> {
+  public async generateCode(programId: number): Promise<string[]> {
     const accounts = await this.accountRepository.find({
       relations: {
         elements: true,

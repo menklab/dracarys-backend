@@ -43,4 +43,15 @@ export const SWAGGER_OPTIONS = {
       },
     },
   },
+  instruction: {
+    generateCodeOk: {
+      description: 'Array of code elements',
+      schema: {
+        type: 'array',
+        items: {
+          type: 'string',
+        },
+      },
+    },
+  },
 }

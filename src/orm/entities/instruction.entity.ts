@@ -1,5 +1,5 @@
 import { InstructionElementEntity } from './instruction.element.entity'
-import { Column, Entity, ManyToOne } from 'typeorm'
+import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
 import { ProgramEntity } from './program.entity'
 import { BaseEntity } from './base.entity'
 
@@ -8,14 +8,21 @@ export class InstructionEntity extends BaseEntity {
   @Column()
   name: string
 
-  @Column()
+  @Column({ nullable: true })
   description: string
 
   @ManyToOne(() => ProgramEntity, (program) => program.instructions)
   program: ProgramEntity
 
-  @ManyToOne(() => InstructionElementEntity, (element) => element.instruction, {
+  @OneToMany(() => InstructionElementEntity, (element) => element.instruction, {
     cascade: true,
   })
   elements: InstructionElementEntity[]
+
+  addElement(element: InstructionElementEntity) {
+    if (this.elements === null) {
+      this.elements = Array<InstructionElementEntity>()
+    }
+    this.elements.push(element)
+  }
 }
