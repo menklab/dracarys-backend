@@ -15,7 +15,7 @@ done
 if [ ${#infra_files[@]} -gt 0 ]; then
     echo "Infrastructure changes found - running infrastructure precommit steps"
 
-    cd infrastructure 
+    cd infrastructure
 
     echo "formatting files..."
     formatted_files=$(terraform fmt -recursive .)
@@ -26,10 +26,10 @@ if [ ${#infra_files[@]} -gt 0 ]; then
     done
 
     set -e # exit if any of the following commands fail
-    
+
     echo "validating terraform configuration..."
     terraform validate .
-    
+
     echo "Linting modules..."
     tflint .
 
@@ -62,3 +62,4 @@ if [ ${#infra_files[@]} -gt 0 ]; then
 fi
 
 # run any other precommit steps here
+npm run format

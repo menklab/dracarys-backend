@@ -11,7 +11,9 @@ export class InstructionEntity extends BaseEntity {
   @Column({ nullable: true })
   description: string
 
-  @ManyToOne(() => ProgramEntity, (program) => program.instructions)
+  @ManyToOne(() => ProgramEntity, (program) => program.instructions, {
+    onDelete: 'CASCADE',
+  })
   program: ProgramEntity
 
   @OneToMany(() => InstructionElementEntity, (element) => element.instruction, {

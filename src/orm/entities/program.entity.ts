@@ -14,9 +14,13 @@ export class ProgramEntity extends BaseEntity {
   })
   user: UserEntity
 
-  @OneToMany(() => AccountEntity, (account) => account.program)
+  @OneToMany(() => AccountEntity, (account) => account.program, {
+    onDelete: 'CASCADE',
+  })
   accounts: AccountEntity[]
 
-  @OneToMany(() => InstructionEntity, (instruction) => instruction.program)
-  instructions: AccountEntity[]
+  @OneToMany(() => InstructionEntity, (instruction) => instruction.program, {
+    onDelete: 'CASCADE',
+  })
+  instructions: InstructionEntity[]
 }
