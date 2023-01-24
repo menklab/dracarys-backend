@@ -11,7 +11,7 @@ import { SWAGGER_OPTIONS } from '../../common'
 export class AuthController {
   constructor(protected readonly authService: AuthService) {}
 
-  @ApiInternalServerErrorResponse()
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
   @ApiOkResponse(SWAGGER_OPTIONS.auth.requestMessageOk)
   @Get('requestMessage')
   @Response({
@@ -22,7 +22,7 @@ export class AuthController {
     return { message }
   }
 
-  @ApiInternalServerErrorResponse()
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
   @ApiUnauthorizedResponse(SWAGGER_OPTIONS.error)
   @ApiBadRequestResponse(SWAGGER_OPTIONS.error)
   @ApiOkResponse(SWAGGER_OPTIONS.auth.authorized)
@@ -31,7 +31,7 @@ export class AuthController {
     return this.authService.verifyMessage(session, authInputDto)
   }
 
-  @ApiInternalServerErrorResponse()
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
   @ApiOkResponse(SWAGGER_OPTIONS.auth.logout)
   @Delete('logout')
   public async logOut(@Session() session: Record<string, any>): Promise<boolean> {

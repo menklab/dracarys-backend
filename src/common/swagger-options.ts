@@ -32,6 +32,42 @@ export const SWAGGER_OPTIONS = {
     description: 'Business of validation errors',
     schema: { $ref: getSchemaPath(ApiException) },
   },
+  unauthorized: {
+    description: 'Unauthorized',
+    schema: {
+      type: 'object',
+      properties: {
+        statusCode: { type: 'number', example: 401 },
+        message: { type: 'string', example: 'Error message' },
+        error: { type: 'string', example: 'Unauthorized' },
+      },
+    },
+  },
+  forbidden: {
+    description: 'Forbidden',
+    schema: {
+      type: 'object',
+      properties: {
+        statusCode: { type: 'number', example: 403 },
+        message: { type: 'string', example: 'Error message' },
+        error: { type: 'string', example: 'Forbidden' },
+      },
+    },
+  },
+  serverError: {
+    description: 'Internal server error',
+    schema: {
+      type: 'object',
+      properties: {
+        statusCode: { type: 'number', example: 500 },
+        message: { type: 'string', example: 'Error message' },
+        error: { type: 'string', example: 'Server' },
+      },
+    },
+  },
+  noContent: {
+    description: 'The server has successfully fulfilled the request and that there is no additional content to send in the response payload body',
+  },
   account: {
     generateCodeOk: {
       description: 'Array of code elements',
