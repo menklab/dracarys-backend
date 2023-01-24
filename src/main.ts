@@ -6,7 +6,7 @@ import { ConfigService } from '@nestjs/config'
 import { ApiException, Error } from './common'
 import { NestFactory } from '@nestjs/core'
 import { env } from 'process'
-import {ProgramDto} from "./modules/program/dtos/program.dto";
+import { ProgramDto } from './modules/program/dtos/program.dto'
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
