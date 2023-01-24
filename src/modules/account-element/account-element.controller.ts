@@ -1,5 +1,12 @@
-import { ApiBadRequestResponse, ApiForbiddenResponse, ApiInternalServerErrorResponse, ApiNotFoundResponse, ApiTags } from '@nestjs/swagger'
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
+import {
+  ApiBadRequestResponse,
+  ApiForbiddenResponse,
+  ApiInternalServerErrorResponse,
+  ApiNoContentResponse,
+  ApiNotFoundResponse,
+  ApiTags,
+} from '@nestjs/swagger'
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
 import { UpdateAccountElementDto } from './dtos/update-account-element/update-account-element.dto'
 import { CreateAccountElementDto } from './dtos/create-account-element/create-account-element.dto'
 import { AccountElementService } from './account-element.service'
@@ -14,22 +21,22 @@ export class AccountElementController {
   constructor(private readonly accountElementService: AccountElementService) {}
 
   @Get()
-  @ApiForbiddenResponse()
-  @ApiInternalServerErrorResponse()
+  @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
   public async getAll(@Query('accountId') accountId: number): Promise<AccountElementDto[]> {
     return this.accountElementService.getAll(accountId)
   }
 
   @Get(':id')
-  @ApiForbiddenResponse()
-  @ApiInternalServerErrorResponse()
+  @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
   public async get(@Param('id') id: number): Promise<AccountElementDto> {
     return this.accountElementService.get(id)
   }
 
   @Post()
-  @ApiForbiddenResponse()
-  @ApiInternalServerErrorResponse()
+  @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
   @ApiNotFoundResponse(SWAGGER_OPTIONS.error)
   @ApiBadRequestResponse(SWAGGER_OPTIONS.error)
   public async create(@Body() createAccountElementDto: CreateAccountElementDto): Promise<AccountElementDto> {
@@ -37,8 +44,8 @@ export class AccountElementController {
   }
 
   @Patch(':id')
-  @ApiForbiddenResponse()
-  @ApiInternalServerErrorResponse()
+  @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
   @ApiNotFoundResponse(SWAGGER_OPTIONS.error)
   @ApiBadRequestResponse(SWAGGER_OPTIONS.error)
   public async update(@Param('id') id: number, @Body() updateAccountElementDto: UpdateAccountElementDto): Promise<AccountElementDto> {
@@ -46,8 +53,10 @@ export class AccountElementController {
   }
 
   @Delete(':id')
-  @ApiForbiddenResponse()
-  @ApiInternalServerErrorResponse()
+  @HttpCode(204)
+  @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
+  @ApiNoContentResponse(SWAGGER_OPTIONS.noContent)
   public async delete(@Param('id') id: number): Promise<void> {
     return this.accountElementService.delete(id)
   }

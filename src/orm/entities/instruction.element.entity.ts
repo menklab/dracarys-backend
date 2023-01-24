@@ -27,6 +27,8 @@ export class InstructionElementEntity extends BaseEntity {
   @Column()
   genericType: string
 
-  @ManyToOne(() => InstructionEntity, (instruction) => instruction.elements)
+  @ManyToOne(() => InstructionEntity, (instruction) => instruction.elements, {
+    onDelete: 'CASCADE',
+  })
   instruction: InstructionEntity
 }

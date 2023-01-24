@@ -15,6 +15,8 @@ export class AccountElementEntity extends BaseEntity {
   })
   type: AccountElementType
 
-  @ManyToOne(() => AccountEntity, (account) => account.elements)
+  @ManyToOne(() => AccountEntity, (account) => account.elements, {
+    onDelete: 'CASCADE',
+  })
   account: AccountEntity
 }

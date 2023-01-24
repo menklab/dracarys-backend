@@ -8,7 +8,9 @@ export class AccountEntity extends BaseEntity {
   @Column()
   name: string
 
-  @ManyToOne(() => ProgramEntity, (program) => program.accounts)
+  @ManyToOne(() => ProgramEntity, (program) => program.accounts, {
+    onDelete: 'CASCADE',
+  })
   program: ProgramEntity
 
   @OneToMany(() => AccountElementEntity, (element) => element.account, {
