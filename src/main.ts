@@ -6,22 +6,18 @@ import { ConfigService } from '@nestjs/config'
 import { ApiException, Error } from './common'
 import { NestFactory } from '@nestjs/core'
 import { env } from 'process'
+import { ProgramDto } from './modules/program/dtos/program.dto'
 
 async function bootstrap(): Promise<void> {
-  // const app = await NestFactory.create(AppModule)
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
   const configService = app.get(ConfigService)
 
   app.setGlobalPrefix('api')
 
-  //TODO revert optsions back if front-end still has cors errors
   const options = {
     origin: true,
-    // origin: ['http://localhost:3000', 'https://dracarys-frontend-git-dev-menklab.vercel.app', 'https://dracarys.digital'],
     methods: 'GET,HEAD,PUT,PATCH,POST,DELETE',
-    // preflightContinue: true,
     credentials: true,
-    // allowedHeaders: '*',
     allowedHeaders: [
       'origin',
       'access-control-allow-origin',
@@ -41,14 +37,18 @@ async function bootstrap(): Promise<void> {
       'Content-Range',
       'Range',
     ],
-    // allowedHeaders: 'Content-Type, Accept',
   }
   app.enableCors(options)
   app.set('trust proxy', true)
   configurePipes(app)
 
   if (env.NODE_ENV === 'dev' || env.NODE_ENV === 'staging') {
-    const config = new DocumentBuilder().setTitle('Dracaris API').setVersion('0.0.1').addBearerAuth().build()
+    const config = new DocumentBuilder()
+      .setTitle('Dracaris API')
+      .setDescription('For authorization you need authorize with Phantom wallet copy cookie value and paste it below place')
+      .setVersion('0.0.1')
+      .addCookieAuth()
+      .build()
     const document = SwaggerModule.createDocument(app, config, {
       extraModels: [ApiException, Error],
     })

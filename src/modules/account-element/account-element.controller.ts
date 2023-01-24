@@ -7,7 +7,7 @@ import { AccountElementDto } from './dtos/account-element.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
 import { SWAGGER_OPTIONS } from 'src/common'
 
-@ApiTags('AccountElement')
+@ApiTags('Account Element')
 @UseGuards(AuthGuard)
 @Controller('account-element')
 export class AccountElementController {
