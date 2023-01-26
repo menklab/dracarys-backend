@@ -5,10 +5,8 @@ import { MessageOutputDto } from './dtos/message/message.output.dto'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
 import { Response } from '../../app/decorators'
 import { SWAGGER_OPTIONS } from '../../common'
-import { SentryInterceptor } from '../../app/interceptors/sentry.interceptor'
 
 @ApiTags('Auth')
-@UseInterceptors(SentryInterceptor)
 @Controller('auth')
 export class AuthController {
   constructor(protected readonly authService: AuthService) {}
@@ -20,7 +18,6 @@ export class AuthController {
     dto: MessageOutputDto,
   })
   public async requestMessage(@Session() session: Record<string, any>): Promise<MessageOutputDto> {
-    throw new InternalServerErrorException('test')
     const message = this.authService.generateMessage(session)
     return { message }
   }

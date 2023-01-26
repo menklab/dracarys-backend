@@ -1,6 +1,6 @@
 import { InstructionElementModule } from '../instruction-element/instruction-element.module'
 import { AccountElementModule } from '../account-element/account-element.module'
-import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
+import { HttpException, MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
 import { InstructionModule } from '../instruction/instruction.module'
 import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
 import { ConfigModule, ConfigService } from '@nestjs/config'
@@ -15,6 +15,7 @@ import RedisStore from 'connect-redis'
 import { config } from '../../config'
 import session from 'express-session'
 import Redis from 'ioredis'
+import { RavenInterceptor, RavenModule } from 'nest-raven'
 
 @Module({
   imports: [
@@ -43,6 +44,7 @@ import Redis from 'ioredis'
         }
       },
     }),
+    RavenModule,
     AuthModule,
     UserModule,
     ProgramModule,
@@ -52,7 +54,19 @@ import Redis from 'ioredis'
     InstructionElementModule,
   ],
   controllers: [AppController],
-  providers: [],
+  providers: [
+    {
+      provide: 'APP_INTERCEPTOR',
+      useValue: new RavenInterceptor({
+        filters: [
+          {
+            type: HttpException,
+            filter: (exception: HttpException) => 500 > exception.getStatus(),
+          },
+        ],
+      }),
+    },
+  ],
 })
 export class AppModule implements NestModule {
   private readonly redis: Redis
