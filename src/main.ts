@@ -6,13 +6,17 @@ import { ConfigService } from '@nestjs/config'
 import { ApiException, Error } from './common'
 import { NestFactory } from '@nestjs/core'
 import { env } from 'process'
-import { ProgramDto } from './modules/program/dtos/program.dto'
+import * as Sentry from '@sentry/node'
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)
   const configService = app.get(ConfigService)
 
   app.setGlobalPrefix('api')
+
+  Sentry.init({
+    dsn: configService.get('app.sentryDsn'),
+  })
 
   const options = {
     origin: true,
