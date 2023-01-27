@@ -1,4 +1,4 @@
-import { Body, Controller, Delete, Get, InternalServerErrorException, Post, Session, UseInterceptors } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Post, Session } from '@nestjs/common'
 import { ApiBadRequestResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
 import { AuthService } from './auth.service'
 import { MessageOutputDto } from './dtos/message/message.output.dto'

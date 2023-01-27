@@ -14,8 +14,6 @@ async function bootstrap(): Promise<void> {
 
   app.setGlobalPrefix('api')
 
-  console.log('dsn', configService.get('app.sentryDsn'))
-
   Sentry.init({
     dsn: configService.get('app.sentryDsn'),
   })
