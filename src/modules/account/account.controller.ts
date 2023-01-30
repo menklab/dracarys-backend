@@ -13,8 +13,8 @@ import { CreateAccountDto } from './dtos/create-account/create-account.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
 import { AccountService } from './account.service'
 import { AccountDto } from './dtos/account.dto'
-import { SWAGGER_OPTIONS } from 'src/common'
 import { UpdateAccountLinkDto } from './dtos/update-account-link/update-account-link.dto'
+import { SWAGGER_OPTIONS } from '../../common'
 
 @ApiTags('Account')
 @UseGuards(AuthGuard)

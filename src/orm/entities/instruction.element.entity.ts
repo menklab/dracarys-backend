@@ -1,7 +1,7 @@
-import { InstructionElementAccountType } from 'src/common/enum/instruction.element.account.type'
 import { InstructionEntity } from './instruction.entity'
 import { Column, Entity, ManyToOne } from 'typeorm'
 import { BaseEntity } from './base.entity'
+import { InstructionElementAccountType } from '../../common/enum/instruction.element.account.type'
 
 @Entity({ name: 'instruction_element' })
 export class InstructionElementEntity extends BaseEntity {
