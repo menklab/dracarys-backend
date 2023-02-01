@@ -12,7 +12,7 @@ export const CreateAccountElementValidationSchema = Joi.object<CreateAccountElem
     .min(1)
     .max(50)
     .trim()
-    .regex(/^[a-zA-Z0-9_]+$/)
+    .regex(/^[a-z0-9_]+$/)
     .messages({
       'string.empty': ERRORS.accountElement.name.empty.message,
       'string.regex': ERRORS.accountElement.name.regex.message,
