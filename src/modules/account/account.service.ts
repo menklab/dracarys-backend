@@ -2,7 +2,7 @@ import { businessException } from 'src/common/errors/utils/business-exception'
 import { CreateAccountDto } from './dtos/create-account/create-account.dto'
 import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
 import { AccountEntity, ProgramEntity } from 'src/orm/entities'
-import { Injectable, NotFoundException } from '@nestjs/common'
+import { Injectable, NotFoundException, Session } from '@nestjs/common'
 import { AccountMapper } from './mappers/account.mapper'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AccountDto } from './dtos/account.dto'
@@ -20,11 +20,14 @@ export class AccountService {
     private readonly programRepository: Repository<ProgramEntity>,
   ) {}
 
-  public async getAll(programId: number): Promise<AccountDto[]> {
+  public async getAll(programId: number, userId: number): Promise<AccountDto[]> {
     const accounts = await this.accountRepository.find({
       where: {
         program: {
           id: programId,
+          user: {
+            id: userId,
+          },
         },
       },
     })
@@ -32,9 +35,16 @@ export class AccountService {
     return accounts.map(AccountMapper.toDto)
   }
 
-  public async get(id: number): Promise<AccountDto> {
+  public async get(id: number, userId: number): Promise<AccountDto> {
     const account = await this.accountRepository.findOne({
-      where: { id },
+      where: {
+        id,
+        program: {
+          user: {
+            id: userId,
+          },
+        },
+      },
     })
 
     if (!account) {

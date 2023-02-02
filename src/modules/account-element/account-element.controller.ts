@@ -6,7 +6,7 @@ import {
   ApiNotFoundResponse,
   ApiTags,
 } from '@nestjs/swagger'
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, Session, UseGuards } from '@nestjs/common'
 import { UpdateAccountElementDto } from './dtos/update-account-element/update-account-element.dto'
 import { CreateAccountElementDto } from './dtos/create-account-element/create-account-element.dto'
 import { AccountElementService } from './account-element.service'
@@ -23,15 +23,15 @@ export class AccountElementController {
   @Get()
   @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
   @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
-  public async getAll(@Query('accountId') accountId: number): Promise<AccountElementDto[]> {
-    return this.accountElementService.getAll(accountId)
+  public async getAll(@Query('accountId') accountId: number, @Session() session: Record<string, any>): Promise<AccountElementDto[]> {
+    return this.accountElementService.getAll(accountId, session.userId)
   }
 
   @Get(':id')
   @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
   @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
-  public async get(@Param('id') id: number): Promise<AccountElementDto> {
-    return this.accountElementService.get(id)
+  public async get(@Param('id') id: number, @Session() session: Record<string, any>): Promise<AccountElementDto> {
+    return this.accountElementService.get(id, session.userId)
   }
 
   @Post()

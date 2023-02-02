@@ -7,7 +7,7 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger'
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Put, Query, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Put, Query, Session, UseGuards } from '@nestjs/common'
 import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
 import { CreateAccountDto } from './dtos/create-account/create-account.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
@@ -25,8 +25,8 @@ export class AccountController {
   @Get()
   @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
   @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
-  public async getAll(@Query('programId') programId: number): Promise<AccountDto[]> {
-    return this.accountService.getAll(programId)
+  public async getAll(@Query('programId') programId: number, @Session() session: Record<string, any>): Promise<AccountDto[]> {
+    return this.accountService.getAll(programId, session.userId)
   }
 
   @Post()
@@ -76,7 +76,7 @@ export class AccountController {
   @Get(':id')
   @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
   @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
-  public async get(@Param('id') id: number): Promise<AccountDto> {
-    return this.accountService.get(id)
+  public async get(@Param('id') id: number, @Session() session: Record<string, any>): Promise<AccountDto> {
+    return this.accountService.get(id, session.userId)
   }
 }
