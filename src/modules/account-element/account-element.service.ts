@@ -19,11 +19,16 @@ export class AccountElementService {
     private readonly accountElementRepository: Repository<AccountElementEntity>,
   ) {}
 
-  public async getAll(accountId: number): Promise<AccountElementDto[]> {
+  public async getAll(accountId: number, userId: number): Promise<AccountElementDto[]> {
     const accountElements = await this.accountElementRepository.find({
       where: {
         account: {
           id: accountId,
+          program: {
+            user: {
+              id: userId,
+            },
+          },
         },
       },
     })
@@ -31,9 +36,19 @@ export class AccountElementService {
     return accountElements.map(AccountElementMapper.toDto)
   }
 
-  public async get(id: number): Promise<AccountElementDto> {
+  public async get(id: number, userId: number): Promise<AccountElementDto> {
+    userId=1
     const accountElement = await this.accountElementRepository.findOne({
-      where: { id },
+      where: {
+        id,
+        account: {
+          program: {
+            user: {
+              id: userId,
+            },
+          },
+        },
+      },
     })
 
     if (!accountElement) {
