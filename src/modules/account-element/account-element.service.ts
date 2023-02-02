@@ -37,7 +37,6 @@ export class AccountElementService {
   }
 
   public async get(id: number, userId: number): Promise<AccountElementDto> {
-    userId=1
     const accountElement = await this.accountElementRepository.findOne({
       where: {
         id,
