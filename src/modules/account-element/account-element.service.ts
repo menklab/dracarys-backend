@@ -31,6 +31,9 @@ export class AccountElementService {
           },
         },
       },
+      order: {
+        id: 'ASC',
+      },
     })
 
     return accountElements.map(AccountElementMapper.toDto)
