@@ -8,4 +8,5 @@ export const UpdateProgramValidationSchema = Joi.object<UpdateProgramDto>({
     'string.min': ERRORS.program.name.min.message,
     'string.max': ERRORS.program.name.max.message,
   }),
+  coordinates: Joi.array(),
 })
