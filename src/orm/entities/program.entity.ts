@@ -9,6 +9,12 @@ export class ProgramEntity extends BaseEntity {
   @Column()
   name: string
 
+  @Column({
+    type: 'jsonb',
+    default: '[]',
+  })
+  coordinates: Array<number>
+
   @ManyToOne(() => UserEntity, (user) => user.programs, {
     onDelete: 'CASCADE',
   })

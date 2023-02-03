@@ -8,6 +8,7 @@ export class ProgramMapper {
     return {
       id: entity.id,
       name: entity.name,
+      coordinates: entity.coordinates,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     }
