@@ -119,6 +119,11 @@ export class AccountService {
 
   public async generateCode(programId: number): Promise<string[]> {
     const accounts = await this.accountRepository.find({
+      where: {
+        program: {
+          id: programId,
+        },
+      },
       relations: {
         elements: true,
       },
