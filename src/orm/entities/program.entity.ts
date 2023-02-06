@@ -15,6 +15,18 @@ export class ProgramEntity extends BaseEntity {
   })
   coordinates: Array<number>
 
+  @Column({
+    type: 'jsonb',
+    default: '[]',
+  })
+  center: Array<number>
+
+  @Column({
+    type: 'real',
+    default: null,
+  })
+  zoom: number
+
   @ManyToOne(() => UserEntity, (user) => user.programs, {
     onDelete: 'CASCADE',
   })

@@ -6,4 +6,10 @@ export class UpdateProgramDto {
 
   @ApiProperty()
   coordinates?: Array<number>
+
+  @ApiProperty()
+  center?: Array<number>
+
+  @ApiProperty()
+  zoom?: number
 }
