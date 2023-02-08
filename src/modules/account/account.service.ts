@@ -10,6 +10,7 @@ import { Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
 import { UpdateAccountLinkDto } from './dtos/update-account-link/update-account-link.dto'
 import { AccountElementEntity } from '../../orm/entities/account.element.entity'
+import { InstructionElementEntity } from 'src/orm/entities/instruction.element.entity'
 
 @Injectable()
 export class AccountService {
@@ -18,7 +19,9 @@ export class AccountService {
     private readonly accountRepository: Repository<AccountEntity>,
     @InjectRepository(ProgramEntity)
     private readonly programRepository: Repository<ProgramEntity>,
-  ) {}
+    @InjectRepository(InstructionElementEntity)
+    private readonly instructionElementRepository: Repository<InstructionElementEntity>,
+  ) { }
 
   public async getAll(programId: number, userId: number): Promise<AccountDto[]> {
     const accounts = await this.accountRepository.find({
@@ -78,8 +81,18 @@ export class AccountService {
       throw new NotFoundException(businessException([ERRORS.account.notFound]))
     }
 
+    const accountOldName = accountFetched.name
     const accountMapped = AccountMapper.toUpdateEntity(accountFetched, data)
     const accountSaved = await this.accountRepository.save(accountMapped)
+
+    if (data.name) {
+      await this.instructionElementRepository
+        .createQueryBuilder()
+        .update(InstructionElementEntity)
+        .set({ genericType: data.name })
+        .where({ genericType: accountOldName })
+        .execute()
+    }
 
     return AccountMapper.toDto(accountSaved)
   }
