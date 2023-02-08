@@ -9,6 +9,8 @@ export class ProgramMapper {
       id: entity.id,
       name: entity.name,
       coordinates: entity.coordinates,
+      center: entity.center,
+      zoom: entity.zoom,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     }
