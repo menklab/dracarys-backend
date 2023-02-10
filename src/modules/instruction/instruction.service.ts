@@ -116,7 +116,7 @@ export class InstructionService {
   }
 
   private generateFunction(name: string, camelCaseName: string): string[] {
-    return [`pub func ${name}(ctx: Context<${camelCaseName}>) ->`, '  Result<()> {', '', '  Ok(())', '}', '']
+    return [`pub fn ${name}(ctx: Context<${camelCaseName}>) ->`, '  Result<()> {', '', '  Ok(())', '}', '']
   }
 
   private generateStructure(instructionElements: InstructionElementEntity[], camelCaseName: string): string[] {
@@ -128,11 +128,12 @@ export class InstructionService {
       if (element.mut) {
         structure.push('  #[account(mut)]')
       }
-      const field = `  pub ${element.name}: ${element.accountType}<'info, ${element.genericType}>`
+      const field = `  pub ${element.name}: ${element.accountType}<'info, ${element.genericType}>,`
       structure.push(field)
-      structure.push('}')
       structure.push('')
     }
+
+    structure.push('}')
 
     return structure
   }
