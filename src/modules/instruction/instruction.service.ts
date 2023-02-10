@@ -116,7 +116,7 @@ export class InstructionService {
   }
 
   private generateFunction(name: string, camelCaseName: string): string[] {
-    return [`pub func ${name}(ctx: Context<${camelCaseName}>) ->`, '  Result<()> {', '', '  Ok(())', '}', '']
+    return [`pub fn ${name}(ctx: Context<${camelCaseName}>) ->`, '  Result<()> {', '', '  Ok(())', '}', '']
   }
 
   private generateStructure(instructionElements: InstructionElementEntity[], camelCaseName: string): string[] {
