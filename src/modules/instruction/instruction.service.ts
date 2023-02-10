@@ -128,11 +128,12 @@ export class InstructionService {
       if (element.mut) {
         structure.push('  #[account(mut)]')
       }
-      const field = `  pub ${element.name}: ${element.accountType}<'info, ${element.genericType}>`
+      const field = `  pub ${element.name}: ${element.accountType}<'info, ${element.genericType}>,`
       structure.push(field)
-      structure.push('}')
       structure.push('')
     }
+
+    structure.push('}')
 
     return structure
   }
