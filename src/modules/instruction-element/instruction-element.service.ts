@@ -26,6 +26,7 @@ export class InstructionElementService {
           id: instructionId,
         },
       },
+      relations: { genericTypeAccount: true },
     })
 
     return instructionElements.map(InstructionElementMapper.toDto)
@@ -34,6 +35,7 @@ export class InstructionElementService {
   public async get(id: number): Promise<InstructionElementDto> {
     const instructionElement = await this.instructionElementRepository.findOne({
       where: { id },
+      relations: { genericTypeAccount: true },
     })
 
     if (!instructionElement) {
@@ -65,6 +67,7 @@ export class InstructionElementService {
   public async update(id: number, data: UpdateInstructionElementDto): Promise<InstructionElementDto> {
     const instructionElement = await this.instructionElementRepository.findOne({
       where: { id: id },
+      relations: { genericTypeAccount: true },
     })
 
     if (!instructionElement) {

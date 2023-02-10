@@ -1,6 +1,8 @@
 import { InstructionElementAccountType } from 'src/common/enum/instruction.element.account.type'
+import { InstructionElementGenericType } from 'src/common/enum/instruction.element.generic.type'
 import { InstructionEntity } from './instruction.entity'
 import { Column, Entity, ManyToOne } from 'typeorm'
+import { AccountEntity } from './account.entity'
 import { BaseEntity } from './base.entity'
 
 @Entity({ name: 'instruction_element' })
@@ -24,8 +26,18 @@ export class InstructionElementEntity extends BaseEntity {
   })
   accountType: InstructionElementAccountType
 
-  @Column()
-  genericType: string
+  @Column({
+    type: 'enum',
+    enum: InstructionElementGenericType,
+    default: InstructionElementGenericType.SYSTEM,
+  })
+  genericType: InstructionElementGenericType
+
+  @ManyToOne(() => AccountEntity, (account) => account.instructionElements, {
+    onDelete: 'CASCADE',
+    nullable: true,
+  })
+  genericTypeAccount: AccountEntity
 
   @ManyToOne(() => InstructionEntity, (instruction) => instruction.elements, {
     onDelete: 'CASCADE',

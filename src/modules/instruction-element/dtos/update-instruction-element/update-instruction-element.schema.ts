@@ -29,10 +29,11 @@ export const UpdateInstructionElementValidationSchema = Joi.object<UpdateInstruc
       'string.empty': ERRORS.instructionElement.accountType.empty.message,
       'string.valid': ERRORS.instructionElement.accountType.valid.message,
     }),
-  genericType: Joi.string().required().min(1).max(50).trim().alphanum().messages({
-    'string.empty': ERRORS.instructionElement.genericType.empty.message,
-    'string.alphanum': ERRORS.instructionElement.genericType.alphanum.message,
-    'string.min': ERRORS.instructionElement.genericType.min.message,
-    'string.max': ERRORS.instructionElement.genericType.max.message,
-  }),
+  genericType: Joi.string()
+    .required()
+    .valid(...Object.values(InstructionElementAccountType))
+    .messages({
+      'string.empty': ERRORS.instructionElement.genericType.empty.message,
+      'string.valid': ERRORS.instructionElement.genericType.valid.message,
+    }),
 })

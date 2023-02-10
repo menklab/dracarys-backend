@@ -14,6 +14,7 @@ export class InstructionElementMapper {
       mut: entity.mut,
       accountType: entity.accountType,
       genericType: entity.genericType,
+      genericTypeAccount: entity.genericTypeAccount,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     }

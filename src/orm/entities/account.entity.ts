@@ -1,3 +1,4 @@
+import { InstructionElementEntity } from './instruction.element.entity'
 import { AccountElementEntity } from './account.element.entity'
 import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
 import { ProgramEntity } from './program.entity'
@@ -36,4 +37,9 @@ export class AccountEntity extends BaseEntity {
     }
     this.elements.push(element)
   }
+
+  @OneToMany(() => InstructionElementEntity, (element) => element.genericTypeAccount, {
+    cascade: true,
+  })
+  instructionElements: InstructionElementEntity[]
 }

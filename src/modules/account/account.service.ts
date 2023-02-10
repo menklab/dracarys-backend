@@ -81,18 +81,8 @@ export class AccountService {
       throw new NotFoundException(businessException([ERRORS.account.notFound]))
     }
 
-    const accountOldName = accountFetched.name
     const accountMapped = AccountMapper.toUpdateEntity(accountFetched, data)
     const accountSaved = await this.accountRepository.save(accountMapped)
-
-    if (data.name) {
-      await this.instructionElementRepository
-        .createQueryBuilder()
-        .update(InstructionElementEntity)
-        .set({ genericType: data.name })
-        .where({ genericType: accountOldName })
-        .execute()
-    }
 
     return AccountMapper.toDto(accountSaved)
   }
