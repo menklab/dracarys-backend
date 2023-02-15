@@ -14,5 +14,5 @@ export const UpdateInstructionValidationSchema = Joi.object<UpdateInstructionDto
       'string.min': ERRORS.instruction.name.min.message,
       'string.max': ERRORS.instruction.name.max.message,
     }),
-  description: Joi.string(),
+  description: Joi.string().allow(null),
 })
