@@ -15,7 +15,7 @@ export const CreateInstructionValidationSchema = Joi.object<CreateInstructionDto
       'string.min': ERRORS.instruction.name.min.message,
       'string.max': ERRORS.instruction.name.max.message,
     }),
-  description: Joi.string(),
+  description: Joi.string().allow(null),
   programId: Joi.number().required().messages({
     'any.only': ERRORS.instruction.programId.message,
   }),
