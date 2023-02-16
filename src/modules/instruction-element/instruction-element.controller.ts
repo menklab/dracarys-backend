@@ -13,6 +13,7 @@ import { InstructionElementService } from './instruction-element.service'
 import { InstructionElementDto } from './dtos/instruction-element.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
 import { SWAGGER_OPTIONS } from 'src/common'
+import { InstructionElementGenericTypeMap } from 'src/common/maps/instruction.element.generic.type.map'
 
 @ApiTags('InstructionElement')
 @UseGuards(AuthGuard)
@@ -25,6 +26,13 @@ export class InstructionElementController {
   @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
   public async getAll(@Query('instructionId') instructionId: number): Promise<InstructionElementDto[]> {
     return this.instructionElementService.getAll(instructionId)
+  }
+
+  @Get('generic-types')
+  @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
+  @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
+  public async getGenericTypes(@Query('programId') programId: number): Promise<InstructionElementGenericTypeMap> {
+    return this.instructionElementService.getGenericTypes(programId)
   }
 
   @Get(':id')

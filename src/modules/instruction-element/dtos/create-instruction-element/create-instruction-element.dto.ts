@@ -1,6 +1,6 @@
 import { InstructionElementAccountType } from 'src/common/enum/instruction.element.account.type'
-import { InstructionElementGenericType } from 'src/common/enum/instruction.element.generic.type'
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger'
+import { GenericTypeDto } from '../generic-type.dto'
 
 export class CreateInstructionElementDto {
   @ApiProperty()
@@ -22,8 +22,5 @@ export class CreateInstructionElementDto {
   accountType: InstructionElementAccountType
 
   @ApiProperty()
-  genericType: InstructionElementGenericType
-
-  @ApiPropertyOptional()
-  genericTypeAccountId?: number
+  genericType: GenericTypeDto
 }

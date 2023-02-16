@@ -1,4 +1,5 @@
 import { InstructionElementAccountType } from 'src/common/enum/instruction.element.account.type'
+import { InstructionElementGenericType } from 'src/common/enum/instruction.element.generic.type'
 import { UpdateInstructionElementDto } from './update-instruction-element.dto'
 import { ERRORS } from 'src/common'
 import Joi from 'joi'
@@ -29,11 +30,15 @@ export const UpdateInstructionElementValidationSchema = Joi.object<UpdateInstruc
       'string.empty': ERRORS.instructionElement.accountType.empty.message,
       'string.valid': ERRORS.instructionElement.accountType.valid.message,
     }),
-  genericType: Joi.string()
-    .required()
-    .valid(...Object.values(InstructionElementAccountType))
-    .messages({
-      'string.empty': ERRORS.instructionElement.genericType.empty.message,
-      'string.valid': ERRORS.instructionElement.genericType.valid.message,
-    }),
+  genericType: Joi.object({
+    id: Joi.number().optional(),
+    name: Joi.string().required(),
+    type: Joi.string()
+      .required()
+      .valid(...Object.values(InstructionElementGenericType))
+      .messages({
+        'string.empty': ERRORS.instructionElement.genericType.empty.message,
+        'string.valid': ERRORS.instructionElement.genericType.valid.message,
+      }),
+  }),
 })
