@@ -21,6 +21,10 @@ export class InstructionService {
   ) {}
 
   public async getAll(programId: number): Promise<InstructionDto[]> {
+    if(!programId){
+      throw new NotFoundException(businessException([ERRORS.instruction.programId]))
+    }
+
     const instructions = await this.instructionRepository.find({
       where: {
         program: {
@@ -108,7 +112,7 @@ export class InstructionService {
       const camelCaseName = this.toCamelCase(instruction.name)
       const func = this.generateFunction(instruction.name, camelCaseName)
       code.push(...func)
-      const structure = this.generateStructure(instruction.elements, camelCaseName)
+      const structure = this.generateStructure(instruction.elements.reverse(), camelCaseName)
       code.push(...structure)
     }
 
