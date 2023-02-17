@@ -21,10 +21,6 @@ export class InstructionService {
   ) {}
 
   public async getAll(programId: number): Promise<InstructionDto[]> {
-    if(!programId){
-      throw new NotFoundException(businessException([ERRORS.instruction.programId]))
-    }
-
     const instructions = await this.instructionRepository.find({
       where: {
         program: {
