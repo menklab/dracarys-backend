@@ -100,6 +100,12 @@ export class InstructionService {
       relations: {
         elements: true,
       },
+      order: {
+        id: 'ASC',
+        elements: {
+          order: 'ASC',
+        },
+      }
     })
 
     if (!instructions) {
@@ -112,7 +118,7 @@ export class InstructionService {
       const camelCaseName = this.toCamelCase(instruction.name)
       const func = this.generateFunction(instruction.name, camelCaseName)
       code.push(...func)
-      const structure = this.generateStructure(instruction.elements.reverse(), camelCaseName)
+      const structure = this.generateStructure(instruction.elements, camelCaseName)
       code.push(...structure)
     }
 

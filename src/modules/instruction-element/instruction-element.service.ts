@@ -26,6 +26,9 @@ export class InstructionElementService {
           id: instructionId,
         },
       },
+      order: {
+        order: 'ASC',
+      },
     })
 
     return instructionElements.map(InstructionElementMapper.toDto)
