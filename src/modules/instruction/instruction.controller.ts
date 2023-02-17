@@ -7,7 +7,7 @@ import {
   ApiOkResponse,
   ApiTags,
 } from '@nestjs/swagger'
-import { Body, Controller, Delete, Get, HttpCode, Param, ParseIntPipe, Patch, Post, Query, UseGuards } from '@nestjs/common'
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
 import { UpdateInstructionDto } from './dtos/update-instruction/update-instruction.dto'
 import { CreateInstructionDto } from './dtos/create-instruction/create-instruction.dto'
 import { GetInstructionsDto } from './dtos/get-instructions/get-instructions.dto'
