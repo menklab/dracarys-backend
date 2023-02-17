@@ -15,7 +15,6 @@ import { InstructionService } from './instruction.service'
 import { InstructionDto } from './dtos/instruction.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
 import { SWAGGER_OPTIONS } from 'src/common'
-import Joi from 'joi'
 
 @ApiTags('Instruction')
 @UseGuards(AuthGuard)
