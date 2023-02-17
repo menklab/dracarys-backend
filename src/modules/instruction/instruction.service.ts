@@ -96,6 +96,12 @@ export class InstructionService {
       relations: {
         elements: true,
       },
+      order: {
+        id: 'ASC',
+        elements: {
+          order: 'ASC',
+        },
+      }
     })
 
     if (!instructions) {
