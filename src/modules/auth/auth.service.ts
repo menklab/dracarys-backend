@@ -50,7 +50,7 @@ export class AuthService {
 
   public async logOut(session: Record<string, any>): Promise<boolean> {
     session.cookie.expires = new Date()
-    session.destroy()
+    
     return true
   }
 }
