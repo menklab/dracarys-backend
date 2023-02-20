@@ -51,8 +51,8 @@ export class AuthService {
 
   public async logOut(session: Record<string, any>, response: Response): Promise<boolean> {
     session.cookie.expires = new Date()
-    response.cookie('connect.sid', '')
-    
+    response.cookie('connect.sid', { domain: '.dracarys.digital' })
+
     return true
   }
 }
