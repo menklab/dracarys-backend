@@ -1,9 +1,10 @@
 import { AccountElementEntity } from './account.element.entity'
-import { Column, Entity, ManyToOne, OneToMany } from 'typeorm'
+import { Column, Entity, ManyToOne, OneToMany, Unique } from 'typeorm'
 import { ProgramEntity } from './program.entity'
 import { BaseEntity } from './base.entity'
 
 @Entity({ name: 'account' })
+@Unique(['name', 'program'])
 export class AccountEntity extends BaseEntity {
   @Column()
   name: string
