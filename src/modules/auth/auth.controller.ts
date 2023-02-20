@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Post, Session } from '@nestjs/common'
+import { Body, Controller, Delete, Get, Post, Res, Session } from '@nestjs/common'
 import { ApiBadRequestResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
 import { AuthService } from './auth.service'
 import { MessageOutputDto } from './dtos/message/message.output.dto'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
 import { Response } from '../../app/decorators'
 import { SWAGGER_OPTIONS } from '../../common'
+import { Response as ExpressResponse } from 'express'
 
 @ApiTags('Auth')
 @Controller('auth')
@@ -34,7 +35,7 @@ export class AuthController {
   @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
   @ApiOkResponse(SWAGGER_OPTIONS.auth.logout)
   @Delete('logout')
-  public async logOut(@Session() session: Record<string, any>): Promise<boolean> {
-    return this.authService.logOut(session)
+  public async logOut(@Session() session: Record<string, any>, @Res({ passthrough: true }) response: ExpressResponse): Promise<boolean> {
+    return this.authService.logOut(session, response)
   }
 }
