@@ -17,36 +17,36 @@ export class InstructionElementMapper {
       mut: entity.mut,
       accountType: entity.accountType,
       genericType: {
-        id: entity.genericType === InstructionElementGenericType.CUSTOM_ACCOUNT && entity.genericTypeAccount ? entity.genericTypeAccount.id : null,
+        id: entity.genericType === InstructionElementGenericType.CUSTOM_ACCOUNT && entity.account ? entity.account.id : null,
         type: entity.genericType,
-        name: entity.genericType === InstructionElementGenericType.CUSTOM_ACCOUNT && entity.genericTypeAccount ? entity.genericTypeAccount.name : entity.genericType,
+        name: entity.genericType === InstructionElementGenericType.CUSTOM_ACCOUNT && entity.account ? entity.account.name : entity.genericType,
       },
-      genericTypeAccount: entity.genericTypeAccount ? AccountMapper.toDto(entity.genericTypeAccount) : null,
+      account: entity.account ? AccountMapper.toDto(entity.account) : null,
       createdAt: entity.createdAt,
       updatedAt: entity.updatedAt,
     }
   }
 
-  static toCreateEntity(instruction: InstructionEntity, data: CreateInstructionElementDto, genericTypeAccount: AccountEntity | null): InstructionElementEntity {
+  static toCreateEntity(instruction: InstructionEntity, data: CreateInstructionElementDto, account: AccountEntity | null): InstructionElementEntity {
     let instructionElement: InstructionElementEntity = Object.assign(new InstructionElementEntity(), { instruction }, data)
     if (data.genericType) {
       instructionElement.genericType = data.genericType.type
-      if (genericTypeAccount) {
-        instructionElement.genericTypeAccount = genericTypeAccount
+      if (account) {
+        instructionElement.account = account
       }
     }
     return instructionElement
   }
 
-  static toUpdateEntity(entity: InstructionElementEntity, data: UpdateInstructionElementDto, genericTypeAccount: AccountEntity | null): InstructionElementEntity {
+  static toUpdateEntity(entity: InstructionElementEntity, data: UpdateInstructionElementDto, account: AccountEntity | null): InstructionElementEntity {
     let instructionElement: InstructionElementEntity = Object.assign(entity, data)
     if (data.genericType) {
       instructionElement.genericType = data.genericType.type
-      if (genericTypeAccount) {
-        instructionElement.genericTypeAccount = genericTypeAccount
+      if (account) {
+        instructionElement.account = account
       }
       else {
-        instructionElement.genericTypeAccount = null
+        instructionElement.account = null
       }
     }
 

@@ -39,7 +39,7 @@ export class AccountEntity extends BaseEntity {
     this.elements.push(element)
   }
 
-  @OneToMany(() => InstructionElementEntity, (element) => element.genericTypeAccount, {
+  @OneToMany(() => InstructionElementEntity, (element) => element.account, {
     cascade: true,
   })
   instructionElements: InstructionElementEntity[]

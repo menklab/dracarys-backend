@@ -10,7 +10,7 @@ export class InstructionElementDto {
   mut: boolean
   accountType: InstructionElementAccountType
   genericType: GenericTypeDto
-  genericTypeAccount: AccountDto | null
+  account: AccountDto | null
   createdAt: Date
   updatedAt: Date
 }

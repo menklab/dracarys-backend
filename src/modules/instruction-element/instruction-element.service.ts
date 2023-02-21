@@ -31,7 +31,7 @@ export class InstructionElementService {
           id: instructionId,
         },
       },
-      relations: { genericTypeAccount: true },
+      relations: { account: true },
       order: {
         order: 'ASC',
       },
@@ -43,7 +43,7 @@ export class InstructionElementService {
   public async get(id: number): Promise<InstructionElementDto> {
     const instructionElement = await this.instructionElementRepository.findOne({
       where: { id },
-      relations: { genericTypeAccount: true },
+      relations: { account: true },
     })
 
     if (!instructionElement) {
@@ -86,7 +86,7 @@ export class InstructionElementService {
   public async update(id: number, data: UpdateInstructionElementDto): Promise<InstructionElementDto> {
     const instructionElement = await this.instructionElementRepository.findOne({
       where: { id: id },
-      relations: { genericTypeAccount: true },
+      relations: { account: true },
     })
 
     if (!instructionElement) {
@@ -137,8 +137,7 @@ export class InstructionElementService {
       type: InstructionElementGenericType.CUSTOM_ACCOUNT,
     }))
 
-    const instructionElementGenericTypeMap = new InstructionElementGenericTypeMap
-    instructionElementGenericTypeMap.custom_account_options.options = customTypes as []
+    const instructionElementGenericTypeMap = new InstructionElementGenericTypeMap(customTypes)
 
     return instructionElementGenericTypeMap
   }
