@@ -10,6 +10,7 @@ import { ProgramEntity } from 'src/orm/entities'
 import { Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
 import { InstructionElementEntity } from '../../orm/entities/instruction.element.entity'
+import { InstructionElementGenericType } from 'src/common/enum/instruction.element.generic.type'
 
 @Injectable()
 export class InstructionService {
@@ -94,7 +95,7 @@ export class InstructionService {
         },
       },
       relations: {
-        elements: true,
+        elements: { account: true, },
       },
       order: {
         id: 'ASC',
@@ -134,7 +135,7 @@ export class InstructionService {
       if (element.mut) {
         structure.push('  #[account(mut)]')
       }
-      const field = `  pub ${element.name}: ${element.accountType}<'info, ${element.genericType}>,`
+      const field = `  pub ${element.name}: ${element.accountType}<'info, ${element.genericType === InstructionElementGenericType.CUSTOM_ACCOUNT && element.account ? element.account.name : element.genericType}>,`
       structure.push(field)
       structure.push('')
     }

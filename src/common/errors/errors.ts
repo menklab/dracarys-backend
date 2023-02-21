@@ -181,6 +181,10 @@ export const ERRORS = {
         code: ErrorCode.GENERIC_TYPE_IS_EMPTY,
         message: 'generic type must not be empty',
       },
+      valid: {
+        code: ErrorCode.TYPE_NOT_VALID,
+        message: 'generic type must be from the list of allowed types',
+      },
       alphanum: {
         code: ErrorCode.GENERIC_TYPE_IS_NOT_CHAR_OR_NUM,
         message: 'generic type must only have characters or numbers',
