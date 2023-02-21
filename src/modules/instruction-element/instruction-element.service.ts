@@ -63,8 +63,8 @@ export class InstructionElementService {
       throw new NotFoundException(businessException([ERRORS.instruction.notFound]))
     }
 
-    let account = undefined
-    if (data.genericType && data.genericType.type === InstructionElementGenericType.CUSTOM_ACCOUNT) {
+    let account = null
+    if (data.genericType && data.genericType.id && data.genericType.type === InstructionElementGenericType.CUSTOM_ACCOUNT) {
       account = await this.accountRepository.findOne({
         where: { id: data.genericType.id },
       })
@@ -93,8 +93,8 @@ export class InstructionElementService {
       throw new NotFoundException(businessException([ERRORS.instruction.notFound]))
     }
 
-    let account = undefined
-    if (data.genericType && data.genericType.type === InstructionElementGenericType.CUSTOM_ACCOUNT) {
+    let account = null
+    if (data.genericType && data.genericType.id && data.genericType.type === InstructionElementGenericType.CUSTOM_ACCOUNT) {
       account = await this.accountRepository.findOne({
         where: { id: data.genericType.id },
       })
@@ -131,17 +131,13 @@ export class InstructionElementService {
       },
     })
 
-    let customTypes = []
+    const customTypes = accounts.map(account => ({
+      id: account.id,
+      name: account.name,
+      type: InstructionElementGenericType.CUSTOM_ACCOUNT,
+    }))
 
-    for (let account of accounts) {
-      customTypes.push({
-        id: account.id,
-        name: account.name,
-        type: InstructionElementGenericType.CUSTOM_ACCOUNT,
-      })
-    }
-
-    let instructionElementGenericTypeMap = new InstructionElementGenericTypeMap
+    const instructionElementGenericTypeMap = new InstructionElementGenericTypeMap
     instructionElementGenericTypeMap.custom_account_options.options = customTypes as []
 
     return instructionElementGenericTypeMap

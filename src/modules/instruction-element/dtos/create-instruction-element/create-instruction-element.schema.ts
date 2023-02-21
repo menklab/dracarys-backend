@@ -31,7 +31,7 @@ export const CreateInstructionElementValidationSchema = Joi.object<CreateInstruc
       'string.valid': ERRORS.instructionElement.accountType.valid.message,
     }),
   genericType: Joi.object({
-    id: Joi.number().optional(),
+    id: Joi.number().allow(null),
     name: Joi.string().required(),
     type: Joi.string()
       .required()

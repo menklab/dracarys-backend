@@ -1,6 +1,6 @@
 import { InstructionElementAccountType } from 'src/common/enum/instruction.element.account.type'
-import { AccountEntity } from 'src/orm/entities'
 import { GenericTypeDto } from './generic-type.dto'
+import { AccountDto } from 'src/modules/account/dtos/account.dto'
 
 export class InstructionElementDto {
   id: number
@@ -10,7 +10,7 @@ export class InstructionElementDto {
   mut: boolean
   accountType: InstructionElementAccountType
   genericType: GenericTypeDto
-  genericTypeAccount: AccountEntity | null
+  genericTypeAccount: AccountDto | null
   createdAt: Date
   updatedAt: Date
 }

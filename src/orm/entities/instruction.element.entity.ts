@@ -37,7 +37,7 @@ export class InstructionElementEntity extends BaseEntity {
     onDelete: 'CASCADE',
     nullable: true,
   })
-  genericTypeAccount: AccountEntity
+  genericTypeAccount: AccountEntity | null
 
   @ManyToOne(() => InstructionEntity, (instruction) => instruction.elements, {
     onDelete: 'CASCADE',

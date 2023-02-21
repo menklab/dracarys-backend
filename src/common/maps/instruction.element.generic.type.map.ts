@@ -1,18 +1,23 @@
+import { InstructionElementGenericType } from '../enum/instruction.element.generic.type'
+
 export class InstructionElementGenericTypeMap {
   predefined_program_options = {
     name: 'Predefined Program Options',
     options: [
       {
-        name: 'System',
-        type: 'System',
+        id: null,
+        name: InstructionElementGenericType.SYSTEM,
+        type: InstructionElementGenericType.SYSTEM,
       },
       {
-        name: 'AssociatedToken',
-        type: 'AssociatedToken',
+        id: null,
+        name: InstructionElementGenericType.ASSOCIATED_TOKEN,
+        type: InstructionElementGenericType.ASSOCIATED_TOKEN,
       },
       {
-        name: 'Token',
-        type: 'Token',
+        id: null,
+        name: InstructionElementGenericType.TOKEN,
+        type: InstructionElementGenericType.TOKEN,
       },
     ],
   }
@@ -20,20 +25,24 @@ export class InstructionElementGenericTypeMap {
     name: 'Predefined Account Options',
     options: [
       {
-        name: 'TokenAccount',
-        type: 'TokenAccount',
+        id: null,
+        name: InstructionElementGenericType.TOKEN_ACCOUNT,
+        type: InstructionElementGenericType.TOKEN_ACCOUNT,
       },
       {
-        name: 'Mint',
-        type: 'Mint',
+        id: null,
+        name: InstructionElementGenericType.MINT,
+        type: InstructionElementGenericType.MINT,
       },
       {
-        name: 'BPFUpgradableLoaderState',
-        type: 'BPFUpgradableLoaderState',
+        id: null,
+        name: InstructionElementGenericType.BPF_UPGRADABLE_LOADER_STATE,
+        type: InstructionElementGenericType.BPF_UPGRADABLE_LOADER_STATE,
       },
       {
-        name: 'ProgramData',
-        type: 'ProgramData',
+        id: null,
+        name: InstructionElementGenericType.PROGRAM_DATA,
+        type: InstructionElementGenericType.PROGRAM_DATA,
       },
     ],
   }
@@ -41,12 +50,14 @@ export class InstructionElementGenericTypeMap {
     name: 'Predefined Sysvar Options',
     options: [
       {
-        name: 'Rent',
-        type: 'Rent',
+        id: null,
+        name: InstructionElementGenericType.RENT,
+        type: InstructionElementGenericType.RENT,
       },
       {
-        name: 'Clock',
-        type: 'Clock',
+        id: null,
+        name: InstructionElementGenericType.CLOCK,
+        type: InstructionElementGenericType.CLOCK,
       },
     ],
   }
