@@ -16,7 +16,7 @@ import { SWAGGER_OPTIONS } from 'src/common'
 import { InstructionElementGenericTypeMap } from 'src/common/maps/instruction.element.generic.type.map'
 
 @ApiTags('InstructionElement')
-// @UseGuards(AuthGuard)
+@UseGuards(AuthGuard)
 @Controller('instruction-element')
 export class InstructionElementController {
   constructor(private readonly instructionElementService: InstructionElementService) {}
