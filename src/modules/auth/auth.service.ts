@@ -6,6 +6,7 @@ import { UserService } from '../user/user.service'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
 import { businessException } from '../../common/errors/utils/business-exception'
 import { ERRORS } from '../../common'
+import { Response } from 'express'
 
 @Injectable()
 export class AuthService {
@@ -48,8 +49,10 @@ export class AuthService {
     return isAuthorized
   }
 
-  public async logOut(session: Record<string, any>): Promise<boolean> {
-    session.destroy()
+  public async logOut(session: Record<string, any>, response: Response): Promise<boolean> {
+    session.cookie.expires = new Date()
+    response.cookie('connect.sid', '', { domain: '.dracarys.digital' })
+
     return true
   }
 }

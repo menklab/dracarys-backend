@@ -32,6 +32,9 @@ export class InstructionElementService {
         },
       },
       relations: { genericTypeAccount: true },
+      order: {
+        order: 'ASC',
+      },
     })
 
     return instructionElements.map(InstructionElementMapper.toDto)

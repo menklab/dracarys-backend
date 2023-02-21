@@ -97,6 +97,12 @@ export class InstructionService {
       relations: {
         elements: { genericTypeAccount: true, },
       },
+      order: {
+        id: 'ASC',
+        elements: {
+          order: 'ASC',
+        },
+      }
     })
 
     if (!instructions) {

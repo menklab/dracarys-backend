@@ -10,6 +10,7 @@ import {
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
 import { UpdateInstructionDto } from './dtos/update-instruction/update-instruction.dto'
 import { CreateInstructionDto } from './dtos/create-instruction/create-instruction.dto'
+import { GetInstructionsDto } from './dtos/get-instructions/get-instructions.dto'
 import { InstructionService } from './instruction.service'
 import { InstructionDto } from './dtos/instruction.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
@@ -24,8 +25,8 @@ export class InstructionController {
   @Get()
   @ApiForbiddenResponse(SWAGGER_OPTIONS.forbidden)
   @ApiInternalServerErrorResponse(SWAGGER_OPTIONS.serverError)
-  public async getAll(@Query('programId') programId: number): Promise<InstructionDto[]> {
-    return this.instructionService.getAll(programId)
+  public async getAll(@Query() getInstructionsDto: GetInstructionsDto): Promise<InstructionDto[]> {
+    return this.instructionService.getAll(getInstructionsDto.programId)
   }
 
   @Post()

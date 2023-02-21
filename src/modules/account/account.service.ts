@@ -2,11 +2,11 @@ import { businessException } from 'src/common/errors/utils/business-exception'
 import { CreateAccountDto } from './dtos/create-account/create-account.dto'
 import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
 import { AccountEntity, ProgramEntity } from 'src/orm/entities'
-import { Injectable, NotFoundException, Session } from '@nestjs/common'
+import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
 import { AccountMapper } from './mappers/account.mapper'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AccountDto } from './dtos/account.dto'
-import { Repository } from 'typeorm'
+import { Not, Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
 import { UpdateAccountLinkDto } from './dtos/update-account-link/update-account-link.dto'
 import { AccountElementEntity } from '../../orm/entities/account.element.entity'
@@ -64,6 +64,20 @@ export class AccountService {
     }
 
     const accountMapped = AccountMapper.toCreateEntity(program, data)
+
+    const accountWithSameName = await this.accountRepository.findOne({
+      where: {
+        name: accountMapped.name,
+        program: {
+          id: accountMapped.program.id,
+        },
+      },
+    })
+
+    if (accountWithSameName) {
+      throw new BadRequestException(businessException([ERRORS.account.nameNotUnique]))
+    }
+
     const accountSaved = await this.accountRepository.save(accountMapped)
 
     return AccountMapper.toDto(accountSaved)
@@ -72,6 +86,9 @@ export class AccountService {
   public async update(id: number, data: UpdateAccountDto): Promise<AccountDto> {
     const accountFetched = await this.accountRepository.findOne({
       where: { id: id },
+      relations: {
+        program: true,
+      },
     })
 
     if (!accountFetched) {
@@ -79,6 +96,21 @@ export class AccountService {
     }
 
     const accountMapped = AccountMapper.toUpdateEntity(accountFetched, data)
+
+    const accountWithSameName = await this.accountRepository.findOne({
+      where: {
+        id: Not(accountFetched.id),
+        name: accountMapped.name,
+        program: {
+          id: accountFetched.program.id,
+        },
+      },
+    })
+
+    if (accountWithSameName) {
+      throw new BadRequestException(businessException([ERRORS.account.nameNotUnique]))
+    }
+
     const accountSaved = await this.accountRepository.save(accountMapped)
 
     return AccountMapper.toDto(accountSaved)

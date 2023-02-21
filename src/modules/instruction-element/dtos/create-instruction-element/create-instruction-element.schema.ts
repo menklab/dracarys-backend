@@ -21,7 +21,7 @@ export const CreateInstructionElementValidationSchema = Joi.object<CreateInstruc
       'string.max': ERRORS.instructionElement.name.max.message,
     }),
   order: Joi.number().required(),
-  description: Joi.string(),
+  description: Joi.string().allow(null),
   mut: Joi.boolean().required(),
   accountType: Joi.string()
     .required()

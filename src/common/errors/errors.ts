@@ -42,6 +42,10 @@ export const ERRORS = {
       code: ErrorCode.ACCOUNT_NOT_FOUND,
       message: 'account not found',
     },
+    nameNotUnique: {
+      code: ErrorCode.ACCOUNT_NAME_NOT_UNIQUE,
+      message: 'account name must be unique',
+    },
     links: {
       code: ErrorCode.LINKS_NOT_FOUND,
       message: 'links array must not be empty',
