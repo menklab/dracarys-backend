@@ -4,7 +4,6 @@ import Joi from 'joi'
 import { CreateAccountElementDto } from './create-account-element.dto'
 
 export const CreateAccountElementValidationSchema = Joi.object<CreateAccountElementDto>({
-  /* eslint-disable */
   accountId: Joi.number().required().messages({
     'any.only': ERRORS.accountElement.accountId.message,
   }),
@@ -27,5 +26,4 @@ export const CreateAccountElementValidationSchema = Joi.object<CreateAccountElem
       'string.empty': ERRORS.accountElement.type.empty.message,
       'string.valid': ERRORS.accountElement.type.valid.message,
     }),
-  /* eslint-enable */
 })

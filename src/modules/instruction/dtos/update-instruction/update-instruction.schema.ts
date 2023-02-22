@@ -3,7 +3,6 @@ import Joi from 'joi'
 import { UpdateInstructionDto } from './update-instruction.dto'
 
 export const UpdateInstructionValidationSchema = Joi.object<UpdateInstructionDto>({
-  /* eslint-disable */
   name: Joi.string()
     .min(1)
     .max(50)
@@ -16,5 +15,4 @@ export const UpdateInstructionValidationSchema = Joi.object<UpdateInstructionDto
       'string.max': ERRORS.instruction.name.max.message,
     }),
   description: Joi.string().allow(null),
-  /* eslint-enable */
 })

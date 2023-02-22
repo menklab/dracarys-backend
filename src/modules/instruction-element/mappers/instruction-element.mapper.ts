@@ -47,11 +47,7 @@ export class InstructionElementMapper {
     const instructionElement: InstructionElementEntity = Object.assign(entity, data)
     if (data.genericType) {
       instructionElement.genericType = data.genericType.type
-      if (account) {
-        instructionElement.account = account
-      } else {
-        instructionElement.account = null
-      }
+      instructionElement.account = account
     }
 
     return instructionElement

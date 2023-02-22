@@ -5,7 +5,6 @@ import Joi from 'joi'
 import { CreateInstructionElementDto } from './create-instruction-element.dto'
 
 export const CreateInstructionElementValidationSchema = Joi.object<CreateInstructionElementDto>({
-  /* eslint-disable */
   instructionId: Joi.number().required().messages({
     'any.only': ERRORS.instructionElement.instructionId.message,
   }),
@@ -42,5 +41,4 @@ export const CreateInstructionElementValidationSchema = Joi.object<CreateInstruc
         'string.valid': ERRORS.instructionElement.genericType.valid.message,
       }),
   }),
-  /* eslint-enable */
 })

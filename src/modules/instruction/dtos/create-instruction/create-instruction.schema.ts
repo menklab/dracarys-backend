@@ -3,7 +3,6 @@ import Joi from 'joi'
 import { CreateInstructionDto } from './create-instruction.dto'
 
 export const CreateInstructionValidationSchema = Joi.object<CreateInstructionDto>({
-  /* eslint-disable */
   name: Joi.string()
     .required()
     .min(1)
@@ -20,5 +19,4 @@ export const CreateInstructionValidationSchema = Joi.object<CreateInstructionDto
   programId: Joi.number().required().messages({
     'any.only': ERRORS.instruction.programId.message,
   }),
-  /* eslint-enable */
 })

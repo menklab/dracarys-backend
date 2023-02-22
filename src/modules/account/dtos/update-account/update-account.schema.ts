@@ -3,7 +3,6 @@ import Joi from 'joi'
 import { UpdateAccountDto } from './update-account.dto'
 
 export const UpdateAccountValidationSchema = Joi.object<UpdateAccountDto>({
-  /* eslint-disable */
   name: Joi.string().min(1).max(50).trim().alphanum().messages({
     'string.empty': ERRORS.account.name.empty.message,
     'string.alphanum': ERRORS.account.name.alphanum.message,
@@ -11,5 +10,4 @@ export const UpdateAccountValidationSchema = Joi.object<UpdateAccountDto>({
     'string.max': ERRORS.account.name.max.message,
   }),
   coordinates: Joi.array(),
-  /* eslint-enable */
 })
