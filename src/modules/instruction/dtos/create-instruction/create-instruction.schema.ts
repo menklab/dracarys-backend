@@ -17,6 +17,6 @@ export const CreateInstructionValidationSchema = Joi.object<CreateInstructionDto
     }),
   description: Joi.string().allow(null),
   programId: Joi.number().required().messages({
-    'any.only': ERRORS.instruction.programId.message,
+    'number.base': ERRORS.instruction.programId.message,
   }),
 })
