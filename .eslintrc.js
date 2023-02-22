@@ -33,6 +33,13 @@ module.exports = {
     'import/no-extraneous-dependencies': 'off',
     '@typescript-eslint/no-unused-vars': 'error',
     'no-restricted-syntax': 'off',
+    '@typescript-eslint/lines-between-class-members': [
+      'error',
+      'always',
+      {
+        'exceptAfterSingleLine': true,
+      },
+    ],
     '@typescript-eslint/naming-convention': [
       'error',
       {

@@ -4,22 +4,13 @@ import { GenericTypeDto } from './generic-type.dto'
 
 export class InstructionElementDto {
   id: number
-
   order: number
-
   name: string
-
   description: string
-
   mut: boolean
-
   accountType: InstructionElementAccountType
-
   genericType: GenericTypeDto
-
   account: AccountDto | null
-
   createdAt: Date
-
   updatedAt: Date
 }
