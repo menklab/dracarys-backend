@@ -1,12 +1,12 @@
 import { NestExpressApplication } from '@nestjs/platform-express'
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger'
-import { AppModule } from './modules/app/app.module'
-import { configurePipes } from './bootstrap/pipes'
 import { ConfigService } from '@nestjs/config'
-import { ApiException, Error } from './common'
 import { NestFactory } from '@nestjs/core'
 import { env } from 'process'
 import * as Sentry from '@sentry/node'
+import { AppModule } from './modules/app/app.module'
+import { configurePipes } from './bootstrap/pipes'
+import { ApiException, Error } from './common'
 
 async function bootstrap(): Promise<void> {
   const app = await NestFactory.create<NestExpressApplication>(AppModule)

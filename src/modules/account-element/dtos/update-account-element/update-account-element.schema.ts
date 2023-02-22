@@ -1,7 +1,7 @@
-import { UpdateAccountElementDto } from './update-account-element.dto'
 import { AccountElementType } from 'src/common/enum/account.element.type'
 import { ERRORS } from 'src/common'
 import Joi from 'joi'
+import { UpdateAccountElementDto } from './update-account-element.dto'
 
 export const UpdateAccountElementValidationSchema = Joi.object<UpdateAccountElementDto>({
   name: Joi.string()

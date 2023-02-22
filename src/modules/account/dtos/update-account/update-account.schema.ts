@@ -1,6 +1,6 @@
-import { UpdateAccountDto } from './update-account.dto'
 import { ERRORS } from 'src/common'
 import Joi from 'joi'
+import { UpdateAccountDto } from './update-account.dto'
 
 export const UpdateAccountValidationSchema = Joi.object<UpdateAccountDto>({
   name: Joi.string().min(1).max(50).trim().alphanum().messages({

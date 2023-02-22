@@ -12,6 +12,5 @@ export enum InstructionElementGenericType {
   RENT = 'Rent',
   CLOCK = 'Clock',
   // Custom Account Option:
-  CUSTOM_ACCOUNT = 'CustomAccount'
+  CUSTOM_ACCOUNT = 'CustomAccount',
 }
-

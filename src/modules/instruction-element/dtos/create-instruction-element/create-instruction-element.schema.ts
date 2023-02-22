@@ -1,8 +1,8 @@
 import { InstructionElementAccountType } from 'src/common/enum/instruction.element.account.type'
 import { InstructionElementGenericType } from 'src/common/enum/instruction.element.generic.type'
-import { CreateInstructionElementDto } from './create-instruction-element.dto'
 import { ERRORS } from 'src/common'
 import Joi from 'joi'
+import { CreateInstructionElementDto } from './create-instruction-element.dto'
 
 export const CreateInstructionElementValidationSchema = Joi.object<CreateInstructionElementDto>({
   instructionId: Joi.number().required().messages({

@@ -1,6 +1,6 @@
-import { CreateAccountDto } from './create-account.dto'
 import { ERRORS } from 'src/common'
 import Joi from 'joi'
+import { CreateAccountDto } from './create-account.dto'
 
 export const CreateAccountValidationSchema = Joi.object<CreateAccountDto>({
   name: Joi.string().required().min(1).max(50).trim().alphanum().messages({
@@ -10,6 +10,6 @@ export const CreateAccountValidationSchema = Joi.object<CreateAccountDto>({
     'string.max': ERRORS.account.name.max.message,
   }),
   programId: Joi.number().required().messages({
-    'any.only': ERRORS.account.program_id.message,
+    'number.only': ERRORS.account.programId.message,
   }),
 })

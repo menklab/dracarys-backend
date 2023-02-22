@@ -1,7 +1,7 @@
 import { AccountElementType } from 'src/common/enum/account.element.type'
-import { CreateAccountElementDto } from './create-account-element.dto'
 import { ERRORS } from 'src/common'
 import Joi from 'joi'
+import { CreateAccountElementDto } from './create-account-element.dto'
 
 export const CreateAccountElementValidationSchema = Joi.object<CreateAccountElementDto>({
   accountId: Joi.number().required().messages({

@@ -1,5 +1,5 @@
-import { AccountElementType } from '../../common/enum/account.element.type'
 import { Column, Entity, ManyToOne } from 'typeorm'
+import { AccountElementType } from '../../common/enum/account.element.type'
 import { AccountEntity } from './account.entity'
 import { BaseEntity } from './base.entity'
 

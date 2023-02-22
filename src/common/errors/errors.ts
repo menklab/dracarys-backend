@@ -68,7 +68,7 @@ export const ERRORS = {
         message: 'name must not exceed 50 characters',
       },
     },
-    program_id: {
+    programId: {
       code: ErrorCode.PROGRAM_ID_MUST_BE_NUMBER,
       message: 'program id must be a number',
     },

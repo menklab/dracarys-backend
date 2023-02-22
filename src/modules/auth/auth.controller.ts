@@ -1,11 +1,11 @@
 import { Body, Controller, Delete, Get, Post, Res, Session } from '@nestjs/common'
 import { ApiBadRequestResponse, ApiInternalServerErrorResponse, ApiOkResponse, ApiTags, ApiUnauthorizedResponse } from '@nestjs/swagger'
+import { Response as ExpressResponse } from 'express'
 import { AuthService } from './auth.service'
 import { MessageOutputDto } from './dtos/message/message.output.dto'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
 import { Response } from '../../app/decorators'
 import { SWAGGER_OPTIONS } from '../../common'
-import { Response as ExpressResponse } from 'express'
 
 @ApiTags('Auth')
 @Controller('auth')

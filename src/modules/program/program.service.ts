@@ -1,14 +1,14 @@
+import { Injectable, NotFoundException } from '@nestjs/common'
+import { InjectRepository } from '@nestjs/typeorm'
+import { Repository } from 'typeorm'
 import { businessException } from '../../common/errors/utils/business-exception'
 import { CreateProgramDto } from './dtos/create-program/create-program.dto'
 import { UpdateProgramDto } from './dtos/update-program/update-program.dto'
-import { Injectable, NotFoundException } from '@nestjs/common'
 import { ProgramMapper } from './mappers/program.mapper'
-import { InjectRepository } from '@nestjs/typeorm'
 import { ProgramEntity } from '../../orm/entities'
 import { UserService } from '../user/user.service'
 import { ProgramDto } from './dtos/program.dto'
 import { ERRORS } from '../../common'
-import { Repository } from 'typeorm'
 
 @Injectable()
 export class ProgramService {
@@ -59,7 +59,7 @@ export class ProgramService {
   }
 
   public async update(id: number, data: UpdateProgramDto): Promise<ProgramDto> {
-    let programFetched = await this.programRepository.findOne({
+    const programFetched = await this.programRepository.findOne({
       where: { id },
     })
     if (!programFetched) {

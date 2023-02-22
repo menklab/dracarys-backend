@@ -7,12 +7,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, Session, UseGuards } from '@nestjs/common'
+import { SWAGGER_OPTIONS } from 'src/common'
 import { UpdateAccountElementDto } from './dtos/update-account-element/update-account-element.dto'
 import { CreateAccountElementDto } from './dtos/create-account-element/create-account-element.dto'
 import { AccountElementService } from './account-element.service'
 import { AccountElementDto } from './dtos/account-element.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
-import { SWAGGER_OPTIONS } from 'src/common'
 
 @ApiTags('Account Element')
 @UseGuards(AuthGuard)

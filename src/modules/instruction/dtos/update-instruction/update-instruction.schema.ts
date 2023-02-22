@@ -1,6 +1,6 @@
-import { UpdateInstructionDto } from './update-instruction.dto'
 import { ERRORS } from 'src/common'
 import Joi from 'joi'
+import { UpdateInstructionDto } from './update-instruction.dto'
 
 export const UpdateInstructionValidationSchema = Joi.object<UpdateInstructionDto>({
   name: Joi.string()

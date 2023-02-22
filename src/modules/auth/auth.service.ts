@@ -2,11 +2,11 @@ import { BadRequestException, Injectable, UnauthorizedException } from '@nestjs/
 import bs58 from 'bs58'
 import nacl from 'tweetnacl'
 import * as crypto from 'crypto'
+import { Response } from 'express'
 import { UserService } from '../user/user.service'
 import { AuthInputDto } from './dtos/auth/auth.input.dto'
 import { businessException } from '../../common/errors/utils/business-exception'
 import { ERRORS } from '../../common'
-import { Response } from 'express'
 
 @Injectable()
 export class AuthService {
@@ -14,7 +14,7 @@ export class AuthService {
 
   public generateMessage(session: Record<string, any>): string {
     const message = crypto.randomBytes(64).toString('base64')
-    session.message = message
+    session.message = message // eslint-disable-line no-param-reassign
     return message
   }
 
@@ -43,14 +43,14 @@ export class AuthService {
       user = await this.userService.create(pubKey, message)
     }
 
-    session.isAuthorized = isAuthorized
-    session.userId = user.id
+    session.isAuthorized = isAuthorized // eslint-disable-line no-param-reassign
+    session.userId = user.id // eslint-disable-line no-param-reassign
 
     return isAuthorized
   }
 
   public async logOut(session: Record<string, any>, response: Response): Promise<boolean> {
-    session.cookie.expires = new Date()
+    session.cookie.expires = new Date() // eslint-disable-line no-param-reassign
     response.cookie('connect.sid', '', { domain: '.dracarys.digital' })
 
     return true

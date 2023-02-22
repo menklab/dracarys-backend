@@ -1,16 +1,16 @@
-import { CreateInstructionDto } from './dtos/create-instruction/create-instruction.dto'
-import { UpdateInstructionDto } from './dtos/update-instruction/update-instruction.dto'
 import { businessException } from 'src/common/errors/utils/business-exception'
 import { InstructionEntity } from 'src/orm/entities/instruction.entity'
-import { InstructionMapper } from './mappers/instruction.mapper'
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { InstructionDto } from './dtos/instruction.dto'
 import { InjectRepository } from '@nestjs/typeorm'
 import { ProgramEntity } from 'src/orm/entities'
 import { Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
-import { InstructionElementEntity } from '../../orm/entities/instruction.element.entity'
 import { InstructionElementGenericType } from 'src/common/enum/instruction.element.generic.type'
+import { InstructionElementEntity } from '../../orm/entities/instruction.element.entity'
+import { UpdateInstructionDto } from './dtos/update-instruction/update-instruction.dto'
+import { CreateInstructionDto } from './dtos/create-instruction/create-instruction.dto'
+import { InstructionMapper } from './mappers/instruction.mapper'
+import { InstructionDto } from './dtos/instruction.dto'
 
 @Injectable()
 export class InstructionService {
@@ -62,7 +62,7 @@ export class InstructionService {
 
   public async update(id: number, data: UpdateInstructionDto): Promise<InstructionDto> {
     const instruction = await this.instructionRepository.findOne({
-      where: { id: id },
+      where: { id },
     })
 
     if (!instruction) {
@@ -76,8 +76,8 @@ export class InstructionService {
   }
 
   public async delete(id: number): Promise<void> {
-    let instruction = await this.instructionRepository.findOne({
-      where: { id: id },
+    const instruction = await this.instructionRepository.findOne({
+      where: { id },
     })
 
     if (!instruction) {
@@ -95,14 +95,14 @@ export class InstructionService {
         },
       },
       relations: {
-        elements: { account: true, },
+        elements: { account: true },
       },
       order: {
         id: 'ASC',
         elements: {
           order: 'ASC',
         },
-      }
+      },
     })
 
     if (!instructions) {
@@ -135,7 +135,9 @@ export class InstructionService {
       if (element.mut) {
         structure.push('  #[account(mut)]')
       }
-      const field = `  pub ${element.name}: ${element.accountType}<'info, ${element.genericType === InstructionElementGenericType.CUSTOM_ACCOUNT && element.account ? element.account.name : element.genericType}>,`
+      const field = `  pub ${element.name}: ${element.accountType}<'info, ${
+        element.genericType === InstructionElementGenericType.CUSTOM_ACCOUNT && element.account ? element.account.name : element.genericType
+      }>,`
       structure.push(field)
       structure.push('')
     }

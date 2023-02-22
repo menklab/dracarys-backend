@@ -1,15 +1,15 @@
-import { businessException } from 'src/common/errors/utils/business-exception'
-import { CreateAccountDto } from './dtos/create-account/create-account.dto'
-import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
-import { AccountEntity, ProgramEntity } from 'src/orm/entities'
 import { BadRequestException, Injectable, NotFoundException } from '@nestjs/common'
-import { AccountMapper } from './mappers/account.mapper'
+import { businessException } from 'src/common/errors/utils/business-exception'
+import { AccountEntity, ProgramEntity } from 'src/orm/entities'
 import { InjectRepository } from '@nestjs/typeorm'
-import { AccountDto } from './dtos/account.dto'
 import { Not, Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
-import { UpdateAccountLinkDto } from './dtos/update-account-link/update-account-link.dto'
+import { CreateAccountDto } from './dtos/create-account/create-account.dto'
+import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
 import { AccountElementEntity } from '../../orm/entities/account.element.entity'
+import { UpdateAccountLinkDto } from './dtos/update-account-link/update-account-link.dto'
+import { AccountMapper } from './mappers/account.mapper'
+import { AccountDto } from './dtos/account.dto'
 
 @Injectable()
 export class AccountService {
@@ -85,7 +85,7 @@ export class AccountService {
 
   public async update(id: number, data: UpdateAccountDto): Promise<AccountDto> {
     const accountFetched = await this.accountRepository.findOne({
-      where: { id: id },
+      where: { id },
       relations: {
         program: true,
       },
@@ -117,8 +117,8 @@ export class AccountService {
   }
 
   public async delete(id: number): Promise<void> {
-    let account = await this.accountRepository.findOne({
-      where: { id: id },
+    const account = await this.accountRepository.findOne({
+      where: { id },
     })
 
     if (!account) {
@@ -129,22 +129,22 @@ export class AccountService {
   }
 
   public async updateLinkedAccounts(data: UpdateAccountLinkDto): Promise<AccountDto[]> {
-    let accounts = []
+    const accounts = await Promise.all(
+      data.links.map(async (link) => {
+        const account = await this.accountRepository.findOne({
+          where: { id: link.accountId },
+        })
 
-    for (let link of data.links) {
-      const account = await this.accountRepository.findOne({
-        where: { id: link.accountId },
-      })
+        if (!account) {
+          throw new NotFoundException(businessException([ERRORS.account.notFound]))
+        }
 
-      if (!account) {
-        throw new NotFoundException(businessException([ERRORS.account.notFound]))
-      }
+        const accountEntity = AccountMapper.toUpdateLinkedAccounts(account, link.linkedAccounts)
+        const accountSaved = await this.accountRepository.save(accountEntity)
 
-      const accountEntity = AccountMapper.toUpdateLinkedAccounts(account, link.linkedAccounts)
-      const accountSaved = await this.accountRepository.save(accountEntity)
-
-      accounts.push(accountSaved)
-    }
+        return accountSaved
+      }),
+    )
 
     return accounts.map(AccountMapper.toDto)
   }

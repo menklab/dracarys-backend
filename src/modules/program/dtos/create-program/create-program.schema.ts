@@ -1,6 +1,6 @@
-import { CreateProgramDto } from './create-program.dto'
 import { ERRORS } from 'src/common'
 import Joi from 'joi'
+import { CreateProgramDto } from './create-program.dto'
 
 export const CreateProgramValidationSchema = Joi.object<CreateProgramDto>({
   name: Joi.string().required().min(1).max(50).messages({
