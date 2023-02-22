@@ -1,6 +1,6 @@
+import { AccountEntity, ProgramEntity } from 'src/orm/entities'
 import { CreateAccountDto } from '../dtos/create-account/create-account.dto'
 import { UpdateAccountDto } from '../dtos/update-account/update-account.dto'
-import { AccountEntity, ProgramEntity } from 'src/orm/entities'
 import { AccountDto } from '../dtos/account.dto'
 
 export class AccountMapper {
@@ -16,7 +16,7 @@ export class AccountMapper {
   }
 
   static toCreateEntity(program: ProgramEntity, data: CreateAccountDto): AccountEntity {
-    return Object.assign(new AccountEntity(), { program: program }, data)
+    return Object.assign(new AccountEntity(), { program }, data)
   }
 
   static toUpdateEntity(account: AccountEntity, data: UpdateAccountDto): AccountEntity {
@@ -24,6 +24,6 @@ export class AccountMapper {
   }
 
   static toUpdateLinkedAccounts(account: AccountEntity, linkedAccounts: Array<number>): AccountEntity {
-    return Object.assign(account, { linkedAccounts: linkedAccounts })
+    return Object.assign(account, { linkedAccounts })
   }
 }

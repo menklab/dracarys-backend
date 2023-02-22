@@ -1,14 +1,14 @@
-import { CreateAccountElementDto } from './dtos/create-account-element/create-account-element.dto'
-import { UpdateAccountElementDto } from './dtos/update-account-element/update-account-element.dto'
 import { businessException } from 'src/common/errors/utils/business-exception'
 import { AccountElementEntity } from 'src/orm/entities/account.element.entity'
-import { AccountElementMapper } from './mappers/account-element.mapper'
 import { Injectable, NotFoundException } from '@nestjs/common'
-import { AccountElementDto } from './dtos/account-element.dto'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AccountEntity } from 'src/orm/entities'
 import { Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
+import { AccountElementDto } from './dtos/account-element.dto'
+import { AccountElementMapper } from './mappers/account-element.mapper'
+import { CreateAccountElementDto } from './dtos/create-account-element/create-account-element.dto'
+import { UpdateAccountElementDto } from './dtos/update-account-element/update-account-element.dto'
 
 @Injectable()
 export class AccountElementService {
@@ -83,7 +83,7 @@ export class AccountElementService {
 
   public async update(id: number, data: UpdateAccountElementDto): Promise<AccountElementDto> {
     const accountElement = await this.accountElementRepository.findOne({
-      where: { id: id },
+      where: { id },
     })
 
     if (!accountElement) {
@@ -98,7 +98,7 @@ export class AccountElementService {
 
   public async delete(id: number): Promise<void> {
     const accountElement = await this.accountElementRepository.findOne({
-      where: { id: id },
+      where: { id },
     })
 
     if (!accountElement) {

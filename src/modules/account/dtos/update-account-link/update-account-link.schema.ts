@@ -1,8 +1,9 @@
-import { UpdateAccountLinkDto } from './update-account-link.dto'
 import { ERRORS } from 'src/common'
 import Joi from 'joi'
+import { UpdateAccountLinkDto } from './update-account-link.dto'
 
 export const UpdateAccountLinkValidationSchema = Joi.object<UpdateAccountLinkDto>({
+  /* eslint-disable */
   links: Joi.array()
     .items({
       accountId: Joi.number().required(),
@@ -13,4 +14,5 @@ export const UpdateAccountLinkValidationSchema = Joi.object<UpdateAccountLinkDto
     .messages({
       'array.min': ERRORS.account.links.message,
     }),
+  /* eslint-enable */
 })

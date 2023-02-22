@@ -2,7 +2,7 @@ import { GenericTypeDto } from 'src/modules/instruction-element/dtos/generic-typ
 import { InstructionElementGenericType } from '../enum/instruction.element.generic.type'
 
 export class InstructionElementGenericTypeMap {
-  constructor(private readonly customOptions: GenericTypeDto[] = []) { }
+  constructor(private readonly customOptions: GenericTypeDto[] = []) {}
 
   predefinedProgramOptions = {
     name: 'Predefined Program Options',
@@ -24,6 +24,7 @@ export class InstructionElementGenericTypeMap {
       },
     ],
   }
+
   predefinedAccountOptions = {
     name: 'Predefined Account Options',
     options: [
@@ -49,6 +50,7 @@ export class InstructionElementGenericTypeMap {
       },
     ],
   }
+
   predefinedSysvarOptions = {
     name: 'Predefined Sysvar Options',
     options: [
@@ -64,6 +66,7 @@ export class InstructionElementGenericTypeMap {
       },
     ],
   }
+
   customAccountOptions = {
     name: 'Custom Account Options',
     options: this.customOptions,

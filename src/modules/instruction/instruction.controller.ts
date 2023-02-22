@@ -8,13 +8,13 @@ import {
   ApiTags,
 } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
+import { SWAGGER_OPTIONS } from 'src/common'
 import { UpdateInstructionDto } from './dtos/update-instruction/update-instruction.dto'
 import { CreateInstructionDto } from './dtos/create-instruction/create-instruction.dto'
 import { GetInstructionsDto } from './dtos/get-instructions/get-instructions.dto'
 import { InstructionService } from './instruction.service'
 import { InstructionDto } from './dtos/instruction.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
-import { SWAGGER_OPTIONS } from 'src/common'
 
 @ApiTags('Instruction')
 @UseGuards(AuthGuard)

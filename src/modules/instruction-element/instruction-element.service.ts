@@ -1,10 +1,6 @@
-import { CreateInstructionElementDto } from './dtos/create-instruction-element/create-instruction-element.dto'
-import { UpdateInstructionElementDto } from './dtos/update-instruction-element/update-instruction-element.dto'
 import { InstructionElementEntity } from 'src/orm/entities/instruction.element.entity'
-import { InstructionElementMapper } from './mappers/instruction-element.mapper'
 import { businessException } from 'src/common/errors/utils/business-exception'
 import { InstructionEntity } from 'src/orm/entities/instruction.entity'
-import { InstructionElementDto } from './dtos/instruction-element.dto'
 import { Injectable, NotFoundException } from '@nestjs/common'
 import { InjectRepository } from '@nestjs/typeorm'
 import { AccountEntity } from 'src/orm/entities'
@@ -12,6 +8,10 @@ import { Repository } from 'typeorm'
 import { ERRORS } from 'src/common'
 import { InstructionElementGenericTypeMap } from 'src/common/maps/instruction.element.generic.type.map'
 import { InstructionElementGenericType } from 'src/common/enum/instruction.element.generic.type'
+import { InstructionElementDto } from './dtos/instruction-element.dto'
+import { InstructionElementMapper } from './mappers/instruction-element.mapper'
+import { CreateInstructionElementDto } from './dtos/create-instruction-element/create-instruction-element.dto'
+import { UpdateInstructionElementDto } from './dtos/update-instruction-element/update-instruction-element.dto'
 
 @Injectable()
 export class InstructionElementService {
@@ -22,7 +22,7 @@ export class InstructionElementService {
     private readonly instructionElementRepository: Repository<InstructionElementEntity>,
     @InjectRepository(AccountEntity)
     private readonly accountRepository: Repository<AccountEntity>,
-  ) { }
+  ) {}
 
   public async getAll(instructionId: number): Promise<InstructionElementDto[]> {
     const instructionElements = await this.instructionElementRepository.find({
@@ -85,7 +85,7 @@ export class InstructionElementService {
 
   public async update(id: number, data: UpdateInstructionElementDto): Promise<InstructionElementDto> {
     const instructionElement = await this.instructionElementRepository.findOne({
-      where: { id: id },
+      where: { id },
       relations: { account: true },
     })
 
@@ -112,7 +112,7 @@ export class InstructionElementService {
 
   public async delete(id: number): Promise<void> {
     const instructionElement = await this.instructionElementRepository.findOne({
-      where: { id: id },
+      where: { id },
     })
 
     if (!instructionElement) {
@@ -131,7 +131,7 @@ export class InstructionElementService {
       },
     })
 
-    const customTypes = accounts.map(account => ({
+    const customTypes = accounts.map((account) => ({
       id: account.id,
       name: account.name,
       type: InstructionElementGenericType.CUSTOM_ACCOUNT,

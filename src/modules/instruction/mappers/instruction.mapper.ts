@@ -1,7 +1,7 @@
-import { CreateInstructionDto } from '../dtos/create-instruction/create-instruction.dto'
-import { UpdateInstructionDto } from '../dtos/update-instruction/update-instruction.dto'
 import { InstructionEntity } from 'src/orm/entities/instruction.entity'
 import { ProgramEntity } from 'src/orm/entities'
+import { CreateInstructionDto } from '../dtos/create-instruction/create-instruction.dto'
+import { UpdateInstructionDto } from '../dtos/update-instruction/update-instruction.dto'
 import { InstructionDto } from '../dtos/instruction.dto'
 
 export class InstructionMapper {
@@ -16,7 +16,7 @@ export class InstructionMapper {
   }
 
   static toCreateEntity(program: ProgramEntity, data: CreateInstructionDto): InstructionEntity {
-    return Object.assign(new InstructionEntity(), { program: program }, data)
+    return Object.assign(new InstructionEntity(), { program }, data)
   }
 
   static toUpdateEntity(entity: InstructionEntity, data: UpdateInstructionDto): InstructionEntity {

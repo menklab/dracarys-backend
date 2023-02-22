@@ -2,6 +2,8 @@ import { InstructionElementGenericType } from 'src/common/enum/instruction.eleme
 
 export class GenericTypeDto {
   id: number | null
+
   name: string
+
   type: InstructionElementGenericType
 }

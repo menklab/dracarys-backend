@@ -1,6 +1,6 @@
+import { Column, Entity, ManyToOne, OneToMany, Unique } from 'typeorm'
 import { InstructionElementEntity } from './instruction.element.entity'
 import { AccountElementEntity } from './account.element.entity'
-import { Column, Entity, ManyToOne, OneToMany, Unique } from 'typeorm'
 import { ProgramEntity } from './program.entity'
 import { BaseEntity } from './base.entity'
 
@@ -32,7 +32,7 @@ export class AccountEntity extends BaseEntity {
   })
   linkedAccounts: Array<number>
 
-  addElement(element: AccountElementEntity) {
+  addElement(element: AccountElementEntity): void {
     if (this.elements === null) {
       this.elements = Array<AccountElementEntity>()
     }

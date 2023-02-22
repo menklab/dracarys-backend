@@ -1,21 +1,21 @@
-import { InstructionElementModule } from '../instruction-element/instruction-element.module'
-import { AccountElementModule } from '../account-element/account-element.module'
 import { HttpException, MiddlewareConsumer, Module, NestModule } from '@nestjs/common'
-import { InstructionModule } from '../instruction/instruction.module'
 import { RedisModule, RedisService } from '@liaoliaots/nestjs-redis'
 import { ConfigModule, ConfigService } from '@nestjs/config'
-import { AccountModule } from '../account/account.module'
-import { ProgramModule } from '../program/program.module'
 import { TerminusModule } from '@nestjs/terminus'
-import { AppController } from './app.controller'
-import { AuthModule } from '../auth/auth.module'
-import { UserModule } from '../user/user.module'
 import { TypeOrmModule } from '@nestjs/typeorm'
 import RedisStore from 'connect-redis'
-import { config } from '../../config'
 import session from 'express-session'
 import Redis from 'ioredis'
 import { RavenInterceptor, RavenModule } from 'nest-raven'
+import { InstructionElementModule } from '../instruction-element/instruction-element.module'
+import { AccountElementModule } from '../account-element/account-element.module'
+import { InstructionModule } from '../instruction/instruction.module'
+import { AccountModule } from '../account/account.module'
+import { ProgramModule } from '../program/program.module'
+import { AppController } from './app.controller'
+import { AuthModule } from '../auth/auth.module'
+import { UserModule } from '../user/user.module'
+import { config } from '../../config'
 
 @Module({
   imports: [
@@ -61,7 +61,7 @@ import { RavenInterceptor, RavenModule } from 'nest-raven'
         filters: [
           {
             type: HttpException,
-            filter: (exception: HttpException) => 500 > exception.getStatus(),
+            filter: (exception: HttpException): boolean => exception.getStatus() < 500,
           },
         ],
       }),

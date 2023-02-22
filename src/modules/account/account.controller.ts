@@ -8,12 +8,12 @@ import {
   ApiTags,
 } from '@nestjs/swagger'
 import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Put, Query, Session, UseGuards } from '@nestjs/common'
+import { SWAGGER_OPTIONS } from 'src/common'
 import { UpdateAccountDto } from './dtos/update-account/update-account.dto'
 import { CreateAccountDto } from './dtos/create-account/create-account.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
 import { AccountService } from './account.service'
 import { AccountDto } from './dtos/account.dto'
-import { SWAGGER_OPTIONS } from 'src/common'
 import { UpdateAccountLinkDto } from './dtos/update-account-link/update-account-link.dto'
 
 @ApiTags('Account')

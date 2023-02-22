@@ -6,14 +6,14 @@ import {
   ApiNotFoundResponse,
   ApiTags,
 } from '@nestjs/swagger'
+import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
+import { InstructionElementGenericTypeMap } from 'src/common/maps/instruction.element.generic.type.map'
+import { SWAGGER_OPTIONS } from 'src/common'
 import { UpdateInstructionElementDto } from './dtos/update-instruction-element/update-instruction-element.dto'
 import { CreateInstructionElementDto } from './dtos/create-instruction-element/create-instruction-element.dto'
-import { Body, Controller, Delete, Get, HttpCode, Param, Patch, Post, Query, UseGuards } from '@nestjs/common'
 import { InstructionElementService } from './instruction-element.service'
 import { InstructionElementDto } from './dtos/instruction-element.dto'
 import { AuthGuard } from '../app/guards/auth.guard'
-import { SWAGGER_OPTIONS } from 'src/common'
-import { InstructionElementGenericTypeMap } from 'src/common/maps/instruction.element.generic.type.map'
 
 @ApiTags('InstructionElement')
 @UseGuards(AuthGuard)

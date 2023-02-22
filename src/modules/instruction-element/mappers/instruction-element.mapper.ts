@@ -1,11 +1,11 @@
-import { CreateInstructionElementDto } from '../dtos/create-instruction-element/create-instruction-element.dto'
-import { UpdateInstructionElementDto } from '../dtos/update-instruction-element/update-instruction-element.dto'
 import { InstructionElementEntity } from 'src/orm/entities/instruction.element.entity'
-import { InstructionElementDto } from '../dtos/instruction-element.dto'
 import { InstructionEntity } from 'src/orm/entities/instruction.entity'
 import { InstructionElementGenericType } from 'src/common/enum/instruction.element.generic.type'
 import { AccountEntity } from 'src/orm/entities'
 import { AccountMapper } from 'src/modules/account/mappers/account.mapper'
+import { InstructionElementDto } from '../dtos/instruction-element.dto'
+import { CreateInstructionElementDto } from '../dtos/create-instruction-element/create-instruction-element.dto'
+import { UpdateInstructionElementDto } from '../dtos/update-instruction-element/update-instruction-element.dto'
 
 export class InstructionElementMapper {
   static toDto(entity: InstructionElementEntity): InstructionElementDto {
@@ -28,24 +28,28 @@ export class InstructionElementMapper {
   }
 
   static toCreateEntity(instruction: InstructionEntity, data: CreateInstructionElementDto, account: AccountEntity | null): InstructionElementEntity {
-    let instructionElement: InstructionElementEntity = Object.assign(new InstructionElementEntity(), { instruction }, data)
+    const instructionElement: InstructionElementEntity = Object.assign(new InstructionElementEntity(), { instruction }, data)
     if (data.genericType) {
       instructionElement.genericType = data.genericType.type
       if (account) {
         instructionElement.account = account
       }
     }
+
     return instructionElement
   }
 
-  static toUpdateEntity(entity: InstructionElementEntity, data: UpdateInstructionElementDto, account: AccountEntity | null): InstructionElementEntity {
-    let instructionElement: InstructionElementEntity = Object.assign(entity, data)
+  static toUpdateEntity(
+    entity: InstructionElementEntity,
+    data: UpdateInstructionElementDto,
+    account: AccountEntity | null,
+  ): InstructionElementEntity {
+    const instructionElement: InstructionElementEntity = Object.assign(entity, data)
     if (data.genericType) {
       instructionElement.genericType = data.genericType.type
       if (account) {
         instructionElement.account = account
-      }
-      else {
+      } else {
         instructionElement.account = null
       }
     }
