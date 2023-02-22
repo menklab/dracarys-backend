@@ -10,6 +10,6 @@ export const CreateAccountValidationSchema = Joi.object<CreateAccountDto>({
     'string.max': ERRORS.account.name.max.message,
   }),
   programId: Joi.number().required().messages({
-    'number.only': ERRORS.account.programId.message,
+    'number.base': ERRORS.account.programId.message,
   }),
 })

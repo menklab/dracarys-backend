@@ -6,7 +6,7 @@ import { CreateInstructionElementDto } from './create-instruction-element.dto'
 
 export const CreateInstructionElementValidationSchema = Joi.object<CreateInstructionElementDto>({
   instructionId: Joi.number().required().messages({
-    'any.only': ERRORS.instructionElement.instructionId.message,
+    'number.base': ERRORS.instructionElement.instructionId.message,
   }),
   name: Joi.string()
     .required()

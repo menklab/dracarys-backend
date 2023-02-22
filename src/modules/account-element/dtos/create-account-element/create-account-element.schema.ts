@@ -5,7 +5,7 @@ import { CreateAccountElementDto } from './create-account-element.dto'
 
 export const CreateAccountElementValidationSchema = Joi.object<CreateAccountElementDto>({
   accountId: Joi.number().required().messages({
-    'any.only': ERRORS.accountElement.accountId.message,
+    'number.base': ERRORS.accountElement.accountId.message,
   }),
   name: Joi.string()
     .required()
