@@ -18,7 +18,7 @@ export class AccountService {
     private readonly accountRepository: Repository<AccountEntity>,
     @InjectRepository(ProgramEntity)
     private readonly programRepository: Repository<ProgramEntity>,
-  ) {}
+  ) { }
 
   public async getAll(programId: number, userId: number): Promise<AccountDto[]> {
     const accounts = await this.accountRepository.find({
@@ -129,12 +129,16 @@ export class AccountService {
     }
 
     if (account.instructionElements.length > 0) {
-      const instructionElementErrors = account.instructionElements.map((element) => ({
-        code: ERRORS.account.inUse.code,
-        message: ERRORS.account.inUse.message + ': ' + element.name,
-      }))
+      const instructionElementNames = account.instructionElements.map((element) => element.name)
 
-      throw new BadRequestException(businessException(instructionElementErrors))
+      throw new BadRequestException(
+        businessException([
+          {
+            code: ERRORS.account.inUse.code,
+            message: ERRORS.account.inUse.message + ': ' + instructionElementNames.join(', '),
+          },
+        ]),
+      )
     }
 
     await this.accountRepository.delete(id)
