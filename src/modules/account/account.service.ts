@@ -18,7 +18,7 @@ export class AccountService {
     private readonly accountRepository: Repository<AccountEntity>,
     @InjectRepository(ProgramEntity)
     private readonly programRepository: Repository<ProgramEntity>,
-  ) { }
+  ) {}
 
   public async getAll(programId: number, userId: number): Promise<AccountDto[]> {
     const accounts = await this.accountRepository.find({
