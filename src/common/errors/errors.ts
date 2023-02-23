@@ -42,6 +42,10 @@ export const ERRORS = {
       code: ErrorCode.ACCOUNT_NOT_FOUND,
       message: 'account not found',
     },
+    inUse: {
+      code: ErrorCode.ACCOUNT_IN_USE,
+      message: 'account is used in instruction element',
+    },
     nameNotUnique: {
       code: ErrorCode.ACCOUNT_NAME_NOT_UNIQUE,
       message: 'account name must be unique',

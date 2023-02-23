@@ -119,10 +119,22 @@ export class AccountService {
   public async delete(id: number): Promise<void> {
     const account = await this.accountRepository.findOne({
       where: { id },
+      relations: {
+        instructionElements: true,
+      },
     })
 
     if (!account) {
       throw new NotFoundException(businessException([ERRORS.account.notFound]))
+    }
+
+    if (account.instructionElements.length > 0) {
+      const instructionElementErrors = account.instructionElements.map((element) => ({
+        code: ERRORS.account.inUse.code,
+        message: ERRORS.account.inUse.message + ': ' + element.name,
+      }))
+
+      throw new BadRequestException(businessException(instructionElementErrors))
     }
 
     await this.accountRepository.delete(id)
