@@ -141,6 +141,22 @@ export class AccountService {
       )
     }
 
+    const linkedAccountsFetched = await this.accountRepository
+      .createQueryBuilder()
+      .where(`linked_accounts ::jsonb @> '${id}'`, { id: account.id })
+      .getMany()
+
+    if (linkedAccountsFetched.length > 0) {
+      const accountsMapped = []
+
+      for (const linkedAccountFetched of linkedAccountsFetched) {
+        const linkedAccounts = linkedAccountFetched.linkedAccounts.filter((item) => item !== account.id)
+        accountsMapped.push(Object.assign(linkedAccountFetched, { linkedAccounts }))
+      }
+
+      this.accountRepository.save(accountsMapped)
+    }
+
     await this.accountRepository.delete(id)
   }
 
