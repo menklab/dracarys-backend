@@ -23,7 +23,7 @@ export class AuthNotAuthorizedSteps {
   @when('use given link to make a {string} api request')
   public async useGivenLink(method: string): Promise<void> {
     try {
-      this.result = await axios({ method, url: this.serverHost + ':' + this.serverPort + '/api/' + this.apiLink })
+      this.result = await axios({ method, url: `${this.serverHost}:${this.serverPort}/api/${this.apiLink}` })
     } catch (e) {
       this.error = e
     }

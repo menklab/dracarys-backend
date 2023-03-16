@@ -2,10 +2,9 @@ import { AxiosResponse } from '@nestjs/terminus/dist/health-indicator/http/axios
 import { AxiosError } from '@nestjs/terminus/dist/errors/axios.error'
 import { binding, given, then, when } from 'cucumber-tsflow'
 import { assert } from 'chai'
-import nacl from 'tweetnacl'
 import dotenv from 'dotenv'
 import axios from 'axios'
-import bs58 from 'bs58'
+import { Auth } from '../src/common/utils/auth'
 
 dotenv.config()
 
@@ -24,54 +23,10 @@ export class ModulesCrudSteps {
   private instruction: AxiosResponse | null = null
   private instructionElement: AxiosResponse | null = null
 
-  private async login(): Promise<string> {
-    let cookie = ''
-
-    try {
-      const requestMessage = await axios({
-        method: 'GET',
-        url: this.serverHost + ':' + this.serverPort + '/api/auth/requestMessage',
-        withCredentials: true,
-      })
-
-      cookie = requestMessage.headers['set-cookie'] ? requestMessage.headers['set-cookie'].join('; ') : ''
-
-      const message = requestMessage?.data.message
-      const encodedMessage = new TextEncoder().encode(message)
-      const keyPairs = nacl.sign.keyPair()
-      const signature = nacl.sign.detached(encodedMessage, keyPairs.secretKey)
-      const signatureString = btoa(String.fromCharCode.apply(null, signature))
-      const pubKeyString = bs58.encode(keyPairs.publicKey)
-
-      const data = {
-        pubKey: pubKeyString,
-        message,
-        signature: signatureString,
-      }
-
-      const validateMessage = await axios({
-        method: 'POST',
-        url: this.serverHost + ':' + this.serverPort + '/api/auth/validateMessage',
-        data,
-        headers: {
-          Cookie: `${cookie};`,
-        },
-      })
-
-      if (validateMessage.data === false) {
-        cookie = ''
-      }
-    } catch (e) {
-      this.error = e
-    }
-
-    return cookie
-  }
-
   private async createEntity(createData: string, additionalData: object = {}): Promise<AxiosResponse | null> {
     this.result = await axios({
       method: 'POST',
-      url: this.serverHost + ':' + this.serverPort + '/api/' + this.moduleName,
+      url: `${this.serverHost}:${this.serverPort}/api/${this.moduleName}`,
       headers: {
         Cookie: `${this.cookie};`,
       },
@@ -88,7 +43,7 @@ export class ModulesCrudSteps {
     try {
       this.result = await axios({
         method: 'DELETE',
-        url: this.serverHost + ':' + this.serverPort + '/api/' + this.moduleName + '/' + entityId,
+        url: `${this.serverHost}:${this.serverPort}/api/${this.moduleName}/${entityId}`,
         headers: {
           Cookie: `${this.cookie};`,
         },
@@ -101,7 +56,7 @@ export class ModulesCrudSteps {
   @given('module {string}')
   public async givenModuleName(module: string): Promise<void> {
     if (!this.cookie) {
-      this.cookie = await this.login()
+      this.cookie = await Auth.login()
     }
 
     this.moduleName = module
@@ -165,7 +120,7 @@ export class ModulesCrudSteps {
     try {
       this.result = await axios({
         method: 'GET',
-        url: this.serverHost + ':' + this.serverPort + '/api/' + this.moduleName + '/' + this.entityId.toString(),
+        url: `${this.serverHost}:${this.serverPort}/api/${this.moduleName}/${this.entityId.toString()}`,
         headers: {
           Cookie: `${this.cookie};`,
         },
@@ -180,7 +135,7 @@ export class ModulesCrudSteps {
     try {
       this.result = await axios({
         method: 'PATCH',
-        url: this.serverHost + ':' + this.serverPort + '/api/' + this.moduleName + '/' + this.entityId.toString(),
+        url: `${this.serverHost}:${this.serverPort}/api/${this.moduleName}/${this.entityId.toString()}`,
         headers: {
           Cookie: `${this.cookie};`,
         },
@@ -197,7 +152,7 @@ export class ModulesCrudSteps {
       try {
         this.result = await axios({
           method: 'PATCH',
-          url: this.serverHost + ':' + this.serverPort + '/api/' + this.moduleName + '/' + this.entityId.toString(),
+          url: `${this.serverHost}:${this.serverPort}/api/${this.moduleName}/${this.entityId.toString()}`,
           headers: {
             Cookie: `${this.cookie};`,
           },
