@@ -1,5 +1,5 @@
-import { InstructionEntity } from 'src/orm/entities/instruction.entity'
-import { ProgramEntity } from 'src/orm/entities'
+import { InstructionEntity } from '../../../orm/entities/instruction.entity'
+import { ProgramEntity } from '../../../orm/entities'
 import { CreateInstructionDto } from '../dtos/create-instruction/create-instruction.dto'
 import { UpdateInstructionDto } from '../dtos/update-instruction/update-instruction.dto'
 import { InstructionDto } from '../dtos/instruction.dto'
