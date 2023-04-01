@@ -1,4 +1,4 @@
-import { AccountEntity, ProgramEntity } from 'src/orm/entities'
+import { AccountEntity, ProgramEntity } from '../../../orm/entities'
 import { CreateAccountDto } from '../dtos/create-account/create-account.dto'
 import { UpdateAccountDto } from '../dtos/update-account/update-account.dto'
 import { AccountDto } from '../dtos/account.dto'

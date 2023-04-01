@@ -1,6 +1,6 @@
-import { InstructionElementAccountType } from 'src/common/enum/instruction.element.account.type'
-import { InstructionElementGenericType } from 'src/common/enum/instruction.element.generic.type'
 import { Column, Entity, ManyToOne } from 'typeorm'
+import { InstructionElementGenericType } from '../../common/enum/instruction.element.generic.type'
+import { InstructionElementAccountType } from '../../common/enum/instruction.element.account.type'
 import { InstructionEntity } from './instruction.entity'
 import { AccountEntity } from './account.entity'
 import { BaseEntity } from './base.entity'

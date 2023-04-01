@@ -1,5 +1,5 @@
-import { AccountElementEntity } from 'src/orm/entities/account.element.entity'
-import { AccountEntity } from 'src/orm/entities'
+import { AccountElementEntity } from '../../../orm/entities/account.element.entity'
+import { AccountEntity } from '../../../orm/entities'
 import { CreateAccountElementDto } from '../dtos/create-account-element/create-account-element.dto'
 import { UpdateAccountElementDto } from '../dtos/update-account-element/update-account-element.dto'
 import { AccountElementDto } from '../dtos/account-element.dto'

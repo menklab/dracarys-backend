@@ -18,8 +18,8 @@ export class AppController {
   async getHealthCheck(): Promise<AppGetHealthOutput> {
     // TODO: Add more health check and move logic to service, exp: DB
     const details = await this.health.check([
-      (): Promise<HealthIndicatorResult> => this.memory.checkHeap('memory_heap', 150 * 1024 * 1024),
-      (): Promise<HealthIndicatorResult> => this.disk.checkStorage('storage', { path: '/', threshold: 250 * 1024 * 1024 * 1024 }),
+      (): Promise<HealthIndicatorResult> => this.memory.checkHeap('memory_heap', 300 * 1024 * 1024),
+      (): Promise<HealthIndicatorResult> => this.disk.checkStorage('storage', { path: '/', threshold: 500 * 1024 * 1024 * 1024 }),
     ])
 
     const cpu = await si.cpu()
